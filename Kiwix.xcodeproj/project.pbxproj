@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		97C920441A5E39D50074FC16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920431A5E39D50074FC16 /* main.m */; };
+		97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920461A5E39D50074FC16 /* AppDelegate.m */; };
+		97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */; };
+		97C9204D1A5E39D50074FC16 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C9204C1A5E39D50074FC16 /* MasterViewController.m */; };
+		97C920501A5E39D50074FC16 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C9204F1A5E39D50074FC16 /* DetailViewController.m */; };
+		97C920531A5E39D50074FC16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C920511A5E39D50074FC16 /* Main.storyboard */; };
+		97C920551A5E39D50074FC16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C920541A5E39D50074FC16 /* Images.xcassets */; };
+		97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C920561A5E39D50074FC16 /* LaunchScreen.xib */; };
+		97C920641A5E39D50074FC16 /* KiwixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920631A5E39D50074FC16 /* KiwixTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		97C9205E1A5E39D50074FC16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C920361A5E39D50074FC16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97C9203D1A5E39D50074FC16;
+			remoteInfo = Kiwix;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		97C9203E1A5E39D50074FC16 /* Kiwix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C920421A5E39D50074FC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97C920431A5E39D50074FC16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		97C920451A5E39D50074FC16 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		97C920461A5E39D50074FC16 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		97C920491A5E39D50074FC16 /* Kiwix.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kiwix.xcdatamodel; sourceTree = "<group>"; };
+		97C9204B1A5E39D50074FC16 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		97C9204C1A5E39D50074FC16 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		97C9204E1A5E39D50074FC16 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		97C9204F1A5E39D50074FC16 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		97C920521A5E39D50074FC16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		97C920541A5E39D50074FC16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		97C920571A5E39D50074FC16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		97C9205D1A5E39D50074FC16 /* KiwixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiwixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C920621A5E39D50074FC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97C920631A5E39D50074FC16 /* KiwixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KiwixTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97C9203B1A5E39D50074FC16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C9205A1A5E39D50074FC16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		97C920351A5E39D50074FC16 = {
+			isa = PBXGroup;
+			children = (
+				97C920401A5E39D50074FC16 /* Kiwix */,
+				97C920601A5E39D50074FC16 /* KiwixTests */,
+				97C9203F1A5E39D50074FC16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		97C9203F1A5E39D50074FC16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97C9203E1A5E39D50074FC16 /* Kiwix.app */,
+				97C9205D1A5E39D50074FC16 /* KiwixTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97C920401A5E39D50074FC16 /* Kiwix */ = {
+			isa = PBXGroup;
+			children = (
+				97C920451A5E39D50074FC16 /* AppDelegate.h */,
+				97C920461A5E39D50074FC16 /* AppDelegate.m */,
+				97C9204B1A5E39D50074FC16 /* MasterViewController.h */,
+				97C9204C1A5E39D50074FC16 /* MasterViewController.m */,
+				97C9204E1A5E39D50074FC16 /* DetailViewController.h */,
+				97C9204F1A5E39D50074FC16 /* DetailViewController.m */,
+				97C920511A5E39D50074FC16 /* Main.storyboard */,
+				97C920541A5E39D50074FC16 /* Images.xcassets */,
+				97C920561A5E39D50074FC16 /* LaunchScreen.xib */,
+				97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */,
+				97C920411A5E39D50074FC16 /* Supporting Files */,
+			);
+			path = Kiwix;
+			sourceTree = "<group>";
+		};
+		97C920411A5E39D50074FC16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				97C920421A5E39D50074FC16 /* Info.plist */,
+				97C920431A5E39D50074FC16 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97C920601A5E39D50074FC16 /* KiwixTests */ = {
+			isa = PBXGroup;
+			children = (
+				97C920631A5E39D50074FC16 /* KiwixTests.m */,
+				97C920611A5E39D50074FC16 /* Supporting Files */,
+			);
+			path = KiwixTests;
+			sourceTree = "<group>";
+		};
+		97C920611A5E39D50074FC16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				97C920621A5E39D50074FC16 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		97C9203D1A5E39D50074FC16 /* Kiwix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97C920671A5E39D50074FC16 /* Build configuration list for PBXNativeTarget "Kiwix" */;
+			buildPhases = (
+				97C9203A1A5E39D50074FC16 /* Sources */,
+				97C9203B1A5E39D50074FC16 /* Frameworks */,
+				97C9203C1A5E39D50074FC16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kiwix;
+			productName = Kiwix;
+			productReference = 97C9203E1A5E39D50074FC16 /* Kiwix.app */;
+			productType = "com.apple.product-type.application";
+		};
+		97C9205C1A5E39D50074FC16 /* KiwixTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97C9206A1A5E39D50074FC16 /* Build configuration list for PBXNativeTarget "KiwixTests" */;
+			buildPhases = (
+				97C920591A5E39D50074FC16 /* Sources */,
+				97C9205A1A5E39D50074FC16 /* Frameworks */,
+				97C9205B1A5E39D50074FC16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97C9205F1A5E39D50074FC16 /* PBXTargetDependency */,
+			);
+			name = KiwixTests;
+			productName = KiwixTests;
+			productReference = 97C9205D1A5E39D50074FC16 /* KiwixTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		97C920361A5E39D50074FC16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Chris Li";
+				TargetAttributes = {
+					97C9203D1A5E39D50074FC16 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					97C9205C1A5E39D50074FC16 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 97C9203D1A5E39D50074FC16;
+					};
+				};
+			};
+			buildConfigurationList = 97C920391A5E39D50074FC16 /* Build configuration list for PBXProject "Kiwix" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 97C920351A5E39D50074FC16;
+			productRefGroup = 97C9203F1A5E39D50074FC16 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97C9203D1A5E39D50074FC16 /* Kiwix */,
+				97C9205C1A5E39D50074FC16 /* KiwixTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97C9203C1A5E39D50074FC16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C920531A5E39D50074FC16 /* Main.storyboard in Resources */,
+				97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */,
+				97C920551A5E39D50074FC16 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C9205B1A5E39D50074FC16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		97C9203A1A5E39D50074FC16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C920501A5E39D50074FC16 /* DetailViewController.m in Sources */,
+				97C9204D1A5E39D50074FC16 /* MasterViewController.m in Sources */,
+				97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */,
+				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
+				97C920441A5E39D50074FC16 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C920591A5E39D50074FC16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C920641A5E39D50074FC16 /* KiwixTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		97C9205F1A5E39D50074FC16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97C9203D1A5E39D50074FC16 /* Kiwix */;
+			targetProxy = 97C9205E1A5E39D50074FC16 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		97C920511A5E39D50074FC16 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97C920521A5E39D50074FC16 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		97C920561A5E39D50074FC16 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97C920571A5E39D50074FC16 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		97C920651A5E39D50074FC16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		97C920661A5E39D50074FC16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97C920681A5E39D50074FC16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Kiwix/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		97C920691A5E39D50074FC16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Kiwix/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		97C9206B1A5E39D50074FC16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KiwixTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kiwix.app/Kiwix";
+			};
+			name = Debug;
+		};
+		97C9206C1A5E39D50074FC16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KiwixTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kiwix.app/Kiwix";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		97C920391A5E39D50074FC16 /* Build configuration list for PBXProject "Kiwix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97C920651A5E39D50074FC16 /* Debug */,
+				97C920661A5E39D50074FC16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97C920671A5E39D50074FC16 /* Build configuration list for PBXNativeTarget "Kiwix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97C920681A5E39D50074FC16 /* Debug */,
+				97C920691A5E39D50074FC16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		97C9206A1A5E39D50074FC16 /* Build configuration list for PBXNativeTarget "KiwixTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97C9206B1A5E39D50074FC16 /* Debug */,
+				97C9206C1A5E39D50074FC16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				97C920491A5E39D50074FC16 /* Kiwix.xcdatamodel */,
+			);
+			currentVersion = 97C920491A5E39D50074FC16 /* Kiwix.xcdatamodel */;
+			path = Kiwix.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 97C920361A5E39D50074FC16 /* Project object */;
+}
