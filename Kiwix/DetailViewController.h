@@ -2,7 +2,7 @@
 //  DetailViewController.h
 //  Kiwix
 //
-//  Created by Chris Li on 1/7/15.
+//  Created by Chris Li on 12/31/14.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 

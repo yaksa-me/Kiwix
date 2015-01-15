@@ -2,26 +2,41 @@
 //  AppDelegate.m
 //  Kiwix
 //
-//  Created by Chris Li on 1/7/15.
+//  Created by Chris Li on 12/31/14.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "DetailViewController.h"
-#import "MasterViewController.h"
+#import "SlideNavigationController.h"
+#import "FileCoordinator.h"
 
 @interface AppDelegate ()
+
+@property(strong,nonatomic)FileCoordinator *fileCoordinator;
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
+    //LeftMenuVC *leftMenu = [[LeftMenuVC alloc] init];
+    //RightMenuViewController *rightMenu = [[RightMenuViewController alloc] init];
+    
+    //[SlideNavigationController sharedInstance].rightMenu = rightMenu;
+    [SlideNavigationController sharedInstance].leftMenu = leftMenu;
+    
+    /*
     // Override point for customization after application launch.
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
+    */
+    
+    self.fileCoordinator = [[FileCoordinator alloc] initWithManagedObjectContext:self.managedObjectContext];
+    [self.fileCoordinator processAllBooks];
+    
     return YES;
 }
 
@@ -41,6 +56,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self.fileCoordinator processAllBooks];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

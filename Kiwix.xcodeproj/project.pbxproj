@@ -7,6 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		977AF9011A6352C200B43722 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FC1A6352C200B43722 /* TFHpple.m */; };
+		977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FE1A6352C200B43722 /* TFHppleElement.m */; };
+		977AF9031A6352C200B43722 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9001A6352C200B43722 /* XPathQuery.m */; };
+		977AF9041A6352C700B43722 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 977AF8F81A63528600B43722 /* libxml2.2.dylib */; };
+		977AF90B1A63539300B43722 /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF90A1A63539300B43722 /* Parser.m */; };
+		977AF9101A63584200B43722 /* ArticleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF90F1A63584200B43722 /* ArticleVC.m */; };
+		977AF91A1A6378F900B43722 /* Book+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9191A6378F900B43722 /* Book+Create.m */; };
+		977AF9291A637C8F00B43722 /* Article+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9281A637C8F00B43722 /* Article+Create.m */; };
+		977AF92C1A63878100B43722 /* FileCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF92B1A63878100B43722 /* FileCoordinator.m */; };
+		978FAF461A62ED59003D7A41 /* ArticleListTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF451A62ED59003D7A41 /* ArticleListTBVC.m */; };
+		978FAF6D1A632A1E003D7A41 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF671A632A1E003D7A41 /* libc++.1.dylib */; };
+		978FAF6E1A632A1E003D7A41 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF681A632A1E003D7A41 /* libc++.dylib */; };
+		978FAF6F1A632A1E003D7A41 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF691A632A1E003D7A41 /* libc++abi.dylib */; };
+		978FAF701A632A1E003D7A41 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF6A1A632A1E003D7A41 /* libstdc++.6.0.9.dylib */; };
+		978FAF711A632A1E003D7A41 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF6B1A632A1E003D7A41 /* libstdc++.6.dylib */; };
+		978FAF721A632A1E003D7A41 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF6C1A632A1E003D7A41 /* libstdc++.dylib */; };
+		978FAF7D1A632A34003D7A41 /* libicudata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF731A632A34003D7A41 /* libicudata.a */; };
+		978FAF7E1A632A34003D7A41 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF741A632A34003D7A41 /* libicui18n.a */; };
+		978FAF7F1A632A34003D7A41 /* libicuio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF751A632A34003D7A41 /* libicuio.a */; };
+		978FAF801A632A34003D7A41 /* libicule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF761A632A34003D7A41 /* libicule.a */; };
+		978FAF811A632A34003D7A41 /* libiculx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF771A632A34003D7A41 /* libiculx.a */; };
+		978FAF821A632A34003D7A41 /* libicutest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF781A632A34003D7A41 /* libicutest.a */; };
+		978FAF831A632A34003D7A41 /* libicutu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF791A632A34003D7A41 /* libicutu.a */; };
+		978FAF841A632A34003D7A41 /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF7A1A632A34003D7A41 /* libicuuc.a */; };
+		978FAF851A632A34003D7A41 /* liblzma.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF7B1A632A34003D7A41 /* liblzma.a */; };
+		978FAF861A632A34003D7A41 /* libzim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 978FAF7C1A632A34003D7A41 /* libzim.a */; };
+		978FAF8E1A632A80003D7A41 /* pathTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF881A632A80003D7A41 /* pathTools.cpp */; };
+		978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF8A1A632A80003D7A41 /* reader.cpp */; };
+		978FAF901A632A80003D7A41 /* stringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF8C1A632A80003D7A41 /* stringTools.cpp */; };
+		978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF931A632BAB003D7A41 /* zimReader.mm */; };
+		97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */; };
+		97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862951A62DC2F004A4791 /* LibraryTBVC.m */; };
+		97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862981A62DE53004A4791 /* SearchTBVC.m */; };
 		97C920441A5E39D50074FC16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920431A5E39D50074FC16 /* main.m */; };
 		97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920461A5E39D50074FC16 /* AppDelegate.m */; };
 		97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */; };
@@ -16,6 +49,18 @@
 		97C920551A5E39D50074FC16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C920541A5E39D50074FC16 /* Images.xcassets */; };
 		97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C920561A5E39D50074FC16 /* LaunchScreen.xib */; };
 		97C920641A5E39D50074FC16 /* KiwixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920631A5E39D50074FC16 /* KiwixTests.m */; };
+		97C920821A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920741A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m */; };
+		97C920831A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920761A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m */; };
+		97C920841A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920781A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
+		97C920851A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C9207A1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m */; };
+		97C920861A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C9207C1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m */; };
+		97C920871A5E3B920074FC16 /* menu-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C9207E1A5E3B920074FC16 /* menu-button.png */; };
+		97C920881A5E3B920074FC16 /* menu-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C9207F1A5E3B920074FC16 /* menu-button@2x.png */; };
+		97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920811A5E3B920074FC16 /* SlideNavigationController.m */; };
+		97CE13D21A66C68F0009C31B /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE13D11A66C68F0009C31B /* Article.m */; };
+		97CE13D51A66C68F0009C31B /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE13D41A66C68F0009C31B /* Book.m */; };
+		97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE13D81A66C9B40009C31B /* zimFileFinder.m */; };
+		97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC5C1A6788DE00C8710F /* CoreDataTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +74,55 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		977AF8F81A63528600B43722 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		977AF8FB1A6352C200B43722 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		977AF8FC1A6352C200B43722 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		977AF8FD1A6352C200B43722 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		977AF8FE1A6352C200B43722 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		977AF8FF1A6352C200B43722 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		977AF9001A6352C200B43722 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		977AF9091A63539300B43722 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		977AF90A1A63539300B43722 /* Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Parser.m; sourceTree = "<group>"; };
+		977AF90E1A63584200B43722 /* ArticleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleVC.h; sourceTree = "<group>"; };
+		977AF90F1A63584200B43722 /* ArticleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleVC.m; sourceTree = "<group>"; };
+		977AF9181A6378F900B43722 /* Book+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+Create.h"; sourceTree = "<group>"; };
+		977AF9191A6378F900B43722 /* Book+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Book+Create.m"; sourceTree = "<group>"; };
+		977AF9271A637C8F00B43722 /* Article+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+Create.h"; sourceTree = "<group>"; };
+		977AF9281A637C8F00B43722 /* Article+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+Create.m"; sourceTree = "<group>"; };
+		977AF92A1A63878100B43722 /* FileCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCoordinator.h; sourceTree = "<group>"; };
+		977AF92B1A63878100B43722 /* FileCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileCoordinator.m; sourceTree = "<group>"; };
+		978FAF441A62ED59003D7A41 /* ArticleListTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleListTBVC.h; sourceTree = "<group>"; };
+		978FAF451A62ED59003D7A41 /* ArticleListTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleListTBVC.m; sourceTree = "<group>"; };
+		978FAF671A632A1E003D7A41 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "usr/lib/libc++.1.dylib"; sourceTree = SDKROOT; };
+		978FAF681A632A1E003D7A41 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		978FAF691A632A1E003D7A41 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
+		978FAF6A1A632A1E003D7A41 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		978FAF6B1A632A1E003D7A41 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		978FAF6C1A632A1E003D7A41 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		978FAF731A632A34003D7A41 /* libicudata.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicudata.a; path = Kiwix/libicudata.a; sourceTree = "<group>"; };
+		978FAF741A632A34003D7A41 /* libicui18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicui18n.a; path = Kiwix/libicui18n.a; sourceTree = "<group>"; };
+		978FAF751A632A34003D7A41 /* libicuio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicuio.a; path = Kiwix/libicuio.a; sourceTree = "<group>"; };
+		978FAF761A632A34003D7A41 /* libicule.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicule.a; path = Kiwix/libicule.a; sourceTree = "<group>"; };
+		978FAF771A632A34003D7A41 /* libiculx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiculx.a; path = Kiwix/libiculx.a; sourceTree = "<group>"; };
+		978FAF781A632A34003D7A41 /* libicutest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicutest.a; path = Kiwix/libicutest.a; sourceTree = "<group>"; };
+		978FAF791A632A34003D7A41 /* libicutu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicutu.a; path = Kiwix/libicutu.a; sourceTree = "<group>"; };
+		978FAF7A1A632A34003D7A41 /* libicuuc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicuuc.a; path = Kiwix/libicuuc.a; sourceTree = "<group>"; };
+		978FAF7B1A632A34003D7A41 /* liblzma.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblzma.a; path = Kiwix/liblzma.a; sourceTree = "<group>"; };
+		978FAF7C1A632A34003D7A41 /* libzim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzim.a; path = Kiwix/libzim.a; sourceTree = "<group>"; };
+		978FAF881A632A80003D7A41 /* pathTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pathTools.cpp; sourceTree = "<group>"; };
+		978FAF891A632A80003D7A41 /* pathTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pathTools.h; sourceTree = "<group>"; };
+		978FAF8A1A632A80003D7A41 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reader.cpp; sourceTree = "<group>"; };
+		978FAF8B1A632A80003D7A41 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		978FAF8C1A632A80003D7A41 /* stringTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stringTools.cpp; sourceTree = "<group>"; };
+		978FAF8D1A632A80003D7A41 /* stringTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringTools.h; sourceTree = "<group>"; };
+		978FAF921A632BAB003D7A41 /* zimReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zimReader.h; sourceTree = "<group>"; };
+		978FAF931A632BAB003D7A41 /* zimReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zimReader.mm; sourceTree = "<group>"; };
+		97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuTBVC.h; sourceTree = "<group>"; };
+		97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuTBVC.m; sourceTree = "<group>"; };
+		97C862941A62DC2F004A4791 /* LibraryTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryTBVC.h; sourceTree = "<group>"; };
+		97C862951A62DC2F004A4791 /* LibraryTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryTBVC.m; sourceTree = "<group>"; };
+		97C862971A62DE53004A4791 /* SearchTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTBVC.h; sourceTree = "<group>"; };
+		97C862981A62DE53004A4791 /* SearchTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTBVC.m; sourceTree = "<group>"; };
 		97C9203E1A5E39D50074FC16 /* Kiwix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C920421A5E39D50074FC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C920431A5E39D50074FC16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,6 +139,29 @@
 		97C9205D1A5E39D50074FC16 /* KiwixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiwixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C920621A5E39D50074FC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C920631A5E39D50074FC16 /* KiwixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KiwixTests.m; sourceTree = "<group>"; };
+		97C920721A5E3B920074FC16 /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
+		97C920731A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
+		97C920741A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
+		97C920751A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorScale.h; sourceTree = "<group>"; };
+		97C920761A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorScale.m; sourceTree = "<group>"; };
+		97C920771A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorScaleAndFade.h; sourceTree = "<group>"; };
+		97C920781A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorScaleAndFade.m; sourceTree = "<group>"; };
+		97C920791A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorSlide.h; sourceTree = "<group>"; };
+		97C9207A1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorSlide.m; sourceTree = "<group>"; };
+		97C9207B1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorSlideAndFade.h; sourceTree = "<group>"; };
+		97C9207C1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorSlideAndFade.m; sourceTree = "<group>"; };
+		97C9207E1A5E3B920074FC16 /* menu-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button.png"; sourceTree = "<group>"; };
+		97C9207F1A5E3B920074FC16 /* menu-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button@2x.png"; sourceTree = "<group>"; };
+		97C920801A5E3B920074FC16 /* SlideNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationController.h; sourceTree = "<group>"; };
+		97C920811A5E3B920074FC16 /* SlideNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationController.m; sourceTree = "<group>"; };
+		97CE13D01A66C68F0009C31B /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		97CE13D11A66C68F0009C31B /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		97CE13D31A66C68F0009C31B /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		97CE13D41A66C68F0009C31B /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		97CE13D71A66C9B40009C31B /* zimFileFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zimFileFinder.h; sourceTree = "<group>"; };
+		97CE13D81A66C9B40009C31B /* zimFileFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zimFileFinder.m; sourceTree = "<group>"; };
+		97EDCC5B1A6788DE00C8710F /* CoreDataTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTask.h; sourceTree = "<group>"; };
+		97EDCC5C1A6788DE00C8710F /* CoreDataTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +169,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				977AF9041A6352C700B43722 /* libxml2.2.dylib in Frameworks */,
+				978FAF7D1A632A34003D7A41 /* libicudata.a in Frameworks */,
+				978FAF7E1A632A34003D7A41 /* libicui18n.a in Frameworks */,
+				978FAF7F1A632A34003D7A41 /* libicuio.a in Frameworks */,
+				978FAF801A632A34003D7A41 /* libicule.a in Frameworks */,
+				978FAF811A632A34003D7A41 /* libiculx.a in Frameworks */,
+				978FAF821A632A34003D7A41 /* libicutest.a in Frameworks */,
+				978FAF831A632A34003D7A41 /* libicutu.a in Frameworks */,
+				978FAF841A632A34003D7A41 /* libicuuc.a in Frameworks */,
+				978FAF851A632A34003D7A41 /* liblzma.a in Frameworks */,
+				978FAF861A632A34003D7A41 /* libzim.a in Frameworks */,
+				978FAF6D1A632A1E003D7A41 /* libc++.1.dylib in Frameworks */,
+				978FAF6E1A632A1E003D7A41 /* libc++.dylib in Frameworks */,
+				978FAF6F1A632A1E003D7A41 /* libc++abi.dylib in Frameworks */,
+				978FAF701A632A1E003D7A41 /* libstdc++.6.0.9.dylib in Frameworks */,
+				978FAF711A632A1E003D7A41 /* libstdc++.6.dylib in Frameworks */,
+				978FAF721A632A1E003D7A41 /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +199,116 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		977AF8FA1A6352C200B43722 /* HPPLE */ = {
+			isa = PBXGroup;
+			children = (
+				977AF8FB1A6352C200B43722 /* TFHpple.h */,
+				977AF8FC1A6352C200B43722 /* TFHpple.m */,
+				977AF8FD1A6352C200B43722 /* TFHppleElement.h */,
+				977AF8FE1A6352C200B43722 /* TFHppleElement.m */,
+				977AF8FF1A6352C200B43722 /* XPathQuery.h */,
+				977AF9001A6352C200B43722 /* XPathQuery.m */,
+			);
+			name = HPPLE;
+			path = Kiwix/HPPLE;
+			sourceTree = "<group>";
+		};
+		977AF9051A6352F300B43722 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				97C8628F1A62D54D004A4791 /* OldVC */,
+				97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */,
+				97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */,
+				97C862941A62DC2F004A4791 /* LibraryTBVC.h */,
+				97C862951A62DC2F004A4791 /* LibraryTBVC.m */,
+				978FAF441A62ED59003D7A41 /* ArticleListTBVC.h */,
+				978FAF451A62ED59003D7A41 /* ArticleListTBVC.m */,
+				977AF90E1A63584200B43722 /* ArticleVC.h */,
+				977AF90F1A63584200B43722 /* ArticleVC.m */,
+				97C862971A62DE53004A4791 /* SearchTBVC.h */,
+				97C862981A62DE53004A4791 /* SearchTBVC.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		977AF9171A63750900B43722 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				977AF9181A6378F900B43722 /* Book+Create.h */,
+				977AF9191A6378F900B43722 /* Book+Create.m */,
+				977AF9271A637C8F00B43722 /* Article+Create.h */,
+				977AF9281A637C8F00B43722 /* Article+Create.m */,
+				97CE13D31A66C68F0009C31B /* Book.h */,
+				97CE13D41A66C68F0009C31B /* Book.m */,
+				97CE13D01A66C68F0009C31B /* Article.h */,
+				97CE13D11A66C68F0009C31B /* Article.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		978FAF871A632A3C003D7A41 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				97C920701A5E3B920074FC16 /* SlideMenu */,
+				977AF8FA1A6352C200B43722 /* HPPLE */,
+				978FAF731A632A34003D7A41 /* libicudata.a */,
+				978FAF741A632A34003D7A41 /* libicui18n.a */,
+				978FAF751A632A34003D7A41 /* libicuio.a */,
+				978FAF761A632A34003D7A41 /* libicule.a */,
+				978FAF771A632A34003D7A41 /* libiculx.a */,
+				978FAF781A632A34003D7A41 /* libicutest.a */,
+				978FAF791A632A34003D7A41 /* libicutu.a */,
+				978FAF7A1A632A34003D7A41 /* libicuuc.a */,
+				978FAF7B1A632A34003D7A41 /* liblzma.a */,
+				978FAF7C1A632A34003D7A41 /* libzim.a */,
+				977AF8F81A63528600B43722 /* libxml2.2.dylib */,
+				978FAF671A632A1E003D7A41 /* libc++.1.dylib */,
+				978FAF681A632A1E003D7A41 /* libc++.dylib */,
+				978FAF691A632A1E003D7A41 /* libc++abi.dylib */,
+				978FAF6A1A632A1E003D7A41 /* libstdc++.6.0.9.dylib */,
+				978FAF6B1A632A1E003D7A41 /* libstdc++.6.dylib */,
+				978FAF6C1A632A1E003D7A41 /* libstdc++.dylib */,
+			);
+			name = Libs;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		978FAF911A632A86003D7A41 /* CPP Code */ = {
+			isa = PBXGroup;
+			children = (
+				978FAF881A632A80003D7A41 /* pathTools.cpp */,
+				978FAF891A632A80003D7A41 /* pathTools.h */,
+				978FAF8A1A632A80003D7A41 /* reader.cpp */,
+				978FAF8B1A632A80003D7A41 /* reader.h */,
+				978FAF8C1A632A80003D7A41 /* stringTools.cpp */,
+				978FAF8D1A632A80003D7A41 /* stringTools.h */,
+			);
+			name = "CPP Code";
+			sourceTree = "<group>";
+		};
+		978FAF951A632BB3003D7A41 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				977AF9171A63750900B43722 /* CoreData */,
+				978FAF911A632A86003D7A41 /* CPP Code */,
+				978FAF921A632BAB003D7A41 /* zimReader.h */,
+				978FAF931A632BAB003D7A41 /* zimReader.mm */,
+				97CE13D61A66C6C40009C31B /* Utilities */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		97C8628F1A62D54D004A4791 /* OldVC */ = {
+			isa = PBXGroup;
+			children = (
+				97C9204B1A5E39D50074FC16 /* MasterViewController.h */,
+				97C9204C1A5E39D50074FC16 /* MasterViewController.m */,
+				97C9204E1A5E39D50074FC16 /* DetailViewController.h */,
+				97C9204F1A5E39D50074FC16 /* DetailViewController.m */,
+			);
+			name = OldVC;
+			sourceTree = "<group>";
+		};
 		97C920351A5E39D50074FC16 = {
 			isa = PBXGroup;
 			children = (
@@ -86,13 +330,12 @@
 		97C920401A5E39D50074FC16 /* Kiwix */ = {
 			isa = PBXGroup;
 			children = (
+				978FAF871A632A3C003D7A41 /* Libs */,
 				97C920451A5E39D50074FC16 /* AppDelegate.h */,
 				97C920461A5E39D50074FC16 /* AppDelegate.m */,
-				97C9204B1A5E39D50074FC16 /* MasterViewController.h */,
-				97C9204C1A5E39D50074FC16 /* MasterViewController.m */,
-				97C9204E1A5E39D50074FC16 /* DetailViewController.h */,
-				97C9204F1A5E39D50074FC16 /* DetailViewController.m */,
+				977AF9051A6352F300B43722 /* ViewControllers */,
 				97C920511A5E39D50074FC16 /* Main.storyboard */,
+				978FAF951A632BB3003D7A41 /* Model */,
 				97C920541A5E39D50074FC16 /* Images.xcassets */,
 				97C920561A5E39D50074FC16 /* LaunchScreen.xib */,
 				97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */,
@@ -125,6 +368,60 @@
 				97C920621A5E39D50074FC16 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97C920701A5E3B920074FC16 /* SlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				97C920711A5E3B920074FC16 /* Animations */,
+				97C9207D1A5E3B920074FC16 /* Assets */,
+				97C920801A5E3B920074FC16 /* SlideNavigationController.h */,
+				97C920811A5E3B920074FC16 /* SlideNavigationController.m */,
+			);
+			name = SlideMenu;
+			path = Kiwix/SlideMenu;
+			sourceTree = "<group>";
+		};
+		97C920711A5E3B920074FC16 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				97C920721A5E3B920074FC16 /* SlideNavigationContorllerAnimator.h */,
+				97C920731A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.h */,
+				97C920741A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m */,
+				97C920751A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.h */,
+				97C920761A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m */,
+				97C920771A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.h */,
+				97C920781A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m */,
+				97C920791A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.h */,
+				97C9207A1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m */,
+				97C9207B1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.h */,
+				97C9207C1A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		97C9207D1A5E3B920074FC16 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				97C9207E1A5E3B920074FC16 /* menu-button.png */,
+				97C9207F1A5E3B920074FC16 /* menu-button@2x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		97CE13D61A66C6C40009C31B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				977AF9091A63539300B43722 /* Parser.h */,
+				977AF90A1A63539300B43722 /* Parser.m */,
+				977AF92A1A63878100B43722 /* FileCoordinator.h */,
+				977AF92B1A63878100B43722 /* FileCoordinator.m */,
+				97EDCC5B1A6788DE00C8710F /* CoreDataTask.h */,
+				97EDCC5C1A6788DE00C8710F /* CoreDataTask.m */,
+				97CE13D71A66C9B40009C31B /* zimFileFinder.h */,
+				97CE13D81A66C9B40009C31B /* zimFileFinder.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,8 +504,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C920871A5E3B920074FC16 /* menu-button.png in Resources */,
 				97C920531A5E39D50074FC16 /* Main.storyboard in Resources */,
 				97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */,
+				97C920881A5E3B920074FC16 /* menu-button@2x.png in Resources */,
 				97C920551A5E39D50074FC16 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,10 +526,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				978FAF901A632A80003D7A41 /* stringTools.cpp in Sources */,
+				97C920841A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
+				97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */,
+				977AF92C1A63878100B43722 /* FileCoordinator.m in Sources */,
+				97C920851A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
+				977AF9031A6352C200B43722 /* XPathQuery.m in Sources */,
+				97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */,
+				97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */,
+				97C920821A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m in Sources */,
+				97C920861A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
+				97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */,
+				978FAF8E1A632A80003D7A41 /* pathTools.cpp in Sources */,
+				97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */,
 				97C920501A5E39D50074FC16 /* DetailViewController.m in Sources */,
+				97CE13D51A66C68F0009C31B /* Book.m in Sources */,
+				977AF91A1A6378F900B43722 /* Book+Create.m in Sources */,
+				978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */,
+				97C920831A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				97C9204D1A5E39D50074FC16 /* MasterViewController.m in Sources */,
+				97CE13D21A66C68F0009C31B /* Article.m in Sources */,
+				978FAF461A62ED59003D7A41 /* ArticleListTBVC.m in Sources */,
 				97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */,
+				977AF9291A637C8F00B43722 /* Article+Create.m in Sources */,
+				977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */,
+				977AF9011A6352C200B43722 /* TFHpple.m in Sources */,
+				97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */,
+				977AF9101A63584200B43722 /* ArticleVC.m in Sources */,
 				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
+				978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */,
+				977AF90B1A63539300B43722 /* Parser.m in Sources */,
 				97C920441A5E39D50074FC16 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,8 +678,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/Chrisli/Developer/Kiwix/Kiwix,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = Kiwix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Kiwix",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -363,8 +699,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/Chrisli/Developer/Kiwix/Kiwix,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = Kiwix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Kiwix",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -422,6 +769,7 @@
 				97C920691A5E39D50074FC16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		97C9206A1A5E39D50074FC16 /* Build configuration list for PBXNativeTarget "KiwixTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +778,7 @@
 				97C9206C1A5E39D50074FC16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
