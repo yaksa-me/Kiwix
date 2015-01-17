@@ -1,15 +1,15 @@
 //
-//  LeftMenuTBVC.h
+//  HistoryTBVC.h
 //  Kiwix
 //
-//  Created by Chris Li on 1/11/15.
+//  Created by Chris Li on 1/15/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "SlideNavigationController.h"
 
-@interface LeftMenuTBVC : UITableViewController 
+@interface HistoryTBVC : UITableViewController <SlideNavigationControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

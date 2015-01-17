@@ -37,10 +37,10 @@
     for (NSString *filePath in self.filePaths) {
         NSURL *fileURL = [NSURL fileURLWithPath:filePath];
         zimReader *reader = [[zimReader alloc] initWithZIMFileURL:fileURL];
-        NSString *idNumber = [reader getID];
+        NSString *idString = [reader getID];
         
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-        request.predicate = [NSPredicate predicateWithFormat:@"idNumber = %@", idNumber];
+        request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];
         
         NSError *error;
         NSArray *matches = [self.managedObjectContext executeFetchRequest:request error:&error];
@@ -53,14 +53,16 @@
         } else {
             //book not exist
             NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-            [infoDictionary setValue:idNumber forKey:@"idNumber"];
+            [infoDictionary setValue:idString forKey:@"idString"];
             [infoDictionary setValue:[reader getTitle] forKey:@"title"];
+            [infoDictionary setValue:[zimFileFinder zimFileNameFromZimFilePath:filePath] forKey:@"fileName"];
+            
             NSArray *articleList = [Parser tableOfContentFromTOCHTMLString:[reader htmlContentOfMainPage]];
             
             [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:self.managedObjectContext];
             
             for (NSString *articleTitle in articleList) {
-                [Article insertArticleWithTitle:articleTitle andBookIDNumber:idNumber inManagedObjectContext:self.managedObjectContext];
+                [Article insertArticleWithTitle:articleTitle andBookIDString:idString inManagedObjectContext:self.managedObjectContext];
             }
         }
     }

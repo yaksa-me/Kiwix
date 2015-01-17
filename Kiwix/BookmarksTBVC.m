@@ -1,38 +1,27 @@
 //
-//  LibraryTBVC.m
+//  BookmarksTBVC.m
 //  Kiwix
 //
-//  Created by Chris Li on 1/11/15.
+//  Created by Chris Li on 1/15/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
-#import "LibraryTBVC.h"
-#import "ArticleListTBVC.h"
-#import "CoreDataTask.h"
-#import "AppDelegate.h"
-#import "Book.h"
+#import "BookmarksTBVC.h"
 
-@interface LibraryTBVC ()
-
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSArray *fileList; // An array of zim files
+@interface BookmarksTBVC ()
 
 @end
 
-@implementation LibraryTBVC
+@implementation BookmarksTBVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,38 +29,29 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Slide Menu Delegation
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return YES;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.fileList count];;
+#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return 0;
 }
 
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Book" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Book"];
-    }
-    Book *book = [self.fileList objectAtIndex:indexPath.row];
-    cell.textLabel.text = book.title;
+    // Configure the cell...
     
     return cell;
 }
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
+*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -107,18 +87,14 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ArticleList"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ArticleListTBVC *destination = [segue destinationViewController];
-        destination.bookIDString = ((Book *)[self.fileList objectAtIndex:indexPath.row]).idString;
-        destination.managedObjectContext = self.managedObjectContext;
-    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
-
+*/
 
 @end

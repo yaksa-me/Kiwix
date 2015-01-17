@@ -11,22 +11,22 @@
 
 @implementation Article (Create)
 
-+ (Article *)articleWithTitle:(NSString *)title andBookIDNumber:(NSString *)idNumber inManagedObjectContext:(NSManagedObjectContext *)context {
++ (Article *)articleWithTitle:(NSString *)title andBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
     Article *article = nil;
     
     article = [NSEntityDescription insertNewObjectForEntityForName:@"Article" inManagedObjectContext:context];
     article.title = title;
-    article.belongsToBook = [Book bookWithBookIDNumber:idNumber inManagedObjectContext:context];
+    article.belongsToBook = [Book bookWithBookIDString:idString inManagedObjectContext:context];
 
     return article;
 }
 
-+ (void)insertArticleWithTitle:(NSString *)title andBookIDNumber:(NSString *)idNumber inManagedObjectContext:(NSManagedObjectContext *)context {
++ (void)insertArticleWithTitle:(NSString *)title andBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
     Article *article = nil;
     
     article = [NSEntityDescription insertNewObjectForEntityForName:@"Article" inManagedObjectContext:context];
     article.title = title;
-    article.belongsToBook = [Book bookWithBookIDNumber:idNumber inManagedObjectContext:context];
+    article.belongsToBook = [Book bookWithBookIDString:idString inManagedObjectContext:context];
 }
 
 @end

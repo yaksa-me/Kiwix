@@ -13,9 +13,9 @@
 + (Book *)bookWithReaderInfo:(NSDictionary *)infoDictionary inManagedObjectContext:(NSManagedObjectContext *)context {
     Book *book = nil;
     
-    NSString *idNumber = [infoDictionary objectForKey:@"idNumber"];
+    NSString *idString = [infoDictionary objectForKey:@"idString"];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"idNumber = %@", idNumber];
+    request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -26,18 +26,19 @@
         book = [matches firstObject];
     } else {
         book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:context];
-        book.idNumber = idNumber;
+        book.idString = idString;
         book.title = [infoDictionary objectForKey:@"title"];
+        book.fileName = [infoDictionary objectForKey:@"fileName"];
     }
     
     return book;
 }
 
-+ (Book *)bookWithBookIDNumber:(NSString *)idNumber inManagedObjectContext:(NSManagedObjectContext *)context {
++ (Book *)bookWithBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
     Book *book = nil;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"idNumber = %@", idNumber];
+    request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SlideNavigationController.h"
 
-@interface SearchTBVC : UITableViewController <SlideNavigationControllerDelegate>
+@interface SearchTBVC : UITableViewController <SlideNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

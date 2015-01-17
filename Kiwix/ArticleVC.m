@@ -7,6 +7,10 @@
 //
 
 #import "ArticleVC.h"
+#import "Preference.h"
+#import "zimFileFinder.h"
+#import "CoreDataTask.h"
+#import "Article.h"
 
 @interface ArticleVC ()
 
@@ -21,8 +25,15 @@
     
     self.title = self.articleTitle;
     
-    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:self.fileURL];
+    Book *book = [CoreDataTask bookWithIDString:self.bookIDString inManagedObjectContext:self.managedObjectContext];
+    Article *article = [CoreDataTask articleWithTitle:self.articleTitle fromBook:book inManagedObjectContext:self.managedObjectContext];
+    article.lastReadDate = [NSDate date];
+    
+    NSString *fileName = book.fileName;
+    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[zimFileFinder zimFileURLInDocumentDirectoryFormFileName:fileName]];
     NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];
+    
+    [Preference setLastReadArticleInfoWithBookIDString:self.bookIDString andArticleTitle:self.articleTitle];
     
     [self.webView loadHTMLString:htmlString baseURL:nil];
 }
@@ -30,6 +41,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Slide Menu Delegation
+- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
+{
+    return YES;
 }
 
 /*

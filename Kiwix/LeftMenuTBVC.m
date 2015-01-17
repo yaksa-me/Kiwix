@@ -7,6 +7,10 @@
 //
 
 #import "LeftMenuTBVC.h"
+#import "ArticleVC.h"
+#import "SearchTBVC.h"
+#import "HistoryTBVC.h"
+#import "Preference.h"
 
 @interface LeftMenuTBVC ()
 
@@ -21,8 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -41,7 +43,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 3;
+    return 5;
 }
 
 
@@ -53,11 +55,15 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"Library";
+        cell.textLabel.text = @"Book Case";
     } else if (indexPath.row == 1) {
         cell.textLabel.text = @"Search";
+    } else if (indexPath.row == 2){
+        cell.textLabel.text = @"Reading";
+    } else if (indexPath.row == 3) {
+        cell.textLabel.text = @"Bookmarks";
     } else {
-        cell.textLabel.text = @"Read";
+        cell.textLabel.text = @"History";
     }
     
     // Configure the cell...
@@ -78,13 +84,25 @@
             
         case 1:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SearchTBVC"];
+            ((SearchTBVC *)viewController).managedObjectContext = self.managedObjectContext;
             break;
             
         case 2:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"FriendsViewController"];
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
+            ((ArticleVC *)viewController).bookIDString = [Preference lastReadArticleIDString];
+            ((ArticleVC *)viewController).articleTitle = [Preference lastReadArticleTitle];
+            NSLog(@"%@, %@", [Preference lastReadArticleIDString], [Preference lastReadArticleTitle]);
             break;
             
         case 3:
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookmarksTBVC"];
+            break;
+            
+        case 4:
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"HistoryTBVC"];
+            ((HistoryTBVC *)viewController).managedObjectContext = self.managedObjectContext;
+            break;
+        case 7:
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
             [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:YES];
             return;
@@ -92,6 +110,8 @@
     }
     
     [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:nil];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [Preference setCurrentMenuIndex:indexPath.row];
 }
 
 

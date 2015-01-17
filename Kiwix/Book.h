@@ -2,7 +2,7 @@
 //  Book.h
 //  Kiwix
 //
-//  Created by Chris Li on 1/14/15.
+//  Created by Chris Li on 1/16/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
@@ -13,8 +13,9 @@
 
 @interface Book : NSManagedObject
 
-@property (nonatomic, retain) NSString * idNumber;
+@property (nonatomic, retain) NSString * idString;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSSet *hasArticles;
 @end
 

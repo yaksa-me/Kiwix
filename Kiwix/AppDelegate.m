@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "SlideNavigationController.h"
+#import "LeftMenuTBVC.h"
 #import "FileCoordinator.h"
+#import "Preference.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +21,14 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    if ([Preference isFirstLunch]) {
+        [Preference initializeUserDefaults];
+    }
+    
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
+    ((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
+    
     //LeftMenuVC *leftMenu = [[LeftMenuVC alloc] init];
     //RightMenuViewController *rightMenu = [[RightMenuViewController alloc] init];
     

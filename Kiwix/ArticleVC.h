@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "zimReader.h"
+#import "SlideNavigationController.h"
 
-@interface ArticleVC : UIViewController
+@interface ArticleVC : UIViewController <SlideNavigationControllerDelegate>
 
 @property(strong, nonatomic)NSString *articleTitle;
-@property(strong, nonatomic)NSURL *fileURL;
+@property(strong, nonatomic)NSString *bookIDString;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

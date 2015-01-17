@@ -11,6 +11,6 @@
 @interface Book (Create)
 
 + (Book *)bookWithReaderInfo:(NSDictionary *)infoDictionary inManagedObjectContext:(NSManagedObjectContext *)context;
-+ (Book *)bookWithBookIDNumber:(NSString *)idNumber inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Book *)bookWithBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

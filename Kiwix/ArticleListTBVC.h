@@ -10,6 +10,7 @@
 
 @interface ArticleListTBVC : UITableViewController
 
-@property (strong, nonatomic)NSString *bookURLAppend;
+@property (strong, nonatomic)NSString *bookIDString;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

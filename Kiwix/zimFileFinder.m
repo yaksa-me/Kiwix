@@ -43,4 +43,23 @@
     }
     return fileListToReturn;
 }
+
++ (NSString *)zimFilePathInDocumentDirectoryFormFileName:(NSString *)fileName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    documentDirPath = [documentDirPath stringByAppendingString:@"/"];
+    NSString *filepath= [[documentDirPath stringByAppendingString:fileName] stringByAppendingString:@".zim"];
+    return filepath;
+}
+
++ (NSURL *)zimFileURLInDocumentDirectoryFormFileName:(NSString *)fileName {
+    NSURL *fileURL = [NSURL fileURLWithPath:[self zimFilePathInDocumentDirectoryFormFileName:fileName]];
+    return fileURL;
+}
+
++ (NSString *)zimFileNameFromZimFilePath:(NSString *)zimFilePath {
+    NSString *fileNameWithExtention = [[zimFilePath componentsSeparatedByString:@"/"] lastObject];
+    NSString *fileName = [[fileNameWithExtention componentsSeparatedByString:@"."] firstObject];
+    return fileName;
+}
 @end

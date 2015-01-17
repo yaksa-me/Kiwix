@@ -10,7 +10,10 @@
 
 @interface zimFileFinder : NSObject
 
-+ (NSArray *)zimFileNamesInDocumentDirectory;
++ (NSArray *)zimFileNamesInDocumentDirectory; //Names doesn't contain .zim extention
 + (NSArray *)zimFilePathsInDocumentDirectory;
++ (NSString *)zimFilePathInDocumentDirectoryFormFileName:(NSString *)fileName;
++ (NSURL *)zimFileURLInDocumentDirectoryFormFileName:(NSString *)fileName;
++ (NSString *)zimFileNameFromZimFilePath:(NSString *)zimFilePath;
 
 @end

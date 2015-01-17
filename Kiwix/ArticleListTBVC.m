@@ -8,14 +8,18 @@
 
 #import "ArticleListTBVC.h"
 #import "ArticleVC.h"
+#import "SlideNavigationController.h"
 #import "zimReader.h"
 #import "Parser.h"
+#import "zimFileFinder.h"
+#import "CoreDataTask.h"
+#import "Book.h"
+#import "Article.h"
 
 @interface ArticleListTBVC ()
 
-@property(strong, nonatomic)NSURL *fileURL;
-@property(strong, nonatomic)zimReader *reader;
-@property(strong, nonatomic)NSArray *articleList;
+@property (strong, nonatomic) Book *book;
+@property (strong, nonatomic) NSArray *articles; //An array of article object
 
 @end
 
@@ -23,20 +27,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSString *fileLocation = [documentDirPath stringByAppendingString:@"/"];
-    fileLocation = [fileLocation stringByAppendingString:self.bookURLAppend];
-    self.fileURL = [NSURL fileURLWithPath:fileLocation];
-    
-    self.reader = [[zimReader alloc] initWithZIMFileURL:self.fileURL];
-    [self.reader searchSuggestionSmart:@"Boe"];
-    
-    self.title = [self.reader getTitle];
-    self.articleList = [Parser tableOfContentFromTOCHTMLString:[self.reader htmlContentOfMainPage]];
-    
-    NSLog(@"%@", [self.reader getID]);
+
+    self.book = [CoreDataTask bookWithIDString:self.bookIDString inManagedObjectContext:self.managedObjectContext];
+    self.articles = [CoreDataTask allArticlesFromBook:self.book inManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,19 +44,32 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.articleList count];
+    return [self.articles count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ArticleTitle" forIndexPath:indexPath];
     
-    cell.textLabel.text = [self.articleList objectAtIndex:indexPath.row];
+    Article *article = [self.articles objectAtIndex:indexPath.row];
+    cell.textLabel.text = article.title;
     
     return cell;
 }
 
-
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    ArticleVC *viewController;
+    viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
+    Article *article = [self.articles objectAtIndex:indexPath.row];
+    viewController.articleTitle = article.title;
+    viewController.bookIDString = self.bookIDString;
+    viewController.managedObjectContext = self.managedObjectContext;
+    [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:^{
+    
+    }];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,7 +106,7 @@
 
 
 #pragma mark - Navigation
-
+/*
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"SelectArticleFromBook"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
@@ -109,6 +115,6 @@
         destination.fileURL = self.fileURL;
     }
 }
-
+*/
 
 @end
