@@ -22,6 +22,7 @@
 + (NSArray *)articlesTitleFilteredBySearchText:(NSString *)searchText inManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)allArticlesFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)articlesReadHistoryInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)articlesBookmarkedInManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (Article *)articleWithTitle:(NSString *)articleTitle fromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
 

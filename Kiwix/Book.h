@@ -15,7 +15,6 @@
 
 @property (nonatomic, retain) NSString * idString;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSSet *hasArticles;
 @end
 

@@ -16,8 +16,14 @@
 + (void)setCurrentMenuIndex:(NSUInteger)index;
 + (NSUInteger)currentMenuIndex;
 
++ (void)setOpeningBookID:(NSString *)idString; //file name is renamed to be the same as file ID
++ (NSString *)openingBookID;
++ (BOOL)hasOpeningBook;
++ (void)noLongerHasAnOpeningBook;
+
+
 + (void)setLastReadArticleInfoWithBookIDString:(NSString *)bookIDString andArticleTitle:(NSString *)articleTitle;
-+ (NSString *)lastReadArticleIDString;
++ (NSString *)lastReadBookIDString;
 + (NSString *)lastReadArticleTitle;
 
 @end

@@ -10,11 +10,15 @@
 #import "Preference.h"
 #import "zimFileFinder.h"
 #import "CoreDataTask.h"
-#import "Article.h"
+#import "Book.h"
+#import "Article+Create.h"
+#import "AppDelegate.h"
 
 @interface ArticleVC ()
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) Article *article;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -23,19 +27,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    
+    if (self.articleTitle) {
+        //If told which article to open, i.e. segued from search.
+        [Preference setLastReadArticleInfoWithBookIDString:[Preference openingBookID] andArticleTitle:self.articleTitle];
+        Book *book = [CoreDataTask bookWithIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
+        self.article = [Article articleWithTitle:self.articleTitle andBook:book inManagedObjectContext:self.managedObjectContext];
+        [self initializeZimReader];
+    } else {
+        if ([Preference hasOpeningBook]) {
+            //If not told which article to open AND there is an opening book, open the last read article
+            self.articleTitle = [Preference lastReadArticleTitle];
+            [self initializeZimReader];
+        } else {
+            //If not told which article to open AND there is not an opening book, display message
+        }
+    }
+    
     self.title = self.articleTitle;
-    
-    Book *book = [CoreDataTask bookWithIDString:self.bookIDString inManagedObjectContext:self.managedObjectContext];
-    Article *article = [CoreDataTask articleWithTitle:self.articleTitle fromBook:book inManagedObjectContext:self.managedObjectContext];
-    article.lastReadDate = [NSDate date];
-    
-    NSString *fileName = book.fileName;
-    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[zimFileFinder zimFileURLInDocumentDirectoryFormFileName:fileName]];
-    NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];
-    
-    [Preference setLastReadArticleInfoWithBookIDString:self.bookIDString andArticleTitle:self.articleTitle];
-    
-    [self.webView loadHTMLString:htmlString baseURL:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,20 +53,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)initializeZimReader {
+    NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
+    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:zimFilePath]];
+    NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];
+    
+    [self.webView loadHTMLString:htmlString baseURL:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.article.lastReadDate = [NSDate date];
+    NSLog(@"%@", [self.article.title description]);
+}
+
+
 #pragma mark - Slide Menu Delegation
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
-    return YES;
+    if ([Preference currentMenuIndex] == 1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

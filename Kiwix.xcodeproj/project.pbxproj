@@ -65,6 +65,8 @@
 		97EDCC681A6832A400C8710F /* HistoryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC671A6832A400C8710F /* HistoryTBVC.m */; };
 		97F1734F1A69FC4300A06E22 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1734E1A69FC4300A06E22 /* Book.m */; };
 		97F173521A69FC4400A06E22 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173511A69FC4400A06E22 /* Article.m */; };
+		97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173571A6AF61C00A06E22 /* SettingTBVC.m */; };
+		97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +175,10 @@
 		97F1734E1A69FC4300A06E22 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		97F173501A69FC4400A06E22 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
 		97F173511A69FC4400A06E22 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		97F173561A6AF61C00A06E22 /* SettingTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTBVC.h; sourceTree = "<group>"; };
+		97F173571A6AF61C00A06E22 /* SettingTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTBVC.m; sourceTree = "<group>"; };
+		97F5EB4C1A6BFDD100B8C306 /* FilePropertiesTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePropertiesTBVC.h; sourceTree = "<group>"; };
+		97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePropertiesTBVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,18 +236,17 @@
 				97C8628F1A62D54D004A4791 /* OldVC */,
 				97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */,
 				97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */,
-				97C862941A62DC2F004A4791 /* LibraryTBVC.h */,
-				97C862951A62DC2F004A4791 /* LibraryTBVC.m */,
+				97C862971A62DE53004A4791 /* SearchTBVC.h */,
+				97C862981A62DE53004A4791 /* SearchTBVC.m */,
 				978FAF441A62ED59003D7A41 /* ArticleListTBVC.h */,
 				978FAF451A62ED59003D7A41 /* ArticleListTBVC.m */,
 				977AF90E1A63584200B43722 /* ArticleVC.h */,
 				977AF90F1A63584200B43722 /* ArticleVC.m */,
-				97C862971A62DE53004A4791 /* SearchTBVC.h */,
-				97C862981A62DE53004A4791 /* SearchTBVC.m */,
 				97EDCC631A68329800C8710F /* BookmarksTBVC.h */,
 				97EDCC641A68329800C8710F /* BookmarksTBVC.m */,
 				97EDCC661A6832A400C8710F /* HistoryTBVC.h */,
 				97EDCC671A6832A400C8710F /* HistoryTBVC.m */,
+				97F5EB4B1A6BFDBB00B8C306 /* Setting */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -442,6 +447,19 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		97F5EB4B1A6BFDBB00B8C306 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				97F173561A6AF61C00A06E22 /* SettingTBVC.h */,
+				97F173571A6AF61C00A06E22 /* SettingTBVC.m */,
+				97C862941A62DC2F004A4791 /* LibraryTBVC.h */,
+				97C862951A62DC2F004A4791 /* LibraryTBVC.m */,
+				97F5EB4C1A6BFDD100B8C306 /* FilePropertiesTBVC.h */,
+				97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -572,12 +590,14 @@
 				977AF9291A637C8F00B43722 /* Article+Create.m in Sources */,
 				977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */,
 				977AF9011A6352C200B43722 /* TFHpple.m in Sources */,
+				97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */,
 				97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */,
 				977AF9101A63584200B43722 /* ArticleVC.m in Sources */,
 				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
 				978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */,
 				977AF90B1A63539300B43722 /* Parser.m in Sources */,
 				97F173521A69FC4400A06E22 /* Article.m in Sources */,
+				97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */,
 				97C920441A5E39D50074FC16 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

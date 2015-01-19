@@ -10,12 +10,13 @@
 #import "ArticleVC.h"
 #import "SearchTBVC.h"
 #import "HistoryTBVC.h"
+#import "BookmarksTBVC.h"
 #import "Preference.h"
 
 @interface LeftMenuTBVC ()
 
 @property BOOL showToolMenu;
-- (IBAction)bookmarkButton:(UIBarButtonItem *)sender;
+
 - (IBAction)toolButton:(UIBarButtonItem *)sender;
 
 @end
@@ -43,7 +44,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 5;
+    return 4;
 }
 
 
@@ -55,12 +56,10 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"Book Case";
-    } else if (indexPath.row == 1) {
         cell.textLabel.text = @"Search";
-    } else if (indexPath.row == 2){
+    } else if (indexPath.row == 1) {
         cell.textLabel.text = @"Reading";
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == 2){
         cell.textLabel.text = @"Bookmarks";
     } else {
         cell.textLabel.text = @"History";
@@ -79,28 +78,27 @@
     switch (indexPath.row)
     {
         case 0:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"LibraryTBVC"];
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SearchTBVC"];
+            ((SearchTBVC *)viewController).managedObjectContext = self.managedObjectContext;
+            [Preference setCurrentMenuIndex:0];
             break;
             
         case 1:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SearchTBVC"];
-            ((SearchTBVC *)viewController).managedObjectContext = self.managedObjectContext;
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
+            [Preference setCurrentMenuIndex:1];
+            NSLog(@"Show last read: %@, %@", [Preference lastReadBookIDString], [Preference lastReadArticleTitle]);
             break;
             
         case 2:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
-            ((ArticleVC *)viewController).bookIDString = [Preference lastReadArticleIDString];
-            ((ArticleVC *)viewController).articleTitle = [Preference lastReadArticleTitle];
-            NSLog(@"%@, %@", [Preference lastReadArticleIDString], [Preference lastReadArticleTitle]);
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookmarksTBVC"];
+            ((BookmarksTBVC *)viewController).managedObjectContext = self.managedObjectContext;
+            [Preference setCurrentMenuIndex:2];
             break;
             
         case 3:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookmarksTBVC"];
-            break;
-            
-        case 4:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"HistoryTBVC"];
             ((HistoryTBVC *)viewController).managedObjectContext = self.managedObjectContext;
+            [Preference setCurrentMenuIndex:3];
             break;
         case 7:
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
@@ -159,13 +157,10 @@
 }
 */
 
-- (IBAction)bookmarkButton:(UIBarButtonItem *)sender {
-    self.showToolMenu = NO;
-    [self.tableView reloadData];
-}
-
 - (IBAction)toolButton:(UIBarButtonItem *)sender {
     self.showToolMenu = YES;
-    [self.tableView reloadData];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UIViewController *viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SettingTBVC"];
+    [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:nil];
 }
 @end

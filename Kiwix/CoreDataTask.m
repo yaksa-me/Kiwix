@@ -93,6 +93,22 @@
     return matches;
 }
 
++ (NSArray *)articlesBookmarkedInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"isBookmarked = YES"];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastReadDate" ascending:NO];
+    request.sortDescriptors = @[sortDescriptor];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        //handling error
+    }
+    
+    return matches;
+}
+
 + (Article *)articleWithTitle:(NSString *)articleTitle fromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
     request.predicate = [NSPredicate predicateWithFormat:@"belongsToBook = %@ AND title = %@", book, articleTitle];

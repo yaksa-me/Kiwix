@@ -3,7 +3,7 @@
     <entity name="Article" representedClassName="Article">
         <attribute name="hasBeenRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="htmlContent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isBookmarked" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isBookmarked" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastPosition" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="lastReadDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,13 +11,12 @@
         <userInfo/>
     </entity>
     <entity name="Book" representedClassName="Book" syncable="YES">
-        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="hasArticles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Article" inverseName="belongsToBook" inverseEntity="Article" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Article" positionX="52" positionY="171" width="128" height="150"/>
-        <element name="Book" positionX="-209" positionY="153" width="128" height="105"/>
+        <element name="Article" positionX="52" positionY="171" width="128" height="148"/>
+        <element name="Book" positionX="-209" positionY="153" width="128" height="90"/>
     </elements>
 </model>

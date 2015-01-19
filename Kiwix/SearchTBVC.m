@@ -7,15 +7,19 @@
 //
 
 #import "SearchTBVC.h"
+#import "ArticleVC.h"
 #import "CoreDataTask.h"
 #import "Article.h"
+#import "Preference.h"
+#import "zimFileFinder.h"
+#import "zimReader.h"
+#import "Book+Create.h"
 
 @interface SearchTBVC ()
-/*
-@property (strong, nonatomic)UISearchBar *searchBar;
-@property (strong, nonatomic)UISearchDisplayController *searchController;*/
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic)NSMutableArray *filteredArticleArray;
+@property (strong, nonatomic) NSMutableArray *filteredArticleArray; // An array of article names
+@property (strong, nonatomic) zimReader *reader;
 
 @end
 
@@ -24,16 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Search";
-    /*
-    self.searchBar = [[UISearchBar alloc] init];
-    self.searchBar.delegate = self;
-    self.navigationItem.titleView = self.searchBar;
-    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    self.searchController.delegate = self;
-    self.searchController.searchResultsDataSource = self;
-    self.searchController.searchResultsDelegate = self;
-    */
-    self.filteredArticleArray = [[NSMutableArray alloc] initWithCapacity:[[CoreDataTask allArticlesInManagedObjectContext:self.managedObjectContext] count]];
+
+    self.filteredArticleArray = [[NSMutableArray alloc] init];
+    
+    if ([Preference hasOpeningBook]) {
+        NSString *openingBookPath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
+        self.reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:openingBookPath]];
+    }
     NSLog(@"Switched to Search.");
 }
 
@@ -42,7 +43,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - SlideMenuDelegation
+#pragma mark - SlideMenu Delegation
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;
@@ -51,89 +52,74 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return 1;
+    if ([Preference hasOpeningBook]) {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            return 1;
+        } else {
+            UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            messageLabel.text = [NSString stringWithFormat:@"%@ is opening, has %lu articles", [self.reader getTitle], (unsigned long)[self.reader getArticleCount]];
+            self.tableView.backgroundView = messageLabel;
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            return 0;
+        }
     } else {
+        //Display message when no book is opening
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        messageLabel.text = @"Open a zim file please...";
+        messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
         return 0;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        NSLog(@"%lu", (unsigned long)[self.filteredArticleArray count]);
-        return [self.filteredArticleArray count];
+    if ([Preference hasOpeningBook]) {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            return [self.filteredArticleArray count];
+        } else {
+            return 0;
+        }
     } else {
+        //Display message when no book is opening
         return 0;
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SearchArticleCell"];
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"searchArticle"];
-        Article *article = [self.filteredArticleArray objectAtIndex:indexPath.row];
-        cell.textLabel.text = article.title;
-    } else {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"searchArticle" forIndexPath:indexPath];
-        //cell.textLabel.text = @"test";
+        cell.textLabel.text = [self.filteredArticleArray objectAtIndex:indexPath.row];
     }
     
     return cell;
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"SelectArticleFromSearch"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        ArticleVC *destination = [segue destinationViewController];
+        destination.articleTitle = [self.filteredArticleArray objectAtIndex:indexPath.row];
+    }
 }
-*/
 
-#pragma mark - search filter
+#pragma mark - Search Filter
 -(void)filterContentForSearchText:(NSString*)searchText{
     [self.filteredArticleArray removeAllObjects];
-    NSArray *filteredArticles = [CoreDataTask articlesTitleFilteredBySearchText:searchText inManagedObjectContext:self.managedObjectContext];
-    self.filteredArticleArray = [NSMutableArray arrayWithArray:filteredArticles];
-    NSLog(@"Search text:%@, %lu items found in Database", searchText, (unsigned long)[self.filteredArticleArray count]);
+    if ([Preference hasOpeningBook]) {
+        NSArray *filteredArticles = [self.reader searchSuggestionsSmart:searchText];
+        self.filteredArticleArray = [NSMutableArray arrayWithArray:filteredArticles];
+        NSLog(@"Search text:%@, %lu items found in zimfile", searchText, (unsigned long)[self.filteredArticleArray count]);
+    }
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -146,9 +132,4 @@
 {
     return YES;
 }
-/*
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    //[self.searchController setActive:YES animated:YES];
-    [self.searchDisplayController setActive:YES animated:YES];
-}*/
 @end

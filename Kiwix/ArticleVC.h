@@ -13,7 +13,5 @@
 @interface ArticleVC : UIViewController <SlideNavigationControllerDelegate>
 
 @property(strong, nonatomic)NSString *articleTitle;
-@property(strong, nonatomic)NSString *bookIDString;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -9,13 +9,17 @@
 #import "LibraryTBVC.h"
 #import "ArticleListTBVC.h"
 #import "CoreDataTask.h"
+#import "FileCoordinator.h"
+#import "zimFileFinder.h"
+#import "Preference.h"
 #import "AppDelegate.h"
 #import "Book.h"
 
 @interface LibraryTBVC ()
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSArray *fileList; // An array of zim files
+@property (strong, nonatomic) NSArray *fileList; // An array of Book Obj
+@property (strong, nonatomic) NSString *openingBookID;
 
 @end
 
@@ -23,16 +27,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
+    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
+    [self setFileListAndOpeningBookID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +45,7 @@
 #pragma mark - Slide Menu Delegation
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark - Table view data source
@@ -53,45 +55,78 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.fileList count];;
+    if ([[zimFileFinder zimFileIDsInAppSupportDirectory] count]) {
+        return [self.fileList count];
+    } else {
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        messageLabel.text = @"no books...";
+        messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Book" forIndexPath:indexPath];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Book"];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCell" forIndexPath:indexPath];
+
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     cell.textLabel.text = book.title;
+    
+    if ([book.idString isEqualToString:self.openingBookID]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
 
+- (void)setFileListAndOpeningBookID {
+    self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
+    
+    if ([Preference hasOpeningBook]) {
+        self.openingBookID = [Preference openingBookID];
+    } else {
+        self.openingBookID = nil;
+    }
+}
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
+    Book *book = [self.fileList objectAtIndex:indexPath.row];
+    self.openingBookID = book.idString;
+    [Preference setOpeningBookID:self.openingBookID];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView reloadData];
 }
 
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        Book *book = [self.fileList objectAtIndex:indexPath.row];
+        [FileCoordinator deleteBookWithID:book.idString inManagedObjectContext:self.managedObjectContext];
+        
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+            [Preference noLongerHasAnOpeningBook];
+        }
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -107,7 +142,7 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -119,6 +154,6 @@
         destination.managedObjectContext = self.managedObjectContext;
     }
 }
-
+*/
 
 @end

@@ -68,4 +68,88 @@
     }
 }
 
+#pragma marks - Paths
++ (NSString *)docDirPath {
+    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirPath = ([docPaths count] > 0) ? [docPaths objectAtIndex:0] : nil;
+    return documentDirPath;
+}
+
++ (NSString *)appSupportDirPath {
+    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
+    return appSupportDirPath;
+}
++ (void)moveZimFileFromDocumentDirectoryToApplicationSupport {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    //Create App Support Dir if not exist
+    if (![fileManager fileExistsAtPath:[self appSupportDirPath]]) {
+        [fileManager createDirectoryAtPath:[self appSupportDirPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    //Helper
+    NSArray *allFileListInDocDir = [fileManager contentsOfDirectoryAtPath:[self docDirPath] error:nil];
+    NSLog(@"%@", [allFileListInDocDir description]);
+    
+    //Move all zim file in Doc dir to App Support Dir
+    for (NSString *fileName in allFileListInDocDir) {
+        NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
+        if ([extention isEqualToString:@"zim"]) {
+            NSString *filePathInDocDir = [[[self docDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInDocDir]];
+            NSString *idString = [reader getID];
+            NSString *filePathInAppSupportDir = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+            NSError *error;
+            [fileManager moveItemAtPath:filePathInDocDir toPath:filePathInAppSupportDir error:&error];
+        }
+    }
+    
+    //Helper
+    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:[self appSupportDirPath] error:nil];
+    NSLog(@"%@", [allFileListInAppSupportDir description]);
+}
+
++ (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *allFileListInDocDir = [fileManager contentsOfDirectoryAtPath:appSupportDirPath error:nil];
+    
+    for (NSString *fileName in allFileListInDocDir) {
+        NSString *filePathInAppSupportDir = [[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileName];
+        
+        zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInAppSupportDir]];
+        NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
+        [infoDictionary setValue:[reader getID] forKey:@"idString"];
+        [infoDictionary setValue:[reader getTitle] forKey:@"title"];
+        
+        [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
+    }
+}
+
++ (void)deleteBookWithID:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
+    //Delete in Coredata database
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error || ([matches count] > 1)) {
+        
+    } else if ([matches count]) {
+        //One book exist
+        [context deleteObject:[matches firstObject]];
+    } else {
+        //book not exist
+    }
+    
+    //Delete on disk
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePathInAppSupportDir = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+    [fileManager removeItemAtPath:filePathInAppSupportDir error:nil];
+}
+
+
 @end

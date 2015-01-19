@@ -21,7 +21,7 @@
 - (NSString *)mainPageURL;//Will return nil if the zim file have no main page, not sure if this will ever happen(Does every zim file have a main page?)
 - (NSString *)getRandomPageUrl;
 
-- (NSString *)searchSuggestionSmart:(NSString *)searchTerm;
+- (NSArray *)searchSuggestionsSmart:(NSString *)searchTerm;
 
 - (NSString *)getTitle;
 - (NSString *)getDate;

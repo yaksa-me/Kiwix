@@ -9,6 +9,9 @@
 #import "Preference.h"
 #import "zimFileFinder.h"
 
+#define OPENINING_BOOK @"Opening_Book"
+#define OPENINING_BOOK_ID @"Opening_Book_ID"
+
 @implementation Preference
 
 + (BOOL)isFirstLunch {
@@ -38,6 +41,36 @@
     return index;
 }
 
+#pragma mark - Book Opening Info
++ (void)setOpeningBookID:(NSString *)idString {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *openingBookInfo = [[NSMutableDictionary alloc] init];
+    [openingBookInfo setObject:idString forKey:OPENINING_BOOK_ID];
+    [defaults setObject:openingBookInfo forKey:OPENINING_BOOK];
+    [defaults synchronize];
+}
++ (NSString *)openingBookID {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *openingBookInfo = [defaults objectForKey:OPENINING_BOOK];
+    NSString *openingBookID = [openingBookInfo objectForKey:OPENINING_BOOK_ID];
+    return openingBookID;
+}
+
++ (BOOL)hasOpeningBook {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:OPENINING_BOOK]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
++ (void)noLongerHasAnOpeningBook {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:OPENINING_BOOK];
+    [defaults synchronize];
+}
+
 + (void)setLastReadArticleInfoWithBookIDString:(NSString *)bookIDString andArticleTitle:(NSString *)articleTitle {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *lastReadArticleInfo = [[NSMutableDictionary alloc] init];
@@ -47,7 +80,7 @@
     [defaults synchronize];
 }
 
-+ (NSString *)lastReadArticleIDString {
++ (NSString *)lastReadBookIDString {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *lastReadArticleInfo = [defaults objectForKey:@"lastReadArticleInfo"];
     NSString *bookIDString = [lastReadArticleInfo objectForKey:@"bookIDString"];

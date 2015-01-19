@@ -14,8 +14,6 @@
 
 @interface AppDelegate ()
 
-@property(strong,nonatomic)FileCoordinator *fileCoordinator;
-
 @end
 
 @implementation AppDelegate
@@ -28,6 +26,7 @@
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
     ((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
+    [Preference setCurrentMenuIndex:0];
     
     //LeftMenuVC *leftMenu = [[LeftMenuVC alloc] init];
     //RightMenuViewController *rightMenu = [[RightMenuViewController alloc] init];
@@ -42,8 +41,8 @@
     controller.managedObjectContext = self.managedObjectContext;
     */
     
-    self.fileCoordinator = [[FileCoordinator alloc] initWithManagedObjectContext:self.managedObjectContext];
-    [self.fileCoordinator processAllBooks];
+    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
+    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
     
     return YES;
 }
@@ -60,11 +59,12 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
+    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [self.fileCoordinator processAllBooks];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

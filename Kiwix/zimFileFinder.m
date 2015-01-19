@@ -62,4 +62,28 @@
     NSString *fileName = [[fileNameWithExtention componentsSeparatedByString:@"."] firstObject];
     return fileName;
 }
+
+#pragma mark -App Support
++ (NSArray *)zimFileIDsInAppSupportDirectory {
+    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
+    NSArray *allFileNamesList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:appSupportDirPath error:nil];
+    NSMutableArray *idStringList = [[NSMutableArray alloc] init];
+    
+    for (NSString *fileName in allFileNamesList) {
+        NSString *extention = [[fileName componentsSeparatedByString:@"."] lastObject];
+        if ([extention isEqualToString:@"zim"]) {
+            NSString *idString = [[fileName componentsSeparatedByString:@"."] firstObject];
+            [idStringList addObject:idString];
+        }
+    }
+    return idStringList;
+}
+
++ (NSString *)zimFilePathInAppSupportDirectoryFormFileID:(NSString *)fileID {
+    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
+    NSString *filePathInAppSupportDir = [[[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileID] stringByAppendingString:@".zim"];
+    return filePathInAppSupportDir;
+}
 @end

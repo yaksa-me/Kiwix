@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideNavigationController.h"
 
-@interface BookmarksTBVC : UITableViewController
+@interface BookmarksTBVC : UITableViewController <SlideNavigationControllerDelegate>
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

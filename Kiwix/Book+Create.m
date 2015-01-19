@@ -28,7 +28,6 @@
         book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:context];
         book.idString = idString;
         book.title = [infoDictionary objectForKey:@"title"];
-        book.fileName = [infoDictionary objectForKey:@"fileName"];
     }
     
     return book;

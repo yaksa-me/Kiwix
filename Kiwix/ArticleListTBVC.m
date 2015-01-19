@@ -30,6 +30,8 @@
 
     self.book = [CoreDataTask bookWithIDString:self.bookIDString inManagedObjectContext:self.managedObjectContext];
     self.articles = [CoreDataTask allArticlesFromBook:self.book inManagedObjectContext:self.managedObjectContext];
+    
+    self.title = self.book.title;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,8 +66,8 @@
     viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
     Article *article = [self.articles objectAtIndex:indexPath.row];
     viewController.articleTitle = article.title;
-    viewController.bookIDString = self.bookIDString;
-    viewController.managedObjectContext = self.managedObjectContext;
+    //viewController.bookIDString = self.bookIDString;
+    //viewController.managedObjectContext = self.managedObjectContext;
     [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:^{
     
     }];

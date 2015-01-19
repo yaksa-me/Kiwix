@@ -9,6 +9,8 @@
 #import "zimReader.h"
 #include "reader.h"
 
+#define SEARCH_SUGGESTIONS_COUNT 100
+
 @interface zimReader () {
     kiwix::Reader *_reader;
 }
@@ -25,6 +27,7 @@
     return self;
 }
 
+#pragma mark - htmlContents
 - (NSString *)htmlContentOfPageWithPageURL:(NSString *)pageURL {
     NSString *htmlContent = nil;
     
@@ -47,6 +50,7 @@
     return [self htmlContentOfPageWithPageURL:self.mainPageURL];
 }
 
+#pragma mark - getURLs
 - (NSString *)pageURLFromTitle:(NSString *)title {
     NSString *pageURL = nil;
     
@@ -73,16 +77,24 @@
     return [NSString stringWithUTF8String:url.c_str()];
 }
 
-- (NSString *)searchSuggestionSmart:(NSString *)searchTerm {
-    string str = [searchTerm cStringUsingEncoding:NSUTF8StringEncoding];
-    int count;
-    if(_reader->searchSuggestionsSmart(str, count)) {
-        NSLog(@"%s, %d", str.c_str(), count);
-        return [NSString stringWithUTF8String:str.c_str()];
+#pragma mark - search
+- (NSArray *)searchSuggestionsSmart:(NSString *)searchTerm {
+    string searchTermC = [searchTerm cStringUsingEncoding:NSUTF8StringEncoding];
+    int count = SEARCH_SUGGESTIONS_COUNT;
+    NSMutableArray *searchSuggestionsArray = [[NSMutableArray alloc] init];
+    
+    if(_reader->searchSuggestionsSmart(searchTermC, count)) {
+        //NSLog(@"%s, %d", searchTermC.c_str(), count);
+        string titleC;
+        while (_reader->getNextSuggestion(titleC)) {
+            NSString *title = [NSString stringWithUTF8String:titleC.c_str()];
+            [searchSuggestionsArray addObject:title];
+        }
     }
-    return nil;
+    return searchSuggestionsArray;
 }
 
+#pragma mark - getZimFileProperties
 - (NSString *)getTitle {
     NSString *title = nil;
     
@@ -113,6 +125,7 @@
     return id;
 }
 
+#pragma mark - getCount
 - (NSUInteger)getArticleCount {
     return _reader->getArticleCount();
 }
@@ -125,6 +138,7 @@
     return _reader->getGlobalCount();
 }
 
+#pragma mark -
 - (void)dealloc {
     _reader->~Reader();
     //delete _reader;

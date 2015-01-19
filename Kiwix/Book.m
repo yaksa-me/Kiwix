@@ -14,7 +14,6 @@
 
 @dynamic idString;
 @dynamic title;
-@dynamic fileName;
 @dynamic hasArticles;
 
 @end
