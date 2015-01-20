@@ -11,6 +11,8 @@
 #import "Book.h"
 #import "CoreDataTask.h"
 #import "Preference.h"
+#import "Parser.h"
+#import "ArticleVC.h"
 
 @interface HistoryTBVC ()
 
@@ -27,6 +29,12 @@
     
     self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInManagedObjectContext:self.managedObjectContext];
     
+    NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTableView) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)updateTableView {
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,8 +58,20 @@
     
     Article *article = [self.articleReadHistoryArray objectAtIndex:indexPath.row];
     cell.textLabel.text = article.title;
+    cell.detailTextLabel.text = [Parser timeDifferenceStringBetweenNowAnd:article.lastReadDate];
     
     return cell;
+}
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"SelectArticleFromHistory"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        ArticleVC *destination = [segue destinationViewController];
+        Article *article = [self.articleReadHistoryArray objectAtIndex:indexPath.row];
+        destination.bookID = article.belongsToBook.idString;
+        destination.articleTitle = article.title;
+    }
 }
 
 #pragma mark - Slide Menu Delegation

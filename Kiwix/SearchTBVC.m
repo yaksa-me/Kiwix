@@ -106,7 +106,7 @@
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"SelectArticleFromSearch"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
         ArticleVC *destination = [segue destinationViewController];
         destination.articleTitle = [self.filteredArticleArray objectAtIndex:indexPath.row];
     }

@@ -30,6 +30,7 @@
 #pragma mark - htmlContents
 - (NSString *)htmlContentOfPageWithPageURL:(NSString *)pageURL {
     NSString *htmlContent = nil;
+    //NSLog(@"URL passed to reader: %@",pageURL);
     
     string pageURLC = [pageURL cStringUsingEncoding:NSUTF8StringEncoding];
     string content;

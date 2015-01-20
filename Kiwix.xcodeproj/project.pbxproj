@@ -67,6 +67,8 @@
 		97F173521A69FC4400A06E22 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173511A69FC4400A06E22 /* Article.m */; };
 		97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173571A6AF61C00A06E22 /* SettingTBVC.m */; };
 		97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */; };
+		97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */; };
+		97F5EB541A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB531A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +181,10 @@
 		97F173571A6AF61C00A06E22 /* SettingTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTBVC.m; sourceTree = "<group>"; };
 		97F5EB4C1A6BFDD100B8C306 /* FilePropertiesTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePropertiesTBVC.h; sourceTree = "<group>"; };
 		97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePropertiesTBVC.m; sourceTree = "<group>"; };
+		97F5EB4F1A6D34E100B8C306 /* KiwixURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KiwixURLProtocol.h; sourceTree = "<group>"; };
+		97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KiwixURLProtocol.m; sourceTree = "<group>"; };
+		97F5EB521A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+KiwixURLProtocol.h"; sourceTree = "<group>"; };
+		97F5EB531A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+KiwixURLProtocol.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,6 +449,10 @@
 				97CE13D81A66C9B40009C31B /* zimFileFinder.m */,
 				97EDCC601A68087B00C8710F /* Preference.h */,
 				97EDCC611A68087B00C8710F /* Preference.m */,
+				97F5EB4F1A6D34E100B8C306 /* KiwixURLProtocol.h */,
+				97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */,
+				97F5EB521A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.h */,
+				97F5EB531A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -566,6 +576,7 @@
 				978FAF901A632A80003D7A41 /* stringTools.cpp in Sources */,
 				97C920841A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
 				97EDCC651A68329800C8710F /* BookmarksTBVC.m in Sources */,
+				97F5EB541A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m in Sources */,
 				97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */,
 				97F1734F1A69FC4300A06E22 /* Book.m in Sources */,
 				977AF92C1A63878100B43722 /* FileCoordinator.m in Sources */,
@@ -575,6 +586,7 @@
 				97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */,
 				97EDCC681A6832A400C8710F /* HistoryTBVC.m in Sources */,
 				97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */,
+				97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */,
 				97C920821A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m in Sources */,
 				97C920861A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */,

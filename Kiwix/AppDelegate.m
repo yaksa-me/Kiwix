@@ -11,6 +11,7 @@
 #import "LeftMenuTBVC.h"
 #import "FileCoordinator.h"
 #import "Preference.h"
+#import "KiwixURLProtocol.h"
 
 @interface AppDelegate ()
 
@@ -40,6 +41,8 @@
     MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     */
+    
+    [NSURLProtocol registerClass:[KiwixURLProtocol class]];
     
     [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
     [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];

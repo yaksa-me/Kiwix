@@ -12,22 +12,30 @@
 #import "CoreDataTask.h"
 #import "Book.h"
 #import "Article+Create.h"
+#import "NSURL+KiwixURLProtocol.h"
 #import "AppDelegate.h"
 
 @interface ArticleVC ()
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+- (IBAction)changeFontSize:(UIBarButtonItem *)sender;
+- (IBAction)test:(UIBarButtonItem *)sender;
 @property (strong, nonatomic) Article *article;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation ArticleVC
-
+NSUInteger textFontSize = 100;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    
+    //BookID setter should before the next if section
+    if (!self.bookID) {
+        self.bookID = [Preference openingBookID];
+    }
     
     if (self.articleTitle) {
         //If told which article to open, i.e. segued from search.
@@ -46,6 +54,10 @@
     }
     
     self.title = self.articleTitle;
+    //[self.webView setScalesPageToFit:YES];
+    //self.webView.delegate = self;
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,17 +66,25 @@
 }
 
 - (void)initializeZimReader {
-    NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
+    NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:self.bookID];
     zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:zimFilePath]];
     NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];
     
-    [self.webView loadHTMLString:htmlString baseURL:nil];
+    /*
+    [self.webView loadHTMLString:htmlString baseURL:nil];//@"Kiwix://"
+    
+    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.bookID articleTitle:self.articleTitle];
+    NSLog(@"%@", url);
+    NSLog(@"%@", [reader pageURLFromTitle:self.articleTitle]);*/
+    
+    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.bookID articleTitle:self.articleTitle];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.article.lastReadDate = [NSDate date];
-    NSLog(@"%@", [self.article.title description]);
+    NSLog(@"Reading Article: %@", [self.article.title description]);
 }
 
 
@@ -78,4 +98,31 @@
     }
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    /*
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.style.width = '500px';"];
+    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
+    [webView.scrollView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height*self.webView.scrollView.zoomScale, 0, 165, 0)];
+     */
+}
+
+- (IBAction)changeFontSize:(UIBarButtonItem *)sender {
+    switch ([sender tag]) {
+        case 1: // A-
+            textFontSize = (textFontSize > 50) ? textFontSize -5 : textFontSize;
+            break;
+        case 2: // A+
+            textFontSize = (textFontSize < 160) ? textFontSize +5 : textFontSize;
+            break;
+    }
+    
+    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%d%%'", textFontSize];
+    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+}
+
+- (IBAction)test:(UIBarButtonItem *)sender {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"var myNode = document.getElementsByTagName('table')[0];"
+     "myNode.parentNode.removeChild(myNode);"];
+}
 @end

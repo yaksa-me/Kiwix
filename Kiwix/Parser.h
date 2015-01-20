@@ -12,4 +12,6 @@
 
 + (NSArray *)tableOfContentFromTOCHTMLString:(NSString *)htmlString;
 
++ (NSString *)timeDifferenceStringBetweenNowAnd:(NSDate *)date;
+
 @end
