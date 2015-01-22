@@ -13,9 +13,11 @@
 
 - (instancetype)initWithZIMFileURL:(NSURL *)url;
 
-- (NSString *)htmlContentOfPageWithPageURL:(NSString *)pageURL;//Will return nil if there is no page with that specific URL
+- (NSString *)htmlContentOfPageWithPageURLString:(NSString *)pageURLString;//Will return nil if there is no page with that specific URL
 - (NSString *)htmlContentOfPageWithPagetitle:(NSString *)title;
 - (NSString *)htmlContentOfMainPage;
+- (NSData *)dataWithContentURLString:(NSString *)pageURLString;
+- (NSData *)dataWithArticleTitle:(NSString *)title;
 
 - (NSString *)pageURLFromTitle:(NSString *)title;//Will return nil if there is no such page with the specific title
 - (NSString *)mainPageURL;//Will return nil if the zim file have no main page, not sure if this will ever happen(Does every zim file have a main page?)
@@ -32,5 +34,7 @@
 - (NSUInteger)getGlobalCount;
 
 - (void)dealloc;
+- (void)exceptionHandling;
+
 
 @end

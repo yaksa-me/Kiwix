@@ -31,9 +31,10 @@
 }
 
 // Decode the article name from the `path` property
-- (NSString *)articleURL {
-    NSString *articleTitle = [self.path stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
-    return articleTitle;
+- (NSString *)contentURLString {
+    //NSLog(@"contentURLString is: %@", self.path);
+    NSString *contentURLString = [self.path stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+    return contentURLString;
 }
 
 // Infer the MIME type of the resource from itshttp://stackoverflow.com/a/9802467/452816 path extension
@@ -42,7 +43,7 @@
 {
     CFStringRef type = NULL;
     {
-        CFStringRef pathExtension = (__bridge_retained CFStringRef)[[self articleURL] pathExtension];
+        CFStringRef pathExtension = (__bridge_retained CFStringRef)[[self contentURLString] pathExtension];
         
         type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, NULL);
         

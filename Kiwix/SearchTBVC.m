@@ -14,6 +14,7 @@
 #import "zimFileFinder.h"
 #import "zimReader.h"
 #import "Book+Create.h"
+#import "FileInfoView.h"
 
 @interface SearchTBVC ()
 
@@ -35,6 +36,7 @@
         NSString *openingBookPath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
         self.reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:openingBookPath]];
     }
+    self.navigationController.toolbarHidden = YES;
     NSLog(@"Switched to Search.");
 }
 
@@ -56,9 +58,10 @@
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             return 1;
         } else {
-            UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-            messageLabel.text = [NSString stringWithFormat:@"%@ is opening, has %lu articles", [self.reader getTitle], (unsigned long)[self.reader getArticleCount]];
-            self.tableView.backgroundView = messageLabel;
+            FileInfoView *messageView = [[[NSBundle mainBundle] loadNibNamed:@"FileInfoView" owner:self options:nil] firstObject];
+            messageView.bookTitleLabel.text = [self.reader getTitle];
+            messageView.numberOfArticleLabel.text = [NSString stringWithFormat:@"%lu articles", (unsigned long)[self.reader getArticleCount]];
+            self.tableView.backgroundView = messageView;
             self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             return 0;
         }

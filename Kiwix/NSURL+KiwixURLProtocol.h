@@ -12,7 +12,7 @@
 
 + (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleTitle:(NSString *)articleTitle;
 - (NSURL *)zimFileURL;
-- (NSString *)articleURL;
+- (NSString *)contentURLString;
 - (NSString *)expectedMIMEType;
 
 @end

@@ -66,16 +66,10 @@ NSUInteger textFontSize = 100;
 }
 
 - (void)initializeZimReader {
+    /*
     NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:self.bookID];
     zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:zimFilePath]];
-    NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];
-    
-    /*
-    [self.webView loadHTMLString:htmlString baseURL:nil];//@"Kiwix://"
-    
-    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.bookID articleTitle:self.articleTitle];
-    NSLog(@"%@", url);
-    NSLog(@"%@", [reader pageURLFromTitle:self.articleTitle]);*/
+    NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];*/
     
     NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.bookID articleTitle:self.articleTitle];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
@@ -84,7 +78,7 @@ NSUInteger textFontSize = 100;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.article.lastReadDate = [NSDate date];
-    NSLog(@"Reading Article: %@", [self.article.title description]);
+    //NSLog(@"Reading Article: %@", [self.article.title description]);
 }
 
 
@@ -104,7 +98,15 @@ NSUInteger textFontSize = 100;
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.style.width = '500px';"];
     [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
     [webView.scrollView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height*self.webView.scrollView.zoomScale, 0, 165, 0)];
-     */
+     
+    CGSize contentSize = webView.scrollView.contentSize;
+    CGSize viewSize = self.view.bounds.size;
+    
+    float sfactor = viewSize.width / contentSize.width;
+    
+    webView.scrollView.minimumZoomScale = sfactor;
+    webView.scrollView.maximumZoomScale = sfactor;
+    webView.scrollView.zoomScale = sfactor;*/
 }
 
 - (IBAction)changeFontSize:(UIBarButtonItem *)sender {

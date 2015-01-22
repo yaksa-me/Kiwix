@@ -37,6 +37,9 @@
 		978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF8A1A632A80003D7A41 /* reader.cpp */; };
 		978FAF901A632A80003D7A41 /* stringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF8C1A632A80003D7A41 /* stringTools.cpp */; };
 		978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 978FAF931A632BAB003D7A41 /* zimReader.mm */; };
+		97A1694A1A6FF3F000D48F68 /* FileInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A169491A6FF3F000D48F68 /* FileInfoView.m */; };
+		97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A1694B1A6FF50D00D48F68 /* ZimFileIcon.png */; };
+		97A1694E1A705A6C00D48F68 /* FileInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A1694D1A705A6C00D48F68 /* FileInfoView.xib */; };
 		97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */; };
 		97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862951A62DC2F004A4791 /* LibraryTBVC.m */; };
 		97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862981A62DE53004A4791 /* SearchTBVC.m */; };
@@ -69,6 +72,7 @@
 		97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */; };
 		97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */; };
 		97F5EB541A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB531A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m */; };
+		97F5EB601A6E9C7A00B8C306 /* left-tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 97F5EB5F1A6E9C7A00B8C306 /* left-tool.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +129,10 @@
 		978FAF8D1A632A80003D7A41 /* stringTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringTools.h; sourceTree = "<group>"; };
 		978FAF921A632BAB003D7A41 /* zimReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zimReader.h; sourceTree = "<group>"; };
 		978FAF931A632BAB003D7A41 /* zimReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zimReader.mm; sourceTree = "<group>"; };
+		97A169481A6FF3F000D48F68 /* FileInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInfoView.h; sourceTree = "<group>"; };
+		97A169491A6FF3F000D48F68 /* FileInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInfoView.m; sourceTree = "<group>"; };
+		97A1694B1A6FF50D00D48F68 /* ZimFileIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZimFileIcon.png; sourceTree = "<group>"; };
+		97A1694D1A705A6C00D48F68 /* FileInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileInfoView.xib; sourceTree = "<group>"; };
 		97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuTBVC.h; sourceTree = "<group>"; };
 		97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuTBVC.m; sourceTree = "<group>"; };
 		97C862941A62DC2F004A4791 /* LibraryTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryTBVC.h; sourceTree = "<group>"; };
@@ -185,6 +193,7 @@
 		97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KiwixURLProtocol.m; sourceTree = "<group>"; };
 		97F5EB521A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+KiwixURLProtocol.h"; sourceTree = "<group>"; };
 		97F5EB531A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+KiwixURLProtocol.m"; sourceTree = "<group>"; };
+		97F5EB5F1A6E9C7A00B8C306 /* left-tool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-tool.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +333,16 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		97A169451A6FF3A900D48F68 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				97A169481A6FF3F000D48F68 /* FileInfoView.h */,
+				97A169491A6FF3F000D48F68 /* FileInfoView.m */,
+				97A1694D1A705A6C00D48F68 /* FileInfoView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		97C8628F1A62D54D004A4791 /* OldVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,12 +379,14 @@
 				97C920451A5E39D50074FC16 /* AppDelegate.h */,
 				97C920461A5E39D50074FC16 /* AppDelegate.m */,
 				977AF9051A6352F300B43722 /* ViewControllers */,
+				97A169451A6FF3A900D48F68 /* View */,
 				97C920511A5E39D50074FC16 /* Main.storyboard */,
 				978FAF951A632BB3003D7A41 /* Model */,
 				97C920541A5E39D50074FC16 /* Images.xcassets */,
 				97C920561A5E39D50074FC16 /* LaunchScreen.xib */,
 				97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */,
 				97EDCC5E1A6807D000C8710F /* Preference.plist */,
+				97F5EB551A6E18F300B8C306 /* Icons */,
 				97C920411A5E39D50074FC16 /* Supporting Files */,
 			);
 			path = Kiwix;
@@ -470,6 +491,15 @@
 			name = Setting;
 			sourceTree = "<group>";
 		};
+		97F5EB551A6E18F300B8C306 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				97F5EB5F1A6E9C7A00B8C306 /* left-tool.png */,
+				97A1694B1A6FF50D00D48F68 /* ZimFileIcon.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -551,10 +581,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C920871A5E3B920074FC16 /* menu-button.png in Resources */,
+				97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */,
 				97C920531A5E39D50074FC16 /* Main.storyboard in Resources */,
 				97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */,
 				97EDCC5F1A6807D000C8710F /* Preference.plist in Resources */,
+				97A1694E1A705A6C00D48F68 /* FileInfoView.xib in Resources */,
 				97C920881A5E3B920074FC16 /* menu-button@2x.png in Resources */,
+				97F5EB601A6E9C7A00B8C306 /* left-tool.png in Resources */,
 				97C920551A5E39D50074FC16 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,6 +635,7 @@
 				977AF9291A637C8F00B43722 /* Article+Create.m in Sources */,
 				977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */,
 				977AF9011A6352C200B43722 /* TFHpple.m in Sources */,
+				97A1694A1A6FF3F000D48F68 /* FileInfoView.m in Sources */,
 				97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */,
 				97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */,
 				977AF9101A63584200B43722 /* ArticleVC.m in Sources */,

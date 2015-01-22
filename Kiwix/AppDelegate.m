@@ -12,6 +12,7 @@
 #import "FileCoordinator.h"
 #import "Preference.h"
 #import "KiwixURLProtocol.h"
+#import "SlideNavigationContorllerAnimatorSlide.h"
 
 @interface AppDelegate ()
 
@@ -34,6 +35,7 @@
     
     //[SlideNavigationController sharedInstance].rightMenu = rightMenu;
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
+    [SlideNavigationController sharedInstance].menuRevealAnimator = [[SlideNavigationContorllerAnimatorSlide alloc] initWithSlideMovement:0];
     
     /*
     // Override point for customization after application launch.

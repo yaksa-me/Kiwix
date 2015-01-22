@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -114,7 +115,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xqV-kD-IVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1321" y="2095"/>
+            <point key="canvasLocation" x="1335" y="2047"/>
         </scene>
         <!--File PropertiesTBVC-->
         <scene sceneID="vkN-NC-eUM">
@@ -154,7 +155,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jg-UH-ddJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1321" y="2846"/>
+            <point key="canvasLocation" x="1335" y="2798"/>
         </scene>
         <!--Article ListTBVC-->
         <scene sceneID="zBx-XY-eMq">
@@ -180,7 +181,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Vq-RL-TM4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2059" y="2095"/>
+            <point key="canvasLocation" x="2073" y="2047"/>
         </scene>
         <!--ArticleVC-->
         <scene sceneID="CF9-mu-nXd">
@@ -194,17 +195,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="TopLeft" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-ZY-YD3">
+                            <webView contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-ZY-YD3">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="601"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="KTO-ZY-YD3" secondAttribute="trailing" constant="-16" id="Gm2-Bp-zhu"/>
+                            <constraint firstItem="KTO-ZY-YD3" firstAttribute="leading" secondItem="RIU-RM-tep" secondAttribute="leadingMargin" constant="-16" id="HTU-Jg-dT1"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="KTO-ZY-YD3" secondAttribute="bottom" constant="-45" id="S5y-Cr-yjj"/>
+                            <constraint firstItem="KTO-ZY-YD3" firstAttribute="top" secondItem="RIU-RM-tep" secondAttribute="topMargin" id="bKd-0S-PtU"/>
+                        </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" id="5MR-Jo-dWR"/>
-                        <barButtonItem title="Item" id="R53-EQ-JIW"/>
-                        <barButtonItem title="Item" id="1CM-j6-Qrz"/>
+                        <barButtonItem image="Left" id="5MR-Jo-dWR"/>
+                        <barButtonItem image="Right" id="R53-EQ-JIW"/>
+                        <barButtonItem title="Font+" id="1CM-j6-Qrz"/>
                     </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
@@ -213,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ft1-oS-UGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1416" y="621"/>
+            <point key="canvasLocation" x="1629" y="829"/>
         </scene>
         <!--Kiwix-->
         <scene sceneID="SVu-tR-u9i">
@@ -326,7 +333,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aU0-1h-yDK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="545" y="621"/>
+            <point key="canvasLocation" x="545" y="577"/>
         </scene>
         <!--HistoryTBVC-->
         <scene sceneID="oXM-K6-9dU">
@@ -369,7 +376,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N7g-Nk-3H9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="545" y="1365"/>
+            <point key="canvasLocation" x="545" y="1309"/>
         </scene>
         <!--SettingTBVC-->
         <scene sceneID="fsM-KL-kw2">
@@ -439,7 +446,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGI-T8-fGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="545" y="2095"/>
+            <point key="canvasLocation" x="545" y="2047"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nuR-mI-yDM">
@@ -497,7 +504,11 @@
             <point key="canvasLocation" x="1283" y="-1636"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Left" width="33" height="33"/>
+        <image name="Right" width="33" height="33"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Wsl-m1-9ah"/>
+        <segue reference="FpP-sK-tSL"/>
     </inferredMetricsTieBreakers>
 </document>

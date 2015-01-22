@@ -28,27 +28,47 @@
 }
 
 #pragma mark - htmlContents
-- (NSString *)htmlContentOfPageWithPageURL:(NSString *)pageURL {
+- (NSString *)htmlContentOfPageWithPageURLString:(NSString *)pageURLString {
     NSString *htmlContent = nil;
-    //NSLog(@"URL passed to reader: %@",pageURL);
     
-    string pageURLC = [pageURL cStringUsingEncoding:NSUTF8StringEncoding];
+    //pageURLString = [pageURLString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    //pageURLString = [pageURLString stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
+    string pageURLC = [pageURLString cStringUsingEncoding:NSUTF8StringEncoding];
+
     string content;
     string contentType;
     unsigned int contentLength = 0;
     if (_reader->getContentByUrl(pageURLC, content, contentLength, contentType)) {
         htmlContent = [NSString stringWithUTF8String:content.c_str()];
     }
-    
+    NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[htmlContent length]);
     return htmlContent;
 }
 
 - (NSString *)htmlContentOfPageWithPagetitle:(NSString *)title {
-    return [self htmlContentOfPageWithPageURL:[self pageURLFromTitle:title]];
+    return [self htmlContentOfPageWithPageURLString:[self pageURLFromTitle:title]];
 }
 
 - (NSString *)htmlContentOfMainPage {
-    return [self htmlContentOfPageWithPageURL:self.mainPageURL];
+    return [self htmlContentOfPageWithPageURLString:self.mainPageURL];
+}
+
+- (NSData *)dataWithContentURLString:(NSString *)pageURLString {
+    NSData *contentData;
+    
+    string pageURLC = [pageURLString cStringUsingEncoding:NSUTF8StringEncoding];
+    string content;
+    string contentType;
+    unsigned int contentLength = 0;
+    if (_reader->getContentByUrl(pageURLC, content, contentLength, contentType)) {
+        contentData = [NSData dataWithBytes:content.data() length:contentLength];
+    }
+    NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[contentData length]);
+    return contentData;
+}
+
+- (NSData *)dataWithArticleTitle:(NSString *)title {
+    return [self dataWithContentURLString:[self pageURLFromTitle:title]];
 }
 
 #pragma mark - getURLs
@@ -144,5 +164,16 @@
     _reader->~Reader();
     //delete _reader;
     //should not call delete _reader; here since that will cause a error, probably because the instance of class Reader was deleted at the end of ~Reader();
+}
+
+- (void)exceptionHandling {
+    try
+    {
+        throw 20;
+    }
+    catch (int e)
+    {
+        cout << "An exception occurred. Exception Nr. " << e << '\n';
+    }
 }
 @end
