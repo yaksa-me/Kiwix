@@ -15,9 +15,17 @@
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (void)processAllBooks;
-+ (void)moveZimFileFromDocumentDirectoryToApplicationSupport;
-+ (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)moveZimFileFromDocumentDirectoryToApplicationSupport; //Move all zim files in document dir to app support dir
+//Add idString, book title, book original file name in 
++ (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)deleteBookWithID:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context; //Delete a book in Coredata DB and delete the relevent file on disk
+
++ (void)addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir;
++ (void)removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir;
++ (void)addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID;
++ (void)removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID;
+
 
 @end

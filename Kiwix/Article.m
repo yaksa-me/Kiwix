@@ -2,7 +2,7 @@
 //  Article.m
 //  Kiwix
 //
-//  Created by Chris Li on 1/16/15.
+//  Created by Chris Li on 1/23/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
@@ -15,9 +15,9 @@
 @dynamic hasBeenRead;
 @dynamic htmlContent;
 @dynamic isBookmarked;
+@dynamic lastPosition;
 @dynamic lastReadDate;
 @dynamic title;
-@dynamic lastPosition;
 @dynamic belongsToBook;
 
 @end

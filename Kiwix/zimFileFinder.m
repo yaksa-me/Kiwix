@@ -86,4 +86,10 @@
     NSString *filePathInAppSupportDir = [[[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileID] stringByAppendingString:@".zim"];
     return filePathInAppSupportDir;
 }
+
++ (NSURL *)zimFileURLInAppSupportDirectoryFormFileID:(NSString *)fileID {
+    NSString *filePath = [self zimFilePathInAppSupportDirectoryFormFileID:fileID];
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    return fileURL;
+}
 @end

@@ -2,7 +2,7 @@
 //  Article.h
 //  Kiwix
 //
-//  Created by Chris Li on 1/16/15.
+//  Created by Chris Li on 1/23/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
@@ -16,9 +16,9 @@
 @property (nonatomic, retain) NSNumber * hasBeenRead;
 @property (nonatomic, retain) NSString * htmlContent;
 @property (nonatomic, retain) NSNumber * isBookmarked;
+@property (nonatomic, retain) NSNumber * lastPosition;
 @property (nonatomic, retain) NSDate * lastReadDate;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * lastPosition;
 @property (nonatomic, retain) Book *belongsToBook;
 
 @end

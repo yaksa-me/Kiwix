@@ -31,8 +31,7 @@
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     
-    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
-    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
+    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
     
     [self setFileListAndOpeningBookID];
 }
@@ -40,6 +39,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setFileListAndOpeningBookID {
+    self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
+    
+    if ([Preference hasOpeningBook]) {
+        self.openingBookID = [Preference openingBookID];
+    } else {
+        self.openingBookID = nil;
+    }
 }
 
 #pragma mark - Slide Menu Delegation
@@ -76,7 +85,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCell" forIndexPath:indexPath];
 
     Book *book = [self.fileList objectAtIndex:indexPath.row];
-    cell.textLabel.text = book.title;
+    cell.textLabel.text = book.fileName;
     
     if ([book.idString isEqualToString:self.openingBookID]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -87,15 +96,6 @@
     return cell;
 }
 
-- (void)setFileListAndOpeningBookID {
-    self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
-    
-    if ([Preference hasOpeningBook]) {
-        self.openingBookID = [Preference openingBookID];
-    } else {
-        self.openingBookID = nil;
-    }
-}
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -103,7 +103,7 @@
     
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     self.openingBookID = book.idString;
-    [Preference setOpeningBookID:self.openingBookID];
+    [Preference setOpeningBookID:self.openingBookID andOpeningBookArticleCount:[book.articleCount integerValue]];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [tableView reloadData];

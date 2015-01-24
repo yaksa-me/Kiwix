@@ -25,6 +25,8 @@
 + (NSArray *)articlesBookmarkedInManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (Article *)articleWithTitle:(NSString *)articleTitle fromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Article *)lastReadArticle inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Article *)lastReadArticleFromBook inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 

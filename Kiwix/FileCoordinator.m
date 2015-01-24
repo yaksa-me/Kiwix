@@ -12,6 +12,7 @@
 #import "zimReader.h"
 #import "Parser.h"
 #import "zimFileFinder.h"
+#import "Preference.h"
 
 @interface FileCoordinator ()
 
@@ -68,7 +69,7 @@
     }
 }
 
-#pragma marks - Paths
+#pragma marks - File Paths
 + (NSString *)docDirPath {
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirPath = ([docPaths count] > 0) ? [docPaths objectAtIndex:0] : nil;
@@ -80,6 +81,20 @@
     NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
     return appSupportDirPath;
 }
+
+#pragma mark - File Position & Coredata
++ (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context {
+    [self moveZimFileFromDocumentDirectoryToApplicationSupport];
+    [self addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:context];
+    [self renameZimFilesInAppSupportDir];
+    
+    if ([Preference isBackingUpFilesToiCloud]) {
+        [self removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir];
+    } else {
+        [self addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir];
+    }
+}
+
 + (void)moveZimFileFromDocumentDirectoryToApplicationSupport {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -88,18 +103,19 @@
         [fileManager createDirectoryAtPath:[self appSupportDirPath] withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
-    //Helper
     NSArray *allFileListInDocDir = [fileManager contentsOfDirectoryAtPath:[self docDirPath] error:nil];
+    
+    //Helper
     NSLog(@"%@", [allFileListInDocDir description]);
     
     //Move all zim file in Doc dir to App Support Dir
-    for (NSString *fileName in allFileListInDocDir) {
+    for (NSString *fileName in allFileListInDocDir) { //fileName has extention
         NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
         if ([extention isEqualToString:@"zim"]) {
             NSString *filePathInDocDir = [[[self docDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
-            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInDocDir]];
-            NSString *idString = [reader getID];
-            NSString *filePathInAppSupportDir = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+            //zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInDocDir]];
+            //NSString *idString = [reader getID];
+            NSString *filePathInAppSupportDir = [[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
             NSError *error;
             [fileManager moveItemAtPath:filePathInDocDir toPath:filePathInAppSupportDir error:&error];
         }
@@ -111,20 +127,40 @@
 }
 
 + (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context {
-    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
+    NSString *appSupportDirPath = [self appSupportDirPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *allFileListInDocDir = [fileManager contentsOfDirectoryAtPath:appSupportDirPath error:nil];
+    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:appSupportDirPath error:nil];
     
-    for (NSString *fileName in allFileListInDocDir) {
-        NSString *filePathInAppSupportDir = [[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileName];
-        
-        zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInAppSupportDir]];
-        NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-        [infoDictionary setValue:[reader getID] forKey:@"idString"];
-        [infoDictionary setValue:[reader getTitle] forKey:@"title"];
-        
-        [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
+    for (NSString *fileName in allFileListInAppSupportDir) {
+        NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
+        if ([extention isEqualToString:@"zim"]) {
+            NSString *filePathInAppSupportDir = [[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            
+            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInAppSupportDir]];
+            NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
+            [infoDictionary setValue:[reader getID] forKey:@"idString"];
+            [infoDictionary setValue:[reader getTitle] forKey:@"title"];
+            [infoDictionary setValue:fileName forKey:@"fileName"];
+            [infoDictionary setValue:[NSNumber numberWithUnsignedInteger:[reader getArticleCount]] forKey:@"articleCount"];
+            
+            [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
+        }
+    }
+}
+
++ (void)renameZimFilesInAppSupportDir {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:[self appSupportDirPath] error:nil];
+    for (NSString *fileName in allFileListInAppSupportDir) {
+        NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
+        if ([extention isEqualToString:@"zim"]) {
+            NSString *oldFilePath = [[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            NSURL *oldFIleURl = [NSURL fileURLWithPath:oldFilePath];
+            NSString *idString  =[[[zimReader alloc] initWithZIMFileURL:oldFIleURl] getID];
+            NSString *newFilePath = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+            NSError *error;
+            [fileManager moveItemAtPath:oldFilePath toPath:newFilePath error:&error];
+        }
     }
 }
 
@@ -151,5 +187,41 @@
     [fileManager removeItemAtPath:filePathInAppSupportDir error:nil];
 }
 
+#pragma mark - File Attribute Management
++ (void)addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir {
+    NSArray *fileIDArray = [zimFileFinder zimFileIDsInAppSupportDirectory];
+    for (NSString *fileID in fileIDArray) {
+        [self addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:fileID];
+    }
+}
+
++ (void)removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir {
+    NSArray *fileIDArray = [zimFileFinder zimFileIDsInAppSupportDirectory];
+    for (NSString *fileID in fileIDArray) {
+        [self removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:fileID];
+    }
+}
+
++ (void)addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID {
+    NSURL *fileURL = [zimFileFinder zimFileURLInAppSupportDirectoryFormFileID:fileID];
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [fileURL path]]);
+    
+    NSError *error = nil;
+    BOOL success = [fileURL setResourceValue: [NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [fileURL lastPathComponent], error);
+    }
+}
+
++ (void)removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID {
+    NSURL *fileURL = [zimFileFinder zimFileURLInAppSupportDirectoryFormFileID:fileID];
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [fileURL path]]);
+    
+    NSError *error = nil;
+    BOOL success = [fileURL setResourceValue: [NSNumber numberWithBool: NO] forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [fileURL lastPathComponent], error);
+    }
+}
 
 @end

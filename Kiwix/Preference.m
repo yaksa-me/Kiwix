@@ -9,8 +9,11 @@
 #import "Preference.h"
 #import "zimFileFinder.h"
 
-#define OPENINING_BOOK @"Opening_Book"
-#define OPENINING_BOOK_ID @"Opening_Book_ID"
+#define OPENING_BOOK @"Opening_Book"
+#define OPENING_BOOK_ID @"Opening_Book_ID"
+#define OPENING_BOOK_ARTICLE_COUNT @"openingBookArticleCount"
+
+#define IS_BACKINGUP_FILES_TO_ICLOUD @"isBackingUpFilesToiCloud"
 
 @implementation Preference
 
@@ -27,8 +30,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"isFirstLunch"];
     [defaults setInteger:1 forKey:@"currentMenuIndex"];
+    [defaults setBool:NO forKey:IS_BACKINGUP_FILES_TO_ICLOUD];
+    [defaults removeObjectForKey:OPENING_BOOK];
+    [defaults synchronize];
 }
 
+#pragma mark - Current Menu Index
 + (void)setCurrentMenuIndex:(NSUInteger)index {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:index forKey:@"currentMenuIndex"];
@@ -42,23 +49,31 @@
 }
 
 #pragma mark - Book Opening Info
-+ (void)setOpeningBookID:(NSString *)idString {
++ (void)setOpeningBookID:(NSString *)idString andOpeningBookArticleCount:(NSUInteger)count{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *openingBookInfo = [[NSMutableDictionary alloc] init];
-    [openingBookInfo setObject:idString forKey:OPENINING_BOOK_ID];
-    [defaults setObject:openingBookInfo forKey:OPENINING_BOOK];
+    [openingBookInfo setObject:idString forKey:OPENING_BOOK_ID];
+    [openingBookInfo setObject:[NSNumber numberWithUnsignedInt:count] forKey:OPENING_BOOK_ARTICLE_COUNT];
+    [defaults setObject:openingBookInfo forKey:OPENING_BOOK];
     [defaults synchronize];
 }
 + (NSString *)openingBookID {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *openingBookInfo = [defaults objectForKey:OPENINING_BOOK];
-    NSString *openingBookID = [openingBookInfo objectForKey:OPENINING_BOOK_ID];
+    NSDictionary *openingBookInfo = [defaults objectForKey:OPENING_BOOK];
+    NSString *openingBookID = [openingBookInfo objectForKey:OPENING_BOOK_ID];
     return openingBookID;
+}
+
++ (NSUInteger)openingBookArticleCount {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *openingBookInfo = [defaults objectForKey:OPENING_BOOK];
+    NSUInteger openingBookArticleCount = [[openingBookInfo objectForKey:OPENING_BOOK_ARTICLE_COUNT] integerValue];
+    return openingBookArticleCount;
 }
 
 + (BOOL)hasOpeningBook {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:OPENINING_BOOK]) {
+    if ([defaults objectForKey:OPENING_BOOK]) {
         return YES;
     } else {
         return NO;
@@ -67,10 +82,11 @@
 
 + (void)noLongerHasAnOpeningBook {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:OPENINING_BOOK];
+    [defaults removeObjectForKey:OPENING_BOOK];
     [defaults synchronize];
 }
 
+#pragma mark - last read article info
 + (void)setLastReadArticleInfoWithBookIDString:(NSString *)bookIDString andArticleTitle:(NSString *)articleTitle {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *lastReadArticleInfo = [[NSMutableDictionary alloc] init];
@@ -92,6 +108,30 @@
     NSDictionary *lastReadArticleInfo = [defaults objectForKey:@"lastReadArticleInfo"];
     NSString *articleTitle = [lastReadArticleInfo objectForKey:@"articleTitle"];
     return articleTitle;
+}
+
++ (BOOL)hasLastReadArticleInfo {
+    if ([self lastReadArticleTitle]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+#pragma mark - settings
++ (BOOL)isBackingUpFilesToiCloud {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:IS_BACKINGUP_FILES_TO_ICLOUD]) {
+        [defaults setBool:NO forKey:IS_BACKINGUP_FILES_TO_ICLOUD];
+        [defaults synchronize];
+    }
+    return [[defaults objectForKey:IS_BACKINGUP_FILES_TO_ICLOUD] boolValue];
+}
+
++ (void)setIsBackingUpFilesToiCloud:(BOOL)backupState {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:backupState forKey:IS_BACKINGUP_FILES_TO_ICLOUD];
+    [defaults synchronize];
 }
 
 @end

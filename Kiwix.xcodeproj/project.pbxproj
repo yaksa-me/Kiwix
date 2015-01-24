@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9717053A1A73308D000902EB /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 971705391A73308D000902EB /* Article.m */; };
+		9717053D1A73308E000902EB /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717053C1A73308E000902EB /* Book.m */; };
 		977AF9011A6352C200B43722 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FC1A6352C200B43722 /* TFHpple.m */; };
 		977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FE1A6352C200B43722 /* TFHppleElement.m */; };
 		977AF9031A6352C200B43722 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9001A6352C200B43722 /* XPathQuery.m */; };
@@ -40,6 +42,8 @@
 		97A1694A1A6FF3F000D48F68 /* FileInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A169491A6FF3F000D48F68 /* FileInfoView.m */; };
 		97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A1694B1A6FF50D00D48F68 /* ZimFileIcon.png */; };
 		97A1694E1A705A6C00D48F68 /* FileInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A1694D1A705A6C00D48F68 /* FileInfoView.xib */; };
+		97BE47AC1A71951C003B8E5D /* LeftMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97BE47AB1A71951C003B8E5D /* LeftMenuTableViewCell.xib */; };
+		97BE47AF1A719545003B8E5D /* LeftMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BE47AE1A719545003B8E5D /* LeftMenuTableViewCell.m */; };
 		97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */; };
 		97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862951A62DC2F004A4791 /* LibraryTBVC.m */; };
 		97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862981A62DE53004A4791 /* SearchTBVC.m */; };
@@ -66,8 +70,6 @@
 		97EDCC621A68087B00C8710F /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC611A68087B00C8710F /* Preference.m */; };
 		97EDCC651A68329800C8710F /* BookmarksTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC641A68329800C8710F /* BookmarksTBVC.m */; };
 		97EDCC681A6832A400C8710F /* HistoryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC671A6832A400C8710F /* HistoryTBVC.m */; };
-		97F1734F1A69FC4300A06E22 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1734E1A69FC4300A06E22 /* Book.m */; };
-		97F173521A69FC4400A06E22 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173511A69FC4400A06E22 /* Article.m */; };
 		97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F173571A6AF61C00A06E22 /* SettingTBVC.m */; };
 		97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB4D1A6BFDD100B8C306 /* FilePropertiesTBVC.m */; };
 		97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5EB501A6D34E100B8C306 /* KiwixURLProtocol.m */; };
@@ -86,6 +88,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		971705381A73308D000902EB /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		971705391A73308D000902EB /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		9717053B1A73308E000902EB /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		9717053C1A73308E000902EB /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		977AF8F81A63528600B43722 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		977AF8FB1A6352C200B43722 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		977AF8FC1A6352C200B43722 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
@@ -133,6 +139,9 @@
 		97A169491A6FF3F000D48F68 /* FileInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInfoView.m; sourceTree = "<group>"; };
 		97A1694B1A6FF50D00D48F68 /* ZimFileIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZimFileIcon.png; sourceTree = "<group>"; };
 		97A1694D1A705A6C00D48F68 /* FileInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileInfoView.xib; sourceTree = "<group>"; };
+		97BE47AB1A71951C003B8E5D /* LeftMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftMenuTableViewCell.xib; sourceTree = "<group>"; };
+		97BE47AD1A719545003B8E5D /* LeftMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuTableViewCell.h; sourceTree = "<group>"; };
+		97BE47AE1A719545003B8E5D /* LeftMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuTableViewCell.m; sourceTree = "<group>"; };
 		97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuTBVC.h; sourceTree = "<group>"; };
 		97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuTBVC.m; sourceTree = "<group>"; };
 		97C862941A62DC2F004A4791 /* LibraryTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryTBVC.h; sourceTree = "<group>"; };
@@ -181,10 +190,6 @@
 		97EDCC641A68329800C8710F /* BookmarksTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksTBVC.m; sourceTree = "<group>"; };
 		97EDCC661A6832A400C8710F /* HistoryTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTBVC.h; sourceTree = "<group>"; };
 		97EDCC671A6832A400C8710F /* HistoryTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTBVC.m; sourceTree = "<group>"; };
-		97F1734D1A69FC4300A06E22 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		97F1734E1A69FC4300A06E22 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		97F173501A69FC4400A06E22 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
-		97F173511A69FC4400A06E22 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		97F173561A6AF61C00A06E22 /* SettingTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTBVC.h; sourceTree = "<group>"; };
 		97F173571A6AF61C00A06E22 /* SettingTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTBVC.m; sourceTree = "<group>"; };
 		97F5EB4C1A6BFDD100B8C306 /* FilePropertiesTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePropertiesTBVC.h; sourceTree = "<group>"; };
@@ -273,10 +278,10 @@
 				977AF9191A6378F900B43722 /* Book+Create.m */,
 				977AF9271A637C8F00B43722 /* Article+Create.h */,
 				977AF9281A637C8F00B43722 /* Article+Create.m */,
-				97F173501A69FC4400A06E22 /* Article.h */,
-				97F173511A69FC4400A06E22 /* Article.m */,
-				97F1734D1A69FC4300A06E22 /* Book.h */,
-				97F1734E1A69FC4300A06E22 /* Book.m */,
+				9717053B1A73308E000902EB /* Book.h */,
+				9717053C1A73308E000902EB /* Book.m */,
+				971705381A73308D000902EB /* Article.h */,
+				971705391A73308D000902EB /* Article.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -339,6 +344,9 @@
 				97A169481A6FF3F000D48F68 /* FileInfoView.h */,
 				97A169491A6FF3F000D48F68 /* FileInfoView.m */,
 				97A1694D1A705A6C00D48F68 /* FileInfoView.xib */,
+				97BE47AB1A71951C003B8E5D /* LeftMenuTableViewCell.xib */,
+				97BE47AD1A719545003B8E5D /* LeftMenuTableViewCell.h */,
+				97BE47AE1A719545003B8E5D /* LeftMenuTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -581,6 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C920871A5E3B920074FC16 /* menu-button.png in Resources */,
+				97BE47AC1A71951C003B8E5D /* LeftMenuTableViewCell.xib in Resources */,
 				97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */,
 				97C920531A5E39D50074FC16 /* Main.storyboard in Resources */,
 				97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */,
@@ -611,7 +620,7 @@
 				97EDCC651A68329800C8710F /* BookmarksTBVC.m in Sources */,
 				97F5EB541A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m in Sources */,
 				97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */,
-				97F1734F1A69FC4300A06E22 /* Book.m in Sources */,
+				9717053A1A73308D000902EB /* Article.m in Sources */,
 				977AF92C1A63878100B43722 /* FileCoordinator.m in Sources */,
 				97C920851A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 				977AF9031A6352C200B43722 /* XPathQuery.m in Sources */,
@@ -626,6 +635,7 @@
 				978FAF8E1A632A80003D7A41 /* pathTools.cpp in Sources */,
 				97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */,
 				97C920501A5E39D50074FC16 /* DetailViewController.m in Sources */,
+				9717053D1A73308E000902EB /* Book.m in Sources */,
 				977AF91A1A6378F900B43722 /* Book+Create.m in Sources */,
 				978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */,
 				97C920831A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m in Sources */,
@@ -642,7 +652,7 @@
 				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
 				978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */,
 				977AF90B1A63539300B43722 /* Parser.m in Sources */,
-				97F173521A69FC4400A06E22 /* Article.m in Sources */,
+				97BE47AF1A719545003B8E5D /* LeftMenuTableViewCell.m in Sources */,
 				97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */,
 				97C920441A5E39D50074FC16 /* main.m in Sources */,
 			);

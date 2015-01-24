@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *filteredArticleArray; // An array of article names
 @property (strong, nonatomic) zimReader *reader;
-
+@property (strong, nonatomic) Book *book;
 @end
 
 @implementation SearchTBVC
@@ -35,8 +35,10 @@
     if ([Preference hasOpeningBook]) {
         NSString *openingBookPath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
         self.reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:openingBookPath]];
+        self.book = [Book bookWithBookIDString:[self.reader getID] inManagedObjectContext:self.managedObjectContext];
     }
     self.navigationController.toolbarHidden = YES;
+    
     NSLog(@"Switched to Search.");
 }
 
@@ -59,7 +61,7 @@
             return 1;
         } else {
             FileInfoView *messageView = [[[NSBundle mainBundle] loadNibNamed:@"FileInfoView" owner:self options:nil] firstObject];
-            messageView.bookTitleLabel.text = [self.reader getTitle];
+            messageView.bookTitleLabel.text = self.book.fileName;
             messageView.numberOfArticleLabel.text = [NSString stringWithFormat:@"%lu articles", (unsigned long)[self.reader getArticleCount]];
             self.tableView.backgroundView = messageView;
             self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

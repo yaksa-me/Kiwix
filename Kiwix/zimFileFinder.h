@@ -17,6 +17,6 @@
 + (NSString *)zimFileNameFromZimFilePath:(NSString *)zimFilePath;
 
 + (NSArray *)zimFileIDsInAppSupportDirectory;
-+ (NSString *)zimFilePathInAppSupportDirectoryFormFileName:(NSString *)fileName;
 + (NSString *)zimFilePathInAppSupportDirectoryFormFileID:(NSString *)fileID;
++ (NSURL *)zimFileURLInAppSupportDirectoryFormFileID:(NSString *)fileID;
 @end

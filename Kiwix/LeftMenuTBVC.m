@@ -12,10 +12,15 @@
 #import "HistoryTBVC.h"
 #import "BookmarksTBVC.h"
 #import "Preference.h"
+#import "LeftMenuTableViewCell.h"
+#import "CoreDataTask.h"
+#import "Book+Create.h"
 
 @interface LeftMenuTBVC ()
 
 @property BOOL showToolMenu;
+@property (strong, nonatomic) Book *book;
+@property (strong, nonatomic) NSArray *articleReadHistoryArray; //An array of articles
 
 - (IBAction)toolButton:(UIBarButtonItem *)sender;
 
@@ -26,7 +31,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([Preference hasOpeningBook]) {
+        self.book = [Book bookWithBookIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
+    }
+    
+    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInManagedObjectContext:self.managedObjectContext];
     //[[self.toolbarItems firstObject] setImage:[UIImage imageNamed:@"settings-64.png"] forState:UIControlStateNormal];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableViewConditioningOnNotificationMesssage:) name:SlideNavigationControllerDidReveal object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SlideNavigationControllerDidReveal object:nil];
+}
+
+- (void)reloadTableViewConditioningOnNotificationMesssage:(NSNotification *)notification{
+    if ([Preference hasOpeningBook]) {
+        self.book = [Book bookWithBookIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
+    }
+    if ([[notification.userInfo objectForKey:@"menu"] isEqualToString:@"left"]) {
+        [self.tableView reloadData];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,25 +77,48 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeftMenuCell" forIndexPath:indexPath];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LeftMenuCell"];
+    NSString *reuseIdentifier = @"LeftMenuTableViewCell";
+    LeftMenuTableViewCell *cell = (LeftMenuTableViewCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:reuseIdentifier owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"Search";
+        cell.cellTitleLabel.text = @"Search";
+        if ([Preference hasOpeningBook]) {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"%lu articles", (unsigned long)[Preference openingBookArticleCount]];
+        } else {
+            cell.cellDetailLabel.text = @"No Book is Opening";
+        }
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = @"Reading";
+        cell.cellTitleLabel.text = @"Reading";
+        if ([Preference hasLastReadArticleInfo]) {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"Last read: %@", [Preference lastReadArticleTitle]];
+        } else {
+            cell.cellDetailLabel.text = @"Haven't opened an article yet!";
+        }
+        
     } else if (indexPath.row == 2){
-        cell.textLabel.text = @"Bookmarks";
+        cell.cellTitleLabel.text = @"Bookmarks";
     } else {
-        cell.textLabel.text = @"History";
+        cell.cellTitleLabel.text = @"History";
+        NSUInteger articleHistoryCount = [self.articleReadHistoryArray count];
+        if (articleHistoryCount <= 1) {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"Read %d article", articleHistoryCount];
+        } else {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"Read %d articles", articleHistoryCount];
+        }
     }
     
-    // Configure the cell...
-    
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 66;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,12 +153,12 @@
             break;
         case 7:
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-            [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:YES];
+            [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
             return;
             break;
     }
     
-    [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:nil];
+    [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:NO andCompletion:nil];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [Preference setCurrentMenuIndex:indexPath.row];
 }

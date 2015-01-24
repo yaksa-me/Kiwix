@@ -54,8 +54,6 @@ NSUInteger textFontSize = 100;
     }
     
     self.title = self.articleTitle;
-    //[self.webView setScalesPageToFit:YES];
-    //self.webView.delegate = self;
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.translucent = NO;
 }
@@ -78,6 +76,7 @@ NSUInteger textFontSize = 100;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.article.lastReadDate = [NSDate date];
+    self.navigationController.toolbarHidden = YES;
     //NSLog(@"Reading Article: %@", [self.article.title description]);
 }
 
@@ -90,23 +89,6 @@ NSUInteger textFontSize = 100;
     } else {
         return NO;
     }
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    /*
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.style.width = '500px';"];
-    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
-    [webView.scrollView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height*self.webView.scrollView.zoomScale, 0, 165, 0)];
-     
-    CGSize contentSize = webView.scrollView.contentSize;
-    CGSize viewSize = self.view.bounds.size;
-    
-    float sfactor = viewSize.width / contentSize.width;
-    
-    webView.scrollView.minimumZoomScale = sfactor;
-    webView.scrollView.maximumZoomScale = sfactor;
-    webView.scrollView.zoomScale = sfactor;*/
 }
 
 - (IBAction)changeFontSize:(UIBarButtonItem *)sender {

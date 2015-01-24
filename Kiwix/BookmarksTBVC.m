@@ -26,6 +26,8 @@
     self.title = @"Bookmark";
     
     self.articleBookmarkedArray = [CoreDataTask articlesBookmarkedInManagedObjectContext:self.managedObjectContext];
+    
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {

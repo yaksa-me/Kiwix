@@ -31,6 +31,8 @@
     
     NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTableView) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)updateTableView {

@@ -12,6 +12,8 @@
 #import "FileCoordinator.h"
 #import "Preference.h"
 #import "KiwixURLProtocol.h"
+#import "CoreDataTask.h"
+#import "zimFileFinder.h"
 #import "SlideNavigationContorllerAnimatorSlide.h"
 
 @interface AppDelegate ()
@@ -30,24 +32,12 @@
     ((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
     [Preference setCurrentMenuIndex:0];
     
-    //LeftMenuVC *leftMenu = [[LeftMenuVC alloc] init];
-    //RightMenuViewController *rightMenu = [[RightMenuViewController alloc] init];
-    
-    //[SlideNavigationController sharedInstance].rightMenu = rightMenu;
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
     [SlideNavigationController sharedInstance].menuRevealAnimator = [[SlideNavigationContorllerAnimatorSlide alloc] initWithSlideMovement:0];
     
-    /*
-    // Override point for customization after application launch.
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
-    controller.managedObjectContext = self.managedObjectContext;
-    */
-    
     [NSURLProtocol registerClass:[KiwixURLProtocol class]];
     
-    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
-    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
+    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
     
     return YES;
 }
@@ -64,8 +54,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [FileCoordinator moveZimFileFromDocumentDirectoryToApplicationSupport];
-    [FileCoordinator addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:self.managedObjectContext];
+    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

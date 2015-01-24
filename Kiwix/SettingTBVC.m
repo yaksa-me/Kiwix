@@ -11,6 +11,7 @@
 #import "CoreDataTask.h"
 #import "AppDelegate.h"
 #import "Book.h"
+#import "FileCoordinator.h"
 
 @interface SettingTBVC ()
 
@@ -23,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -37,7 +39,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -48,6 +50,8 @@
         } else {
             return 1;
         }
+    } else if (section == 1) {
+        return 1;
     } else {
         return 0;
     }
@@ -55,7 +59,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cellDefault = [tableView dequeueReusableCellWithIdentifier:@"SettingBasic"];
+    UITableViewCell *cellDefault = [tableView dequeueReusableCellWithIdentifier:@"SettingBasicCell"];
     
     if (indexPath.section == 0) {
         //File choosing cell
@@ -68,6 +72,14 @@
             cell.textLabel.text = @"File Properties";
             return cell;
         }
+    } else if (indexPath.section == 1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"iCloudBackupCell"];
+        UISwitch *swith = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [swith addTarget:self action:@selector(setiCloudBackupPreference:) forControlEvents:UIControlEventValueChanged];
+        [swith setOn:[Preference isBackingUpFilesToiCloud]];
+        cell.accessoryView = swith;
+        cell.textLabel.text = @"Zim File Backup to iCloud";
+        return cell;
     }
     return cellDefault;
 }
@@ -76,6 +88,8 @@
     NSString *string;
     if (section == 0) {
         string = @"File";
+    } else if (section == 1) {
+        string = @"iCloud Backup";
     }
     return string;
 }
@@ -90,6 +104,8 @@
         } else {
             string = @"No Book is opened.";
         }
+    } else if (section == 1) {
+        string = @"When turned off, none of your zim files will be backed up to iCloud. But your settings and reading history will still be backed up to iCloud.";
     }
     return string;
 }
@@ -117,6 +133,19 @@
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;
+}
+
+#pragma mark - Target actions
+- (void)setiCloudBackupPreference:(UISwitch *)backupStateSwitch {
+    if (backupStateSwitch.on) {
+        //should backup to iCloud
+        [FileCoordinator removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir];
+        [Preference setIsBackingUpFilesToiCloud:YES];
+    } else {
+        //should not backup to iCloud
+        [FileCoordinator addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir];
+        [Preference setIsBackingUpFilesToiCloud:NO];
+    }
 }
 
 @end
