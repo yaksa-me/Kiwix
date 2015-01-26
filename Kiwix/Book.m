@@ -17,5 +17,6 @@
 @dynamic fileName;
 @dynamic articleCount;
 @dynamic hasArticles;
+@dynamic isOpening;
 
 @end

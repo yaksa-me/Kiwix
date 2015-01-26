@@ -14,11 +14,12 @@
         <attribute name="articleCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isOpening" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="hasArticles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Article" inverseName="belongsToBook" inverseEntity="Article" syncable="YES"/>
     </entity>
     <elements>
         <element name="Article" positionX="52" positionY="171" width="128" height="148"/>
-        <element name="Book" positionX="-209" positionY="153" width="128" height="120"/>
+        <element name="Book" positionX="-209" positionY="153" width="128" height="135"/>
     </elements>
 </model>

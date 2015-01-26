@@ -14,7 +14,9 @@
 
 @interface BookmarksTBVC ()
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSArray *articleBookmarkedArray; //An array of articles
+@property (strong, nonatomic) Book *openingBook;
 
 @end
 
@@ -25,7 +27,8 @@
     
     self.title = @"Bookmark";
     
-    self.articleBookmarkedArray = [CoreDataTask articlesBookmarkedInManagedObjectContext:self.managedObjectContext];
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+    self.articleBookmarkedArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     
     self.navigationController.toolbarHidden = YES;
 }

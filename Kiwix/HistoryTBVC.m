@@ -13,10 +13,13 @@
 #import "Preference.h"
 #import "Parser.h"
 #import "ArticleVC.h"
+#import "AppDelegate.h"
 
 @interface HistoryTBVC ()
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSArray *articleReadHistoryArray; //An array of articles
+@property (strong, nonatomic) Book *openingBook;
 
 @end
 
@@ -27,9 +30,11 @@
     
     self.title = @"History";
     
-    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInManagedObjectContext:self.managedObjectContext];
+    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     
-    NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTableView) userInfo:nil repeats:YES];
+    NSTimer* timer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(updateTableView) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     
     self.navigationController.toolbarHidden = YES;
@@ -71,7 +76,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ArticleVC *destination = [segue destinationViewController];
         Article *article = [self.articleReadHistoryArray objectAtIndex:indexPath.row];
-        destination.bookID = article.belongsToBook.idString;
+        //destination.bookID = article.belongsToBook.idString;
         destination.articleTitle = article.title;
     }
 }

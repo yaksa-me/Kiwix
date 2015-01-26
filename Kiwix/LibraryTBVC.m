@@ -19,7 +19,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSArray *fileList; // An array of Book Obj
-@property (strong, nonatomic) NSString *openingBookID;
+@property (strong, nonatomic) NSArray *openingBookList; // An array of Book Obj that is opening
 
 @end
 
@@ -33,22 +33,21 @@
     
     [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
     
-    [self setFileListAndOpeningBookID];
+    [self setFileLists];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setFileListAndOpeningBookID {
+- (void)setFileLists {
     self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
-    
-    if ([Preference hasOpeningBook]) {
-        self.openingBookID = [Preference openingBookID];
-    } else {
-        self.openingBookID = nil;
-    }
+    self.openingBookList = [CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext];
 }
 
 #pragma mark - Slide Menu Delegation
@@ -64,15 +63,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([[zimFileFinder zimFileIDsInAppSupportDirectory] count]) {
+    if ([self.fileList count]) {
         return [self.fileList count];
     } else {
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        messageLabel.text = @"no books...";
+        messageLabel.text = @"Oh, no books...";
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        messageLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
@@ -87,7 +86,7 @@
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     cell.textLabel.text = book.fileName;
     
-    if ([book.idString isEqualToString:self.openingBookID]) {
+    if ([self.openingBookList containsObject:book]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -98,12 +97,17 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    // set all book to closed
+    for (Book *bookToBeClosed in self.fileList) {
+        bookToBeClosed.isOpening = [NSNumber numberWithBool:NO];
+    }
     
     Book *book = [self.fileList objectAtIndex:indexPath.row];
-    self.openingBookID = book.idString;
-    [Preference setOpeningBookID:self.openingBookID andOpeningBookArticleCount:[book.articleCount integerValue]];
+    book.isOpening = [NSNumber numberWithBool:YES];
+    [self setFileLists];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [tableView reloadData];
@@ -117,43 +121,14 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Book *book = [self.fileList objectAtIndex:indexPath.row];
         [FileCoordinator deleteBookWithID:book.idString inManagedObjectContext:self.managedObjectContext];
-        
+        [self setFileLists];
+        /*
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
             [Preference noLongerHasAnOpeningBook];
         }
-        
+        */
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ArticleList"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ArticleListTBVC *destination = [segue destinationViewController];
-        destination.bookIDString = ((Book *)[self.fileList objectAtIndex:indexPath.row]).idString;
-        destination.managedObjectContext = self.managedObjectContext;
-    }
-}
-*/
-
 @end

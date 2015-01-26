@@ -39,18 +39,7 @@
         NSString *articleTitle = [[[requestURL contentURLString] componentsSeparatedByString:@"/"] lastObject];
         articleTitle = [articleTitle stringByReplacingOccurrencesOfString:@".html" withString:@""];
         contentData = [reader dataWithArticleTitle:articleTitle];
-        /*
-        NSString *htmlString = [NSString stringWithUTF8String:[contentData bytes]];
-        NSRange range = [htmlString rangeOfString:@"<body"];
-        
-        if(range.location != NSNotFound) {
-            // Adjust style for mobile
-            float inset = 40;
-            //NSString *style = [NSString stringWithFormat:@"<style>div {max-width: %fpx;}</style>", 400.0];
-            NSString *style = @"<meta name='viewport' content='width=device-width'>";
-            htmlString = [NSString stringWithFormat:@"%@%@%@", [htmlString substringToIndex:range.location], style, [htmlString substringFromIndex:range.location]];
-            //NSLog(@"%@", htmlString);
-        }*/
+
     } else {
         contentData = [reader dataWithContentURLString:[requestURL contentURLString]];
     }

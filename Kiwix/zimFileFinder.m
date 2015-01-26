@@ -7,9 +7,10 @@
 //
 
 #import "zimFileFinder.h"
+#import "FileCoordinator.h"
 
 @implementation zimFileFinder
-
+/*
 + (NSArray *)zimFileNamesInDocumentDirectory {
     NSMutableArray *fileListToReturn = [[NSMutableArray alloc] init];
     
@@ -62,7 +63,7 @@
     NSString *fileName = [[fileNameWithExtention componentsSeparatedByString:@"."] firstObject];
     return fileName;
 }
-
+*/
 #pragma mark -App Support
 + (NSArray *)zimFileIDsInAppSupportDirectory {
     NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
@@ -90,6 +91,14 @@
 + (NSURL *)zimFileURLInAppSupportDirectoryFormFileID:(NSString *)fileID {
     NSString *filePath = [self zimFilePathInAppSupportDirectoryFormFileID:fileID];
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    return fileURL;
+}
+
+#pragma mark - get file URL
++ (NSURL *)zimFileURLInLibraryDirectoryFormFileID:(NSString *)fileID {
+    NSString *libDirPath = [FileCoordinator libDirPath];
+    NSString *filePathInLibDir = [[[libDirPath stringByAppendingString:@"/"] stringByAppendingString:fileID] stringByAppendingString:@".zim"];
+    NSURL *fileURL = [NSURL fileURLWithPath:filePathInLibDir];
     return fileURL;
 }
 @end

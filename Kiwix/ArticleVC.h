@@ -13,6 +13,6 @@
 @interface ArticleVC : UIViewController <SlideNavigationControllerDelegate, UIWebViewDelegate>
 
 @property (strong, nonatomic)NSString *articleTitle;
-@property (strong, nonatomic)NSString *bookID;
+//@property (strong, nonatomic)NSString *bookID;
 
 @end

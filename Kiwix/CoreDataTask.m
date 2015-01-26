@@ -13,6 +13,8 @@
 #pragma mark - Book methods
 + (NSArray *)allBooksInManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fileName" ascending:YES];
+    request.sortDescriptors = @[sortDescriptor];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -23,7 +25,18 @@
     return matches;
 }
 
-//+ (NSArray *)allBookTitleInManagedObjectContext:(NSManagedObjectContext *)context
++ (NSArray *)openingBooksInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"isOpening == YES"];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error || ([matches count] > 1)) {
+        //handling error
+    }
+    return matches;
+}
 
 + (Book *)bookWithIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
@@ -51,19 +64,6 @@
     return matches;
 }
 
-+ (NSArray *)articlesTitleFilteredBySearchText:(NSString *)searchText inManagedObjectContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
-    request.predicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
-    
-    NSError *error;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    
-    if (!matches || error) {
-        //handling error
-    }
-    return matches;
-}
-
 + (NSArray *)allArticlesFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
     request.predicate = [NSPredicate predicateWithFormat:@"belongsToBook = %@", book];
@@ -77,9 +77,38 @@
     return matches;
 }
 
++ (NSArray *)articlesTitleFilteredBySearchText:(NSString *)searchText inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        //handling error
+    }
+    return matches;
+}
+
 + (NSArray *)articlesReadHistoryInManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
     request.predicate = [NSPredicate predicateWithFormat:@"lastReadDate != nil"];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastReadDate" ascending:NO];
+    request.sortDescriptors = @[sortDescriptor];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        //handling error
+    }
+    
+    return matches;
+}
+
++ (NSArray *)articlesReadHistoryInBook:(Book *)book InManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"lastReadDate != nil AND belongsToBook == %@", book];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastReadDate" ascending:NO];
     request.sortDescriptors = @[sortDescriptor];
     
@@ -109,6 +138,22 @@
     return matches;
 }
 
++ (NSArray *)articlesBookmarkedInBook:(Book *)book InManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"isBookmarked = YES AND belongsToBook == %@", book];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastReadDate" ascending:NO];
+    request.sortDescriptors = @[sortDescriptor];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        //handling error
+    }
+    
+    return matches;
+}
+
 + (Article *)articleWithTitle:(NSString *)articleTitle fromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
     request.predicate = [NSPredicate predicateWithFormat:@"belongsToBook = %@ AND title = %@", book, articleTitle];
@@ -122,5 +167,25 @@
     return [matches firstObject];
 }
 
++ (Article *)lastReadArticleInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSArray *articlesHistory = [self articlesReadHistoryInManagedObjectContext:context];
+    return [articlesHistory firstObject];
+}
+
++ (Article *)lastReadArticleFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"lastReadDate != nil AND belongsToBook == %@", book];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastReadDate" ascending:NO];
+    request.sortDescriptors = @[sortDescriptor];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        //handling error
+    }
+    
+    return [matches firstObject];
+}
 
 @end
