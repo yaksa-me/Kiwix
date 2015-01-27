@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSNumber * articleCount;
+@property (nonatomic, retain) NSNumber * isOpening;
 @property (nonatomic, retain) NSSet *hasArticles;
 @end
 

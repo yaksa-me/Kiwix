@@ -11,6 +11,4 @@
 
 @interface HistoryTBVC : UITableViewController <SlideNavigationControllerDelegate>
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
 @end

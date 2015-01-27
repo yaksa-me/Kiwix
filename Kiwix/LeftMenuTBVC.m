@@ -15,11 +15,12 @@
 #import "LeftMenuTableViewCell.h"
 #import "CoreDataTask.h"
 #import "Book+Create.h"
+#import "Article.h"
 
 @interface LeftMenuTBVC ()
 
 @property BOOL showToolMenu;
-@property (strong, nonatomic) Book *book;
+@property (strong, nonatomic) Book *openingBook;
 @property (strong, nonatomic) NSArray *articleReadHistoryArray; //An array of articles
 
 - (IBAction)toolButton:(UIBarButtonItem *)sender;
@@ -31,10 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([Preference hasOpeningBook]) {
-        self.book = [Book bookWithBookIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
-    }
-    
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInManagedObjectContext:self.managedObjectContext];
     //[[self.toolbarItems firstObject] setImage:[UIImage imageNamed:@"settings-64.png"] forState:UIControlStateNormal];
 }
@@ -50,9 +48,7 @@
 }
 
 - (void)reloadTableViewConditioningOnNotificationMesssage:(NSNotification *)notification{
-    if ([Preference hasOpeningBook]) {
-        self.book = [Book bookWithBookIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
-    }
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     if ([[notification.userInfo objectForKey:@"menu"] isEqualToString:@"left"]) {
         [self.tableView reloadData];
     }
@@ -88,15 +84,16 @@
     
     if (indexPath.row == 0) {
         cell.cellTitleLabel.text = @"Search";
-        if ([Preference hasOpeningBook]) {
-            cell.cellDetailLabel.text = [NSString stringWithFormat:@"%lu articles", (unsigned long)[Preference openingBookArticleCount]];
+        if (self.openingBook) {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"%lu articles", [self.openingBook.articleCount longValue]];
         } else {
             cell.cellDetailLabel.text = @"No Book is Opening";
         }
     } else if (indexPath.row == 1) {
         cell.cellTitleLabel.text = @"Reading";
-        if ([Preference hasLastReadArticleInfo]) {
-            cell.cellDetailLabel.text = [NSString stringWithFormat:@"Last read: %@", [Preference lastReadArticleTitle]];
+        Article *lastReadArticle = [CoreDataTask lastReadArticleFromBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
+        if (lastReadArticle) {
+            cell.cellDetailLabel.text = [NSString stringWithFormat:@"Last read: %@", lastReadArticle.title];
         } else {
             cell.cellDetailLabel.text = @"Haven't opened an article yet!";
         }
@@ -130,14 +127,12 @@
     {
         case 0:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SearchTBVC"];
-            ((SearchTBVC *)viewController).managedObjectContext = self.managedObjectContext;
             [Preference setCurrentMenuIndex:0];
             break;
             
         case 1:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
             [Preference setCurrentMenuIndex:1];
-            NSLog(@"Show last read: %@, %@", [Preference lastReadBookIDString], [Preference lastReadArticleTitle]);
             break;
             
         case 2:
@@ -148,7 +143,6 @@
             
         case 3:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"HistoryTBVC"];
-            ((HistoryTBVC *)viewController).managedObjectContext = self.managedObjectContext;
             [Preference setCurrentMenuIndex:3];
             break;
         case 7:
@@ -162,51 +156,6 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [Preference setCurrentMenuIndex:indexPath.row];
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)toolButton:(UIBarButtonItem *)sender {
     self.showToolMenu = YES;

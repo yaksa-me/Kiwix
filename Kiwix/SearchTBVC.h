@@ -11,6 +11,4 @@
 
 @interface SearchTBVC : UITableViewController <SlideNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
 @end

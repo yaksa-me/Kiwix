@@ -11,6 +11,5 @@
 
 @interface BookmarksTBVC : UITableViewController <SlideNavigationControllerDelegate>
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

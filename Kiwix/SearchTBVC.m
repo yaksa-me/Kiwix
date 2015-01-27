@@ -15,13 +15,15 @@
 #import "zimReader.h"
 #import "Book+Create.h"
 #import "FileInfoView.h"
+#import "AppDelegate.h"
 
 @interface SearchTBVC ()
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *filteredArticleArray; // An array of article names
 @property (strong, nonatomic) zimReader *reader;
-@property (strong, nonatomic) Book *book;
+@property (strong, nonatomic) Book *openingBook;
 @end
 
 @implementation SearchTBVC
@@ -29,14 +31,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Search";
-
-    self.filteredArticleArray = [[NSMutableArray alloc] init];
     
-    if ([Preference hasOpeningBook]) {
-        NSString *openingBookPath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:[Preference openingBookID]];
-        self.reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:openingBookPath]];
-        self.book = [Book bookWithBookIDString:[self.reader getID] inManagedObjectContext:self.managedObjectContext];
+    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    self.filteredArticleArray = [[NSMutableArray alloc] init];
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+    if (self.openingBook) {
+        self.reader = [[zimReader alloc] initWithZIMFileURL:[zimFileFinder zimFileURLInLibraryDirectoryFormFileID:self.openingBook.idString]];
     }
+    
     self.navigationController.toolbarHidden = YES;
     
     NSLog(@"Switched to Search.");
@@ -56,12 +58,13 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([Preference hasOpeningBook]) {
+    if (self.openingBook) {
+        //Has a opening Book
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             return 1;
         } else {
             FileInfoView *messageView = [[[NSBundle mainBundle] loadNibNamed:@"FileInfoView" owner:self options:nil] firstObject];
-            messageView.bookTitleLabel.text = self.book.fileName;
+            messageView.bookTitleLabel.text = self.openingBook.fileName;
             messageView.numberOfArticleLabel.text = [NSString stringWithFormat:@"%lu articles", (unsigned long)[self.reader getArticleCount]];
             self.tableView.backgroundView = messageView;
             self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -74,7 +77,7 @@
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        messageLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
@@ -85,14 +88,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([Preference hasOpeningBook]) {
+    if (self.openingBook) {
+        //Has a opening Book
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             return [self.filteredArticleArray count];
         } else {
             return 0;
         }
     } else {
-        //Display message when no book is opening
+        //No book is opening
         return 0;
     }
 }
@@ -120,7 +124,7 @@
 #pragma mark - Search Filter
 -(void)filterContentForSearchText:(NSString*)searchText{
     [self.filteredArticleArray removeAllObjects];
-    if ([Preference hasOpeningBook]) {
+    if (self.openingBook) {
         NSArray *filteredArticles = [self.reader searchSuggestionsSmart:searchText];
         self.filteredArticleArray = [NSMutableArray arrayWithArray:filteredArticles];
         NSLog(@"Search text:%@, %lu items found in zimfile", searchText, (unsigned long)[self.filteredArticleArray count]);

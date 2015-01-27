@@ -13,13 +13,13 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-- (void)processAllBooks;
++ (NSString *)docDirPath;
++ (NSString *)libDirPath;
 
 + (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context;
-+ (void)moveZimFileFromDocumentDirectoryToApplicationSupport; //Move all zim files in document dir to app support dir
++ (void)moveZimFileFromDocumentDirectoryToLibraryDirectory; //Move all zim files in document dir to app support dir
 //Add idString, book title, book original file name in 
-+ (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)addAllFilesInLibraryDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)deleteBookWithID:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context; //Delete a book in Coredata DB and delete the relevent file on disk
 
 + (void)addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir;

@@ -25,8 +25,7 @@
 // Decode the zim file URL from the `host` property
 - (NSURL *)zimFileURL {
     NSString *idString = [[self.host componentsSeparatedByString:@"/"] lastObject];
-    NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:idString];
-    NSURL *zimFileURL = [NSURL fileURLWithPath:zimFilePath];
+    NSURL *zimFileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:idString];
     return zimFileURL;
 }
 

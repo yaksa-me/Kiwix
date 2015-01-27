@@ -22,53 +22,6 @@
 
 @implementation FileCoordinator
 
-- (id)init {
-    self = [super init];
-    self.filePaths = [zimFileFinder zimFilePathsInDocumentDirectory];
-    return self;
-}
-
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    self = [self init];
-    self.managedObjectContext = managedObjectContext;
-    return self;
-}
-
-- (void)processAllBooks {
-    for (NSString *filePath in self.filePaths) {
-        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-        zimReader *reader = [[zimReader alloc] initWithZIMFileURL:fileURL];
-        NSString *idString = [reader getID];
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-        request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];
-        
-        NSError *error;
-        NSArray *matches = [self.managedObjectContext executeFetchRequest:request error:&error];
-        
-        if (!matches || error || ([matches count] > 1)) {
-            
-        } else if ([matches count]) {
-            //book exist, and only one exist
-            //NSLog(@"Book exists and only one exists");
-        } else {
-            //book not exist
-            NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-            [infoDictionary setValue:idString forKey:@"idString"];
-            [infoDictionary setValue:[reader getTitle] forKey:@"title"];
-            [infoDictionary setValue:[zimFileFinder zimFileNameFromZimFilePath:filePath] forKey:@"fileName"];
-            
-            NSArray *articleList = [Parser tableOfContentFromTOCHTMLString:[reader htmlContentOfMainPage]];
-            
-            [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:self.managedObjectContext];
-            
-            for (NSString *articleTitle in articleList) {
-                [Article insertArticleWithTitle:articleTitle andBookIDString:idString inManagedObjectContext:self.managedObjectContext];
-            }
-        }
-    }
-}
-
 #pragma marks - File Paths
 + (NSString *)docDirPath {
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -76,17 +29,17 @@
     return documentDirPath;
 }
 
-+ (NSString *)appSupportDirPath {
-    NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *appSupportDirPath = ([appSupportPaths count] > 0) ? [appSupportPaths objectAtIndex:0] : nil;
-    return appSupportDirPath;
++ (NSString *)libDirPath {
+    NSArray *libDirPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *libDirPath = ([libDirPaths count] > 0) ? [libDirPaths objectAtIndex:0] : nil;
+    return libDirPath;
 }
 
 #pragma mark - File Position & Coredata
 + (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context {
-    [self moveZimFileFromDocumentDirectoryToApplicationSupport];
-    [self addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:context];
-    [self renameZimFilesInAppSupportDir];
+    [self moveZimFileFromDocumentDirectoryToLibraryDirectory];
+    [self addAllFilesInLibraryDirToDatabaseInManagedObjectContext:context];
+    [self renameZimFilesInLibDir];
     
     if ([Preference isBackingUpFilesToiCloud]) {
         [self removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir];
@@ -95,12 +48,12 @@
     }
 }
 
-+ (void)moveZimFileFromDocumentDirectoryToApplicationSupport {
++ (void)moveZimFileFromDocumentDirectoryToLibraryDirectory {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     //Create App Support Dir if not exist
-    if (![fileManager fileExistsAtPath:[self appSupportDirPath]]) {
-        [fileManager createDirectoryAtPath:[self appSupportDirPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    if (![fileManager fileExistsAtPath:[self libDirPath]]) {
+        [fileManager createDirectoryAtPath:[self libDirPath] withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
     NSArray *allFileListInDocDir = [fileManager contentsOfDirectoryAtPath:[self docDirPath] error:nil];
@@ -113,51 +66,49 @@
         NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
         if ([extention isEqualToString:@"zim"]) {
             NSString *filePathInDocDir = [[[self docDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
-            //zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInDocDir]];
-            //NSString *idString = [reader getID];
-            NSString *filePathInAppSupportDir = [[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            NSString *filePathInLibDir = [[[self libDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
             NSError *error;
-            [fileManager moveItemAtPath:filePathInDocDir toPath:filePathInAppSupportDir error:&error];
+            [fileManager moveItemAtPath:filePathInDocDir toPath:filePathInLibDir error:&error];
         }
     }
     
     //Helper
-    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:[self appSupportDirPath] error:nil];
-    NSLog(@"%@", [allFileListInAppSupportDir description]);
+    NSArray *allFileListInLibDir = [fileManager contentsOfDirectoryAtPath:[self libDirPath] error:nil];
+    NSLog(@"%@", [allFileListInLibDir description]);
 }
 
-+ (void)addAllFilesInApplicationSupportDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context {
-    NSString *appSupportDirPath = [self appSupportDirPath];
++ (void)addAllFilesInLibraryDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSString *libDirPath = [self libDirPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:appSupportDirPath error:nil];
+    NSArray *allFileListInLibDir = [fileManager contentsOfDirectoryAtPath:libDirPath error:nil];
     
-    for (NSString *fileName in allFileListInAppSupportDir) {
+    for (NSString *fileName in allFileListInLibDir) { // fileName has extentions
         NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
         if ([extention isEqualToString:@"zim"]) {
-            NSString *filePathInAppSupportDir = [[appSupportDirPath stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            NSString *filePathInLibDir = [[libDirPath stringByAppendingString:@"/"] stringByAppendingString:fileName];
             
-            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInAppSupportDir]];
+            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:filePathInLibDir]];
             NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-            [infoDictionary setValue:[reader getID] forKey:@"idString"];
-            [infoDictionary setValue:[reader getTitle] forKey:@"title"];
-            [infoDictionary setValue:fileName forKey:@"fileName"];
-            [infoDictionary setValue:[NSNumber numberWithUnsignedInteger:[reader getArticleCount]] forKey:@"articleCount"];
+            [infoDictionary setObject:[reader getID] forKey:@"idString"];
+            [infoDictionary setObject:[reader getTitle] forKey:@"title"];
+            [infoDictionary setObject:fileName forKey:@"fileName"];
+            [infoDictionary setObject:[NSNumber numberWithUnsignedInteger:[reader getArticleCount]] forKey:@"articleCount"];
             
             [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
         }
     }
 }
 
-+ (void)renameZimFilesInAppSupportDir {
++ (void)renameZimFilesInLibDir {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *allFileListInAppSupportDir = [fileManager contentsOfDirectoryAtPath:[self appSupportDirPath] error:nil];
-    for (NSString *fileName in allFileListInAppSupportDir) {
+    NSArray *allFileListInLibDir = [fileManager contentsOfDirectoryAtPath:[self libDirPath] error:nil];
+    for (NSString *fileName in allFileListInLibDir) {
         NSString *extention = [[[fileName componentsSeparatedByString:@"."] lastObject] lowercaseString];
         if ([extention isEqualToString:@"zim"]) {
-            NSString *oldFilePath = [[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
+            NSString *oldFilePath = [[[self libDirPath] stringByAppendingString:@"/"] stringByAppendingString:fileName];
             NSURL *oldFIleURl = [NSURL fileURLWithPath:oldFilePath];
             NSString *idString  =[[[zimReader alloc] initWithZIMFileURL:oldFIleURl] getID];
-            NSString *newFilePath = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+            NSString *newFilePath = [[[[self libDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
             NSError *error;
             [fileManager moveItemAtPath:oldFilePath toPath:newFilePath error:&error];
         }
@@ -173,7 +124,7 @@
     NSArray *matches = [context executeFetchRequest:request error:&error];
     
     if (!matches || error || ([matches count] > 1)) {
-        
+        //Should never get here, something is wrong.
     } else if ([matches count]) {
         //One book exist
         [context deleteObject:[matches firstObject]];
@@ -183,8 +134,8 @@
     
     //Delete on disk
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *filePathInAppSupportDir = [[[[self appSupportDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
-    [fileManager removeItemAtPath:filePathInAppSupportDir error:nil];
+    NSString *filePathInLibDir = [[[[self libDirPath] stringByAppendingString:@"/"] stringByAppendingString:idString] stringByAppendingString:@".zim"];
+    [fileManager removeItemAtPath:filePathInLibDir error:nil];
 }
 
 #pragma mark - File Attribute Management

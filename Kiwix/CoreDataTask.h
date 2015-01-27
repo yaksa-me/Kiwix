@@ -12,21 +12,24 @@
 @interface CoreDataTask : NSObject
 
 + (NSArray *)allBooksInManagedObjectContext:(NSManagedObjectContext *)context;  //An array of Book object.
-+ (NSArray *)allBookTitleInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)openingBooksInManagedObjectContext:(NSManagedObjectContext *)context; // Currently there should only be one opening book (v1.0)
 
 + (Book *)bookWithIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-
 + (NSArray *)allArticlesInManagedObjectContext:(NSManagedObjectContext *)context;
-+ (NSArray *)articlesTitleFilteredBySearchText:(NSString *)searchText inManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)allArticlesFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (NSArray *)articlesTitleFilteredBySearchText:(NSString *)searchText inManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)articlesReadHistoryInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)articlesReadHistoryInBook:(Book *)book InManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)articlesBookmarkedInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)articlesBookmarkedInBook:(Book *)book InManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (Article *)articleWithTitle:(NSString *)articleTitle fromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
-+ (Article *)lastReadArticle inManagedObjectContext:(NSManagedObjectContext *)context;
-+ (Article *)lastReadArticleFromBook inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (Article *)lastReadArticleInManagedObjectContext:(NSManagedObjectContext *)context;
++ (Article *)lastReadArticleFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 

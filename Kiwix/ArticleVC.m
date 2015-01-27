@@ -17,11 +17,12 @@
 
 @interface ArticleVC ()
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 - (IBAction)changeFontSize:(UIBarButtonItem *)sender;
 - (IBAction)test:(UIBarButtonItem *)sender;
+@property (strong, nonatomic) Book *openingBook;
 @property (strong, nonatomic) Article *article;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -32,22 +33,30 @@ NSUInteger textFontSize = 100;
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     
+    /* v1.1+ code
     //BookID setter should before the next if section
     if (!self.bookID) {
-        self.bookID = [Preference openingBookID];
-    }
+        Book *book = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+        self.bookID = book.idString;
+    }*/
+    
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject]; // Currently only one book should be open (v1.0)
     
     if (self.articleTitle) {
         //If told which article to open, i.e. segued from search.
-        [Preference setLastReadArticleInfoWithBookIDString:[Preference openingBookID] andArticleTitle:self.articleTitle];
-        Book *book = [CoreDataTask bookWithIDString:[Preference openingBookID] inManagedObjectContext:self.managedObjectContext];
-        self.article = [Article articleWithTitle:self.articleTitle andBook:book inManagedObjectContext:self.managedObjectContext];
+        self.article = [Article articleWithTitle:self.articleTitle andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
         [self initializeZimReader];
     } else {
-        if ([Preference hasOpeningBook]) {
-            //If not told which article to open AND there is an opening book, open the last read article
-            self.articleTitle = [Preference lastReadArticleTitle];
-            [self initializeZimReader];
+        if (self.openingBook) {
+            //If not told which article to open AND there is an opening book, see if there is a last read article from the opening book
+            self.article = [CoreDataTask lastReadArticleFromBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
+            if (self.article) {
+                // There is a last read article
+                self.articleTitle = self.article.title;
+                [self initializeZimReader];
+            } else {
+                // There is not a last read article
+            }
         } else {
             //If not told which article to open AND there is not an opening book, display message
         }
@@ -64,12 +73,7 @@ NSUInteger textFontSize = 100;
 }
 
 - (void)initializeZimReader {
-    /*
-    NSString *zimFilePath = [zimFileFinder zimFilePathInAppSupportDirectoryFormFileID:self.bookID];
-    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[NSURL fileURLWithPath:zimFilePath]];
-    NSString *htmlString = [reader htmlContentOfPageWithPagetitle:self.articleTitle];*/
-    
-    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.bookID articleTitle:self.articleTitle];
+    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.openingBook.idString articleTitle:self.articleTitle];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
