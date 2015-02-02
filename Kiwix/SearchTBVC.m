@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *filteredArticleArray; // An array of article names
 @property (strong, nonatomic) zimReader *reader;
 @property (strong, nonatomic) Book *openingBook;
+@property (strong, nonatomic) UIBarButtonItem *leftNavBarItem;
 @end
 
 @implementation SearchTBVC
@@ -39,7 +40,13 @@
         self.reader = [[zimReader alloc] initWithZIMFileURL:[zimFileFinder zimFileURLInLibraryDirectoryFormFileID:self.openingBook.idString]];
     }
     
+    self.searchBar.frame = CGRectMake(0, 70, 320, 44);
     self.navigationController.toolbarHidden = YES;
+    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearch)];
+
     
     NSLog(@"Switched to Search.");
 }
@@ -47,6 +54,37 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)toggleSearch {
+    // get the height of the search bar
+    float delta = self.searchBar.frame.size.height;
+    // check if toolbar was visible or hidden before the animation
+    BOOL isHidden = [self.searchBar isHidden];
+    
+    // if search bar was visible set delta to negative value
+    if (!isHidden) {
+        delta *= -1;
+    } else {
+        // if search bar was hidden then make it visible
+        self.searchBar.hidden = NO;
+    }
+    
+    // run animation 0.7 second and no delay
+    [UIView animateWithDuration:0.7 delay: 0.0 options: UIViewAnimationOptionCurveEaseIn animations:^{
+        // move search bar delta units up or down
+        self.searchBar.frame = CGRectOffset(self.searchBar.frame, 0.0, delta);
+    } completion:^(BOOL finished) {
+        //if the bar was visible then hide it
+        if (!isHidden) {
+            self.searchBar.hidden = YES;
+        }
+    }];
 }
 
 #pragma mark - SlideMenu Delegation
@@ -117,7 +155,7 @@
     if ([segue.identifier isEqualToString:@"SelectArticleFromSearch"]) {
         NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
         ArticleVC *destination = [segue destinationViewController];
-        destination.articleTitle = [self.filteredArticleArray objectAtIndex:indexPath.row];
+        //destination.articleTitle = [self.filteredArticleArray objectAtIndex:indexPath.row];
     }
 }
 
@@ -129,6 +167,17 @@
         self.filteredArticleArray = [NSMutableArray arrayWithArray:filteredArticles];
         NSLog(@"Search text:%@, %lu items found in zimfile", searchText, (unsigned long)[self.filteredArticleArray count]);
     }
+}
+
+#pragma mark - UISearchBar delegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+    [self.navigationItem setHidesBackButton:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [self.navigationItem setHidesBackButton:NO];
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods

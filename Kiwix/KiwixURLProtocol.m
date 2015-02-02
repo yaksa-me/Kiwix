@@ -34,25 +34,31 @@
     zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[requestURL zimFileURL]];
     NSData *contentData;
     
-    //[reader exceptionHandling];
-    if ([[requestURL pathExtension] caseInsensitiveCompare:@"html"] == NSOrderedSame) {
-        NSString *articleTitle = [[[requestURL contentURLString] componentsSeparatedByString:@"/"] lastObject];
-        articleTitle = [articleTitle stringByReplacingOccurrencesOfString:@".html" withString:@""];
-        contentData = [reader dataWithArticleTitle:articleTitle];
-
+    if ([[requestURL path] containsString:@"(main)"]) {
+        contentData = [reader dataWithContentOfMainPage];
     } else {
         contentData = [reader dataWithContentURLString:[requestURL contentURLString]];
     }
+    /*
+    if ([[requestURL pathExtension] caseInsensitiveCompare:@"html"] == NSOrderedSame) {
+        if ([[requestURL path] containsString:@"(null)"]) {
+            contentData = [reader dataWithContentOfMainPage];
+        } else {
+            contentData = [reader dataWithContentURLString:[requestURL contentURLString]];
+        }
+    } else {
+        contentData = [reader dataWithContentURLString:[requestURL contentURLString]];
+    }*/
     
     NSURLResponse *response = [[NSURLResponse alloc] initWithURL:requestURL MIMEType:[requestURL expectedMIMEType] expectedContentLength:[contentData length] textEncodingName:nil];
     
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
     if (contentData) {
-        NSLog(@"Load %@ success, length: %ld", [requestURL contentURLString], (unsigned long)[contentData length]);
+        //NSLog(@"Load %@ success, length: %ld", [requestURL contentURLString], (unsigned long)[contentData length]);
         [self.client URLProtocol:self didLoadData:contentData];
         [self.client URLProtocolDidFinishLoading:self];
     } else {
-        NSLog(@"Load %@ failed, length: %ld", [requestURL contentURLString], (unsigned long)[contentData length]);
+        //NSLog(@"Load %@ failed, length: %ld", [requestURL contentURLString], (unsigned long)[contentData length]);
         [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil]];
     }
 }

@@ -95,6 +95,25 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Book *book = [self.fileList objectAtIndex:indexPath.row];
+        [FileCoordinator deleteBookWithID:book.idString inManagedObjectContext:self.managedObjectContext];
+        [self setFileLists];
+        /*
+         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+         if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+         [Preference noLongerHasAnOpeningBook];
+         }
+         */
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -111,24 +130,5 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [tableView reloadData];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Book *book = [self.fileList objectAtIndex:indexPath.row];
-        [FileCoordinator deleteBookWithID:book.idString inManagedObjectContext:self.managedObjectContext];
-        [self setFileLists];
-        /*
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            [Preference noLongerHasAnOpeningBook];
-        }
-        */
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
 }
 @end

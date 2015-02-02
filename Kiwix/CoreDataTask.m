@@ -188,4 +188,26 @@
     return [matches firstObject];
 }
 
++ (void)deleteArticleWithTitle:(NSString *)title inBook:(Book*)book inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Article"];
+    request.predicate = [NSPredicate predicateWithFormat:@"title = %@ AND belongsToBook = %@", title, book];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error || ([matches count] > 1)) {
+        //Should never get here, something is wrong.
+    } else if ([matches count]) {
+        //One article exist
+        [context deleteObject:[matches firstObject]];
+    } else {
+        //book not exist
+    }
+
+}
+
++ (void)deleteArticle:(Article *)article inManagedObjectContext:(NSManagedObjectContext *)context {
+    [context deleteObject:(NSManagedObject *)article];
+}
+
 @end

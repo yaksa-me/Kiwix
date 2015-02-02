@@ -15,7 +15,7 @@
 
 - (NSString *)htmlContentOfPageWithPageURLString:(NSString *)pageURLString;//Will return nil if there is no page with that specific URL
 - (NSString *)htmlContentOfPageWithPagetitle:(NSString *)title;
-- (NSString *)htmlContentOfMainPage;
+- (NSData *)dataWithContentOfMainPage;
 - (NSData *)dataWithContentURLString:(NSString *)pageURLString;
 - (NSData *)dataWithArticleTitle:(NSString *)title;
 
@@ -34,7 +34,6 @@
 - (NSUInteger)getGlobalCount;
 
 - (void)dealloc;
-- (void)exceptionHandling;
 
 
 @end

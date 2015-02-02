@@ -22,10 +22,10 @@
 + (void)addAllFilesInLibraryDirToDatabaseInManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)deleteBookWithID:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context; //Delete a book in Coredata DB and delete the relevent file on disk
 
-+ (void)addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir;
-+ (void)removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir;
-+ (void)addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID;
-+ (void)removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID;
++ (void)addNoiCloudBackupAttributeToAllZimFilesInLibraryDir;
++ (void)removeNoiCloudBackupAttributeFromAllZimFilesInLibraryDir;
++ (void)addNoiCloudBackupAttributeToZimFilesInLibraryDirWithZimFileID:(NSString *)fileID;
++ (void)removeNoiCloudBackupAttributeFromZimFilesInLibraryDirWithZimFileID:(NSString *)fileID;
 
 
 @end

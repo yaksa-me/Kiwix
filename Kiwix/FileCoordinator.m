@@ -42,9 +42,9 @@
     [self renameZimFilesInLibDir];
     
     if ([Preference isBackingUpFilesToiCloud]) {
-        [self removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir];
+        [self removeNoiCloudBackupAttributeFromAllZimFilesInLibraryDir];
     } else {
-        [self addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir];
+        [self addNoiCloudBackupAttributeToAllZimFilesInLibraryDir];
     }
 }
 
@@ -139,22 +139,22 @@
 }
 
 #pragma mark - File Attribute Management
-+ (void)addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir {
-    NSArray *fileIDArray = [zimFileFinder zimFileIDsInAppSupportDirectory];
++ (void)addNoiCloudBackupAttributeToAllZimFilesInLibraryDir {
+    NSArray *fileIDArray = [zimFileFinder zimFileIDsInLibraryDirectory];
     for (NSString *fileID in fileIDArray) {
-        [self addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:fileID];
+        [self addNoiCloudBackupAttributeToZimFilesInLibraryDirWithZimFileID:fileID];
     }
 }
 
-+ (void)removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir {
-    NSArray *fileIDArray = [zimFileFinder zimFileIDsInAppSupportDirectory];
++ (void)removeNoiCloudBackupAttributeFromAllZimFilesInLibraryDir {
+    NSArray *fileIDArray = [zimFileFinder zimFileIDsInLibraryDirectory];
     for (NSString *fileID in fileIDArray) {
-        [self removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:fileID];
+        [self removeNoiCloudBackupAttributeFromZimFilesInLibraryDirWithZimFileID:fileID];
     }
 }
 
-+ (void)addNoiCloudBackupAttributeToZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID {
-    NSURL *fileURL = [zimFileFinder zimFileURLInAppSupportDirectoryFormFileID:fileID];
++ (void)addNoiCloudBackupAttributeToZimFilesInLibraryDirWithZimFileID:(NSString *)fileID {
+    NSURL *fileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:fileID];
     assert([[NSFileManager defaultManager] fileExistsAtPath: [fileURL path]]);
     
     NSError *error = nil;
@@ -164,8 +164,8 @@
     }
 }
 
-+ (void)removeNoiCloudBackupAttributeFromZimFilesInAppSupportDirWithZimFileID:(NSString *)fileID {
-    NSURL *fileURL = [zimFileFinder zimFileURLInAppSupportDirectoryFormFileID:fileID];
++ (void)removeNoiCloudBackupAttributeFromZimFilesInLibraryDirWithZimFileID:(NSString *)fileID {
+    NSURL *fileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:fileID];
     assert([[NSFileManager defaultManager] fileExistsAtPath: [fileURL path]]);
     
     NSError *error = nil;
