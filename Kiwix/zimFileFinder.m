@@ -10,60 +10,7 @@
 #import "FileCoordinator.h"
 
 @implementation zimFileFinder
-/*
-+ (NSArray *)zimFileNamesInDocumentDirectory {
-    NSMutableArray *fileListToReturn = [[NSMutableArray alloc] init];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSArray *allFileList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirPath error:nil];
 
-    for (NSString *file in allFileList) {
-        NSString *extention = [[file componentsSeparatedByString:@"."] lastObject];
-        if ([extention isEqualToString:@"zim"]) {
-            NSString *fileName = [[file componentsSeparatedByString:@"."] firstObject];
-            [fileListToReturn addObject:fileName];
-        }
-    }
-    return fileListToReturn;
-}
-
-+ (NSArray *)zimFilePathsInDocumentDirectory {
-    NSMutableArray *fileListToReturn = [[NSMutableArray alloc] init];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSArray *allFileList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirPath error:nil];
-    
-    for (NSString *file in allFileList) {
-        NSString *extention = [[file componentsSeparatedByString:@"."] lastObject];
-        if ([extention isEqualToString:@"zim"]) {
-            NSString *filePath = [[documentDirPath stringByAppendingString:@"/"] stringByAppendingString:file];
-            [fileListToReturn addObject:filePath];
-        }
-    }
-    return fileListToReturn;
-}
-
-+ (NSString *)zimFilePathInDocumentDirectoryFormFileName:(NSString *)fileName {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    documentDirPath = [documentDirPath stringByAppendingString:@"/"];
-    NSString *filepath= [[documentDirPath stringByAppendingString:fileName] stringByAppendingString:@".zim"];
-    return filepath;
-}
-
-+ (NSURL *)zimFileURLInDocumentDirectoryFormFileName:(NSString *)fileName {
-    NSURL *fileURL = [NSURL fileURLWithPath:[self zimFilePathInDocumentDirectoryFormFileName:fileName]];
-    return fileURL;
-}
-
-+ (NSString *)zimFileNameFromZimFilePath:(NSString *)zimFilePath {
-    NSString *fileNameWithExtention = [[zimFilePath componentsSeparatedByString:@"/"] lastObject];
-    NSString *fileName = [[fileNameWithExtention componentsSeparatedByString:@"."] firstObject];
-    return fileName;
-}
-*/
 #pragma mark -App Support
 + (NSArray *)zimFileIDsInAppSupportDirectory {
     NSArray *appSupportPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
@@ -94,11 +41,39 @@
     return fileURL;
 }
 
-#pragma mark - get file URL
-+ (NSURL *)zimFileURLInLibraryDirectoryFormFileID:(NSString *)fileID {
+
+#pragma mark - Library Dir
+
++ (NSArray *)zimFileIDsInLibraryDirectory {
     NSString *libDirPath = [FileCoordinator libDirPath];
-    NSString *filePathInLibDir = [[[libDirPath stringByAppendingString:@"/"] stringByAppendingString:fileID] stringByAppendingString:@".zim"];
+    NSArray *allFileNamesList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:libDirPath error:nil];
+    NSMutableArray *idStringList = [[NSMutableArray alloc] init];
+    
+    for (NSString *fileName in allFileNamesList) {
+        NSString *extention = [[fileName componentsSeparatedByString:@"."] lastObject];
+        if ([extention isEqualToString:@"zim"]) {
+            NSString *idString = [[fileName componentsSeparatedByString:@"."] firstObject];
+            [idStringList addObject:idString];
+        }
+    }
+    return idStringList;
+}
+
++ (NSString *)zimFilePathInLibraryDirectoryFormFileID:(NSString *)fileID {
+    NSString *libDirPath = [FileCoordinator libDirPath];
+    return [[[libDirPath stringByAppendingString:@"/"] stringByAppendingString:fileID] stringByAppendingString:@".zim"];
+}
+
++ (NSURL *)zimFileURLInLibraryDirectoryFormFileID:(NSString *)fileID {
+    NSString *filePathInLibDir = [self zimFilePathInLibraryDirectoryFormFileID:fileID];
     NSURL *fileURL = [NSURL fileURLWithPath:filePathInLibDir];
     return fileURL;
 }
+
++ (BOOL)zimFileExistInLibraryDirectoryWithFileID:(NSString *)fileID {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePath = [self zimFilePathInLibraryDirectoryFormFileID:fileID];
+    return [fileManager fileExistsAtPath:filePath];
+}
+
 @end

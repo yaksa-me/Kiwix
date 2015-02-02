@@ -12,10 +12,12 @@
 #import "AppDelegate.h"
 #import "Book.h"
 #import "FileCoordinator.h"
+#import "FilePropertiesTBVC.h"
 
 @interface SettingTBVC ()
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) Book *openingBook;
 
 @end
 
@@ -29,6 +31,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
@@ -45,7 +48,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         //File choosing cell
-        if ([Preference hasOpeningBook]) {
+        if (self.openingBook) {
             return 2;
         } else {
             return 1;
@@ -97,10 +100,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *string;
     if (section == 0) {
-        if ([Preference hasOpeningBook]) {
-            NSString *idString = [Preference openingBookID];
-            Book *book = [CoreDataTask bookWithIDString:idString inManagedObjectContext:self.managedObjectContext];
-            string = [NSString stringWithFormat:@"%@ is currently opened.", book.title];
+        if (self.openingBook) {
+            string = [NSString stringWithFormat:@"%@ is currently opened.", self.openingBook.title];
         } else {
             string = @"No Book is opened.";
         }
@@ -119,15 +120,17 @@
     }
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ShowBookDetail"]) {
+        FilePropertiesTBVC *destination = segue.destinationViewController;
+        destination.book = self.openingBook;
+    }
 }
-*/
+
 
 #pragma mark - Slide Menu Delegation
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
@@ -139,11 +142,11 @@
 - (void)setiCloudBackupPreference:(UISwitch *)backupStateSwitch {
     if (backupStateSwitch.on) {
         //should backup to iCloud
-        [FileCoordinator removeNoiCloudBackupAttributeFromAllZimFilesInAppSupportDir];
+        [FileCoordinator removeNoiCloudBackupAttributeFromAllZimFilesInLibraryDir];
         [Preference setIsBackingUpFilesToiCloud:YES];
     } else {
         //should not backup to iCloud
-        [FileCoordinator addNoiCloudBackupAttributeToAllZimFilesInAppSupportDir];
+        [FileCoordinator addNoiCloudBackupAttributeToAllZimFilesInLibraryDir];
         [Preference setIsBackingUpFilesToiCloud:NO];
     }
 }

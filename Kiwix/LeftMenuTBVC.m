@@ -33,7 +33,7 @@
     [super viewDidLoad];
     
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
-    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInManagedObjectContext:self.managedObjectContext];
+    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     //[[self.toolbarItems firstObject] setImage:[UIImage imageNamed:@"settings-64.png"] forState:UIControlStateNormal];
 }
 
@@ -49,6 +49,7 @@
 
 - (void)reloadTableViewConditioningOnNotificationMesssage:(NSNotification *)notification{
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     if ([[notification.userInfo objectForKey:@"menu"] isEqualToString:@"left"]) {
         [self.tableView reloadData];
     }
@@ -68,7 +69,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return 3;
 }
 
 
@@ -83,13 +84,6 @@
     }
     
     if (indexPath.row == 0) {
-        cell.cellTitleLabel.text = @"Search";
-        if (self.openingBook) {
-            cell.cellDetailLabel.text = [NSString stringWithFormat:@"%lu articles", [self.openingBook.articleCount longValue]];
-        } else {
-            cell.cellDetailLabel.text = @"No Book is Opening";
-        }
-    } else if (indexPath.row == 1) {
         cell.cellTitleLabel.text = @"Reading";
         Article *lastReadArticle = [CoreDataTask lastReadArticleFromBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
         if (lastReadArticle) {
@@ -98,7 +92,7 @@
             cell.cellDetailLabel.text = @"Haven't opened an article yet!";
         }
         
-    } else if (indexPath.row == 2){
+    } else if (indexPath.row == 1){
         cell.cellTitleLabel.text = @"Bookmarks";
     } else {
         cell.cellTitleLabel.text = @"History";
@@ -126,22 +120,16 @@
     switch (indexPath.row)
     {
         case 0:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"SearchTBVC"];
-            [Preference setCurrentMenuIndex:0];
-            break;
-            
-        case 1:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
             [Preference setCurrentMenuIndex:1];
             break;
             
-        case 2:
+        case 1:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookmarksTBVC"];
-            ((BookmarksTBVC *)viewController).managedObjectContext = self.managedObjectContext;
             [Preference setCurrentMenuIndex:2];
             break;
             
-        case 3:
+        case 2:
             viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"HistoryTBVC"];
             [Preference setCurrentMenuIndex:3];
             break;

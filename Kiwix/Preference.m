@@ -14,6 +14,7 @@
 #define OPENING_BOOK_ARTICLE_COUNT @"openingBookArticleCount"
 
 #define IS_BACKINGUP_FILES_TO_ICLOUD @"isBackingUpFilesToiCloud"
+#define OPEN_LAST_READ_WHEN_LUNCH @"openLastReadWhenLunch"
 
 @implementation Preference
 
@@ -131,6 +132,22 @@
 + (void)setIsBackingUpFilesToiCloud:(BOOL)backupState {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:backupState forKey:IS_BACKINGUP_FILES_TO_ICLOUD];
+    [defaults synchronize];
+}
+
+#pragma mark - Open Last Read When Lunch
++ (BOOL)openLastReadWhenLunch {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults boolForKey:OPEN_LAST_READ_WHEN_LUNCH]) {
+        [defaults setBool:NO forKey:OPEN_LAST_READ_WHEN_LUNCH];
+        [defaults synchronize];
+    }
+    return [defaults boolForKey:OPEN_LAST_READ_WHEN_LUNCH];
+}
+
++ (void)setOpenLastReadWhenLunch:(BOOL)mainPageLunchOpenState {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:mainPageLunchOpenState forKey:OPEN_LAST_READ_WHEN_LUNCH];
     [defaults synchronize];
 }
 

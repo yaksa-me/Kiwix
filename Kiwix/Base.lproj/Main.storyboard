@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5a3-dK-Esi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5a3-dK-Esi">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Slide Navigation Controller-->
+        <!--Item-->
         <scene sceneID="2Iu-NF-ARo">
             <objects>
                 <navigationController id="5a3-dK-Esi" customClass="SlideNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="XgU-Iz-ax0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0xO-Jx-LkR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="H4B-ku-YIy" kind="relationship" relationship="rootViewController" id="awm-a4-WYd"/>
+                        <segue destination="w3N-4L-YkQ" kind="relationship" relationship="rootViewController" id="fcY-3k-pCa"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUw-hY-lEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -31,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="BookCell" textLabel="Vr1-yq-0tO" style="IBUITableViewCellStyleDefault" id="Gd3-UK-w9q">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="BookCell" textLabel="Vr1-yq-0tO" detailTextLabel="zka-C2-SYM" style="IBUITableViewCellStyleSubtitle" id="Gd3-UK-w9q">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gd3-UK-w9q" id="hgf-FQ-eID">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -39,6 +40,12 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vr1-yq-0tO">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zka-C2-SYM">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -125,7 +132,7 @@
             </objects>
             <point key="canvasLocation" x="2073" y="2047"/>
         </scene>
-        <!--ArticleVC-->
+        <!--Item-->
         <scene sceneID="CF9-mu-nXd">
             <objects>
                 <viewController storyboardIdentifier="ArticleVC" id="w3N-4L-YkQ" customClass="ArticleVC" sceneMemberID="viewController">
@@ -137,37 +144,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-ZY-YD3">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="601"/>
+                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aPw-pk-EYS">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
+                            <searchBar contentMode="redraw" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7xD-II-61N">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="w3N-4L-YkQ" id="4zh-8t-b6S"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="KTO-ZY-YD3" secondAttribute="trailing" constant="-16" id="Gm2-Bp-zhu"/>
-                            <constraint firstItem="KTO-ZY-YD3" firstAttribute="leading" secondItem="RIU-RM-tep" secondAttribute="leadingMargin" constant="-16" id="HTU-Jg-dT1"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="KTO-ZY-YD3" secondAttribute="bottom" constant="-45" id="S5y-Cr-yjj"/>
-                            <constraint firstItem="KTO-ZY-YD3" firstAttribute="top" secondItem="RIU-RM-tep" secondAttribute="topMargin" id="bKd-0S-PtU"/>
+                            <constraint firstItem="7xD-II-61N" firstAttribute="leading" secondItem="RIU-RM-tep" secondAttribute="leadingMargin" constant="-16" id="Czs-l2-bNG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aPw-pk-EYS" secondAttribute="trailing" constant="-16" id="J9n-QS-jK1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7xD-II-61N" secondAttribute="trailing" constant="-16" id="U7E-75-ymY"/>
+                            <constraint firstItem="aPw-pk-EYS" firstAttribute="leading" secondItem="RIU-RM-tep" secondAttribute="leadingMargin" constant="-16" id="V3A-Pc-fSA"/>
+                            <constraint firstItem="ax4-hd-0Kx" firstAttribute="top" secondItem="aPw-pk-EYS" secondAttribute="bottom" constant="-46" id="gY2-fr-CYt"/>
+                            <constraint firstItem="aPw-pk-EYS" firstAttribute="top" secondItem="PG1-1a-sZI" secondAttribute="bottom" constant="-64" id="zut-di-vkp"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="31s-4B-Tvk"/>
                     <toolbarItems>
-                        <barButtonItem image="Left" id="5MR-Jo-dWR"/>
-                        <barButtonItem image="Right" id="R53-EQ-JIW"/>
+                        <barButtonItem image="Left" id="5MR-Jo-dWR">
+                            <connections>
+                                <action selector="webViewNavigation:" destination="w3N-4L-YkQ" id="eL5-TA-P2I"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="1" image="Right" id="R53-EQ-JIW">
+                            <connections>
+                                <action selector="webViewNavigation:" destination="w3N-4L-YkQ" id="xDO-Ff-GUd"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="5OR-RS-Fbz"/>
-                        <barButtonItem image="Font+" id="1CM-j6-Qrz"/>
-                        <barButtonItem image="Font-" id="rhP-63-TAZ"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="bQG-fN-qxL"/>
-                        <barButtonItem image="AlignLeft" id="hwv-NG-Oiv"/>
-                        <barButtonItem image="AlignJustify" id="v93-kN-M3b"/>
+                        <barButtonItem systemItem="action" id="hwv-NG-Oiv"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="s9U-T5-brd"/>
+                        <barButtonItem systemItem="bookmarks" id="3R6-3N-UcB"/>
+                        <barButtonItem title="Item" id="v93-kN-M3b">
+                            <connections>
+                                <action selector="testButton:" destination="w3N-4L-YkQ" id="p1c-0b-B37"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
+                    <navigationItem key="navigationItem" id="kMp-b1-9Cg"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
-                        <outlet property="webView" destination="KTO-ZY-YD3" id="IaQ-ar-o0J"/>
+                        <outlet property="searchBar" destination="7xD-II-61N" id="Gd7-rS-nQK"/>
+                        <outlet property="searchDisplayController" destination="WjW-Wo-FN0" id="piV-F1-QzP"/>
+                        <outlet property="webView" destination="aPw-pk-EYS" id="RmK-jO-V12"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ft1-oS-UGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="hhA-9m-9gh">
+                    <connections>
+                        <outlet property="delegate" destination="w3N-4L-YkQ" id="oZd-LC-ICL"/>
+                        <outlet property="searchContentsController" destination="w3N-4L-YkQ" id="RdB-Nv-s7c"/>
+                        <outlet property="searchResultsDataSource" destination="w3N-4L-YkQ" id="uJE-dE-mn6"/>
+                        <outlet property="searchResultsDelegate" destination="w3N-4L-YkQ" id="2p8-2f-Dko"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="WjW-Wo-FN0">
+                    <connections>
+                        <outlet property="delegate" destination="w3N-4L-YkQ" id="Bny-MG-mEd"/>
+                        <outlet property="searchBar" destination="7xD-II-61N" id="bde-wf-JRI"/>
+                        <outlet property="searchContentsController" destination="w3N-4L-YkQ" id="twC-5C-M3h"/>
+                        <outlet property="searchResultsDataSource" destination="w3N-4L-YkQ" id="X2J-nP-A4w"/>
+                        <outlet property="searchResultsDelegate" destination="w3N-4L-YkQ" id="2Vj-JP-iRZ"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1629" y="829"/>
+            <point key="canvasLocation" x="1281" y="-148"/>
         </scene>
         <!--Kiwix-->
         <scene sceneID="SVu-tR-u9i">
@@ -205,58 +253,7 @@
             </objects>
             <point key="canvasLocation" x="545" y="-894"/>
         </scene>
-        <!--SearchTBVC-->
-        <scene sceneID="IIR-o0-VjF">
-            <objects>
-                <tableViewController storyboardIdentifier="SearchTBVC" id="H4B-ku-YIy" customClass="SearchTBVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tbW-Al-cHI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="O91-Wn-8Bg">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="H4B-ku-YIy" id="CPY-aR-Gzm"/>
-                            </connections>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SearchArticleCell" id="gD8-uA-RgD">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gD8-uA-RgD" id="066-6D-KdB">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="w3N-4L-YkQ" kind="show" identifier="SelectArticleFromSearch" id="FpP-sK-tSL"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="H4B-ku-YIy" id="4N6-Nv-Ue6"/>
-                            <outlet property="delegate" destination="H4B-ku-YIy" id="ZSg-1g-ub0"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="iBd-c4-TSe"/>
-                    <connections>
-                        <outlet property="searchBar" destination="O91-Wn-8Bg" id="EWB-zK-he9"/>
-                        <outlet property="searchDisplayController" destination="pjR-il-HOe" id="3Mo-eA-tYS"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-8l-SbM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="pjR-il-HOe">
-                    <connections>
-                        <outlet property="delegate" destination="H4B-ku-YIy" id="GyM-Wo-euU"/>
-                        <outlet property="searchBar" destination="O91-Wn-8Bg" id="GW2-hO-HuD"/>
-                        <outlet property="searchContentsController" destination="H4B-ku-YIy" id="VN4-rP-nzk"/>
-                        <outlet property="searchResultsDataSource" destination="H4B-ku-YIy" id="4NO-Ac-G5X"/>
-                        <outlet property="searchResultsDelegate" destination="H4B-ku-YIy" id="WTJ-me-kVr"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="545" y="-148"/>
-        </scene>
-        <!--BookmarksTBVC-->
+        <!--Item-->
         <scene sceneID="fnC-de-GxX">
             <objects>
                 <tableViewController storyboardIdentifier="BookmarksTBVC" id="kqc-HD-cpl" customClass="BookmarksTBVC" sceneMemberID="viewController">
@@ -277,12 +274,13 @@
                             <outlet property="delegate" destination="kqc-HD-cpl" id="jbB-sT-xqt"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="mER-ul-seX"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aU0-1h-yDK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="577"/>
         </scene>
-        <!--HistoryTBVC-->
+        <!--Item-->
         <scene sceneID="oXM-K6-9dU">
             <objects>
                 <tableViewController storyboardIdentifier="HistoryTBVC" id="PC2-uf-rLb" customClass="HistoryTBVC" sceneMemberID="viewController">
@@ -320,12 +318,13 @@
                             <outlet property="delegate" destination="PC2-uf-rLb" id="zHL-Cb-Si3"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="DQu-6N-Cac"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N7g-Nk-3H9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="1309"/>
         </scene>
-        <!--SettingTBVC-->
+        <!--Item-->
         <scene sceneID="fsM-KL-kw2">
             <objects>
                 <tableViewController storyboardIdentifier="SettingTBVC" id="Tc2-1o-ki1" customClass="SettingTBVC" sceneMemberID="viewController">
@@ -380,7 +379,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="o7b-Nx-XzD" kind="show" id="NT4-Mh-Rfm"/>
+                                    <segue destination="o7b-Nx-XzD" kind="show" identifier="ShowBookDetail" id="NT4-Mh-Rfm"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="iCloudBackupCell" textLabel="rlQ-tI-a1b" style="IBUITableViewCellStyleDefault" id="wQi-30-noB">
@@ -405,6 +404,7 @@
                             <outlet property="delegate" destination="Tc2-1o-ki1" id="etK-TR-1Jk"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="i90-Pp-lyt"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGI-T8-fGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -431,14 +431,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AlignJustify" width="33" height="33"/>
-        <image name="AlignLeft" width="33" height="33"/>
-        <image name="Font+" width="33" height="33"/>
-        <image name="Font-" width="33" height="33"/>
         <image name="Left" width="33" height="33"/>
         <image name="Right" width="33" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FpP-sK-tSL"/>
+        <segue reference="Wsl-m1-9ah"/>
     </inferredMetricsTieBreakers>
 </document>

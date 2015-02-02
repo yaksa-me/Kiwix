@@ -12,24 +12,20 @@
 
 @implementation NSURL (KiwixURLProtocol)
 
-// Create a new URL by encoding archiveURL as the `host` and `entryFileName` as the `path`
-+ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleTitle:(NSString *)articleTitle
-{
-    NSString *articleURL = [articleTitle stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    articleURL = [NSString stringWithFormat:@"A/%@.html", articleURL];
-    NSURL *newArchiveURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
-    NSURL *newURL = [NSURL URLWithString:articleURL relativeToURL:newArchiveURL];
+// encoder
++ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleURL:(NSString *)articleURL {
+    NSURL *zimFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
+    NSURL *newURL = [NSURL URLWithString:articleURL relativeToURL:zimFileURL];
     return newURL;
 }
 
-// Decode the zim file URL from the `host` property
+////Decoder
 - (NSURL *)zimFileURL {
     NSString *idString = [[self.host componentsSeparatedByString:@"/"] lastObject];
     NSURL *zimFileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:idString];
     return zimFileURL;
 }
 
-// Decode the article name from the `path` property
 - (NSString *)contentURLString {
     //NSLog(@"contentURLString is: %@", self.path);
     NSString *contentURLString = [self.path stringByReplacingOccurrencesOfString:@"%20" withString:@" "];

@@ -31,8 +31,6 @@
 - (NSString *)htmlContentOfPageWithPageURLString:(NSString *)pageURLString {
     NSString *htmlContent = nil;
     
-    //pageURLString = [pageURLString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    //pageURLString = [pageURLString stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
     string pageURLC = [pageURLString cStringUsingEncoding:NSUTF8StringEncoding];
 
     string content;
@@ -41,7 +39,7 @@
     if (_reader->getContentByUrl(pageURLC, content, contentLength, contentType)) {
         htmlContent = [NSString stringWithUTF8String:content.c_str()];
     }
-    NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[htmlContent length]);
+    //NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[htmlContent length]);
     return htmlContent;
 }
 
@@ -49,8 +47,8 @@
     return [self htmlContentOfPageWithPageURLString:[self pageURLFromTitle:title]];
 }
 
-- (NSString *)htmlContentOfMainPage {
-    return [self htmlContentOfPageWithPageURLString:self.mainPageURL];
+- (NSData *)dataWithContentOfMainPage {
+    return [self dataWithContentURLString:[self mainPageURL]];
 }
 
 - (NSData *)dataWithContentURLString:(NSString *)pageURLString {
@@ -63,7 +61,7 @@
     if (_reader->getContentByUrl(pageURLC, content, contentLength, contentType)) {
         contentData = [NSData dataWithBytes:content.data() length:contentLength];
     }
-    NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[contentData length]);
+    //NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[contentData length]);
     return contentData;
 }
 

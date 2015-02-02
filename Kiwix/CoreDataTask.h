@@ -32,5 +32,8 @@
 + (Article *)lastReadArticleFromBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
++ (void)deleteArticleWithTitle:(NSString *)title inBook:(Book*)book inManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)deleteArticle:(Article *)article inManagedObjectContext:(NSManagedObjectContext *)context;
+
 
 @end

@@ -32,16 +32,21 @@
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
-    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
+    [self setTableViewDataSource];
     
     NSTimer* timer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(updateTableView) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     
     self.navigationController.toolbarHidden = YES;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)updateTableView {
     [self.tableView reloadData];
+}
+
+- (void)setTableViewDataSource {
+    self.articleReadHistoryArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,14 +75,17 @@
     return cell;
 }
 
-#pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"SelectArticleFromHistory"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ArticleVC *destination = [segue destinationViewController];
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         Article *article = [self.articleReadHistoryArray objectAtIndex:indexPath.row];
-        //destination.bookID = article.belongsToBook.idString;
-        destination.articleTitle = article.title;
+        [CoreDataTask deleteArticle:article inManagedObjectContext:self.managedObjectContext];
+        [self setTableViewDataSource];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -87,4 +95,13 @@
     return YES;
 }
 
+#pragma mark - Navigation 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"SelectArticleFromHistory"]) {
+        ArticleVC *destination = segue.destinationViewController;
+        NSUInteger indexOfSelectedArticle = [self.tableView indexPathForCell:(UITableViewCell *)sender].row;
+        Article *selectedArticle = [self.articleReadHistoryArray objectAtIndex:indexOfSelectedArticle];
+        destination.article = selectedArticle;
+    }
+}
 @end
