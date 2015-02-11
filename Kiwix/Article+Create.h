@@ -10,7 +10,7 @@
 
 @interface Article (Create)
 
-+ (Article *)articleWithTitle:(NSString *)title andBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
-+ (void)insertArticleWithTitle:(NSString *)title andBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Article *)articleWithTitleInfo:(NSDictionary *)articleInfo andBook:(Book *)book inManagedObjectContext:(NSManagedObjectContext *)context;
+//+ (void)insertArticleWithTitle:(NSString *)title andBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

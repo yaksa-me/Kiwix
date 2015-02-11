@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Book.h"
 
 @interface FilePropertiesTBVC : UITableViewController
 
-@property (strong, nonatomic) Book *book;
 
 @end

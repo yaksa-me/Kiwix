@@ -25,13 +25,25 @@
 
 - (NSArray *)searchSuggestionsSmart:(NSString *)searchTerm;
 
-- (NSString *)getTitle;
-- (NSString *)getDate;
-- (NSString *)getID;
+
+
+
 
 - (NSUInteger)getArticleCount;
 - (NSUInteger)getMediaCount;
 - (NSUInteger)getGlobalCount;
+
+- (NSString *)getID;
+- (NSString *)getTitle;
+- (NSString *)getDesc;
+- (NSString *)getLanguage;
+- (NSDate *)getDate;
+- (NSString *)getCreator;
+- (NSString *)getPublisher;
+- (NSString *)getOriginID;
+- (NSUInteger)getFileSize;
+- (NSData *)getFavicon;
+
 
 - (void)dealloc;
 

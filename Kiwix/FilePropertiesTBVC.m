@@ -7,15 +7,16 @@
 //
 
 #import "FilePropertiesTBVC.h"
-#import "Preference.h"
-#import "zimFileFinder.h"
-#import "zimReader.h"
+#import "CoreDataTask.h"
+#import "Book.h"
+#import "AppDelegate.h"
 
 @interface FilePropertiesTBVC ()
 
-@property (strong, nonatomic) zimReader *reader;
-@property (strong, nonatomic) NSArray *propertyNames;
-@property (strong, nonatomic) NSMutableDictionary *propertyValues;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) Book *book;
+@property (strong, nonatomic) NSArray *propertyNameA;
+@property (strong, nonatomic) NSMutableArray *propertyValueA;
 
 @end
 
@@ -24,14 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSURL *zimFileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:self.book.idString];
-    self.reader = [[zimReader alloc] initWithZIMFileURL:zimFileURL];
+    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    self.book = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     
-    self.propertyNames = @[@"Title", @"ID"];
-    self.propertyValues = [[NSMutableDictionary alloc] init];
-    [self.propertyValues setObject:[self.reader getTitle] forKey:@"Title"];
-    [self.propertyValues setObject:[self.reader getID] forKey:@"ID"];
+    self.propertyNameA = @[@"Title", @"Language", @"Date", @"Creator", @"Publisher"];
+    self.propertyValueA = [[NSMutableArray alloc] init];
+    [self.propertyValueA addObject:self.book.title];
+    [self.propertyValueA addObject:self.book.language];
+    [self.propertyValueA addObject:self.book.date];
+    [self.propertyValueA addObject:self.book.creator];
+    [self.propertyValueA addObject:self.book.publisher];
     
+    
+    //View setup
+    self.title = @"Properties";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,18 +53,48 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.propertyNames count];
+    if (section == 0) {
+        return [self.propertyValueA count];
+    } else {
+        return 0;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilePropertiesDetailCell" forIndexPath:indexPath];
     
-    NSString *propertyName = [self.propertyNames objectAtIndex:indexPath.row];
-    cell.textLabel.text = propertyName;
-    cell.detailTextLabel.text = [self.propertyValues objectForKey:propertyName];
+    if (indexPath.section == 0) {
+        NSString *property = [self.propertyNameA objectAtIndex:indexPath.row];
+        if ([property isEqual:@"Date"]) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"yyyy-MM-dd";
+            NSDate *propertyValue = [self.propertyValueA objectAtIndex:indexPath.row];
+            NSString *dateString = [dateFormatter stringFromDate:propertyValue];
+            
+            cell.textLabel.text = property;
+            cell.detailTextLabel.text = dateString;
+        } else {
+            NSString *propertyValue = [self.propertyValueA objectAtIndex:indexPath.row];
+            cell.textLabel.text = property;
+            cell.detailTextLabel.text = propertyValue;
+        }
+    }
+    
     
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.book.fileName;
+    } else {
+        return @"";
+    }
+}
+
+#pragma mark - Table View Delegate
+-(void)viewDidLayoutSubviews {
+    [self.tableView headerViewForSection:0].textLabel.textAlignment = NSTextAlignmentCenter;
+}
 @end

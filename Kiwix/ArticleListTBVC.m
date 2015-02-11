@@ -65,7 +65,7 @@
     ArticleVC *viewController;
     viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
     Article *article = [self.articles objectAtIndex:indexPath.row];
-    viewController.articleTitle = article.title;
+    //viewController.articleTitle = article.title;
     //viewController.bookIDString = self.bookIDString;
     //viewController.managedObjectContext = self.managedObjectContext;
     [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:viewController withSlideOutAnimation:YES andCompletion:^{

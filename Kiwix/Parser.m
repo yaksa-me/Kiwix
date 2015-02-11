@@ -61,4 +61,8 @@
     
 }
 
++ (NSString *)articleCountString:(NSUInteger)articleCount {
+    NSString *articleCountString;
+    return articleCountString;
+}
 @end

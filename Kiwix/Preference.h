@@ -33,5 +33,11 @@
 + (BOOL)openLastReadWhenLunch;
 + (void)setOpenLastReadWhenLunch:(BOOL)mainPageLunchOpenState;
 
++ (NSUInteger)readingMode;
++ (void)setReadingMode:(NSUInteger)mode;
+
++ (NSUInteger)readingFontSize;
++ (void)setReadingFontSize:(NSUInteger)fontSize;
+
 
 @end

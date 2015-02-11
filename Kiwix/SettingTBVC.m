@@ -113,7 +113,6 @@
 
 #pragma mark - Table View Delegate
 -(void)viewDidLayoutSubviews {
-    
     for (int section = 0; section < [self.tableView numberOfSections]; section++)
     {
         [self.tableView footerViewForSection:section].textLabel.textAlignment = NSTextAlignmentCenter;
@@ -127,7 +126,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowBookDetail"]) {
         FilePropertiesTBVC *destination = segue.destinationViewController;
-        destination.book = self.openingBook;
+        //destination.book = self.openingBook;
     }
 }
 

@@ -113,7 +113,30 @@
     return searchSuggestionsArray;
 }
 
-#pragma mark - getZimFileProperties
+
+
+
+#pragma mark - getCounts
+- (NSUInteger)getArticleCount {
+    return _reader->getArticleCount();
+}
+- (NSUInteger)getMediaCount {
+    return _reader->getMediaCount();
+}
+- (NSUInteger)getGlobalCount {
+    return _reader->getGlobalCount();
+}
+
+#pragma mark - get File Attributes
+- (NSString *)getID {
+    NSString *idString = nil;
+    
+    string idStringC;
+    idStringC = _reader->getId();
+    idString = [NSString stringWithCString:idStringC.c_str() encoding:NSUTF8StringEncoding];
+    
+    return idString;
+}
 - (NSString *)getTitle {
     NSString *title = nil;
     
@@ -123,45 +146,80 @@
     
     return title;
 }
-
-- (NSString *)getDate {
-    NSString *date = nil;
+- (NSString *)getDesc {
+    NSString *description = nil;
+    
+    string descriptionC;
+    descriptionC = _reader->getDescription();
+    description = [NSString stringWithCString:descriptionC.c_str() encoding:NSUTF8StringEncoding];
+    
+    return description;
+}
+- (NSString *)getLanguage {
+    NSString *language = nil;
+    
+    string languageC;
+    languageC = _reader->getLanguage();
+    language = [NSString stringWithCString:languageC.c_str() encoding:NSUTF8StringEncoding];
+    
+    return language;
+}
+- (NSDate *)getDate {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
     
     string dateC;
     dateC = _reader->getDate();
-    date = [NSString stringWithCString:dateC.c_str() encoding:NSUTF8StringEncoding];
+    NSString *dateString = [NSString stringWithCString:dateC.c_str() encoding:NSUTF8StringEncoding];
     
-    return date;
+    return [dateFormatter dateFromString:dateString];
 }
-
-- (NSString *)getID {
-    NSString *id = nil;
+- (NSString *)getCreator {
+    NSString *creator = nil;
     
-    string idC;
-    idC = _reader->getId();
-    id = [NSString stringWithCString:idC.c_str() encoding:NSUTF8StringEncoding];
+    string creatorC;
+    creatorC = _reader->getCreator();
+    creator = [NSString stringWithCString:creatorC.c_str() encoding:NSUTF8StringEncoding];
     
-    return id;
+    return creator;
+}
+- (NSString *)getPublisher {
+    NSString *publisher = nil;
+    
+    string publisherC;
+    publisherC = _reader->getOrigId();
+    publisher = [NSString stringWithCString:publisherC.c_str() encoding:NSUTF8StringEncoding];
+    
+    return publisher;
+}
+- (NSString *)getOriginID {
+    NSString *originID = nil;
+    
+    string originIDC;
+    originIDC = _reader->getOrigId();
+    originID = [NSString stringWithCString:originIDC.c_str() encoding:NSUTF8StringEncoding];
+    
+    return originID;
+}
+- (NSUInteger)getFileSize {
+    return _reader->getFileSize();
+}
+- (NSData *)getFavicon {
+    NSData *faviconData;
+    string content;
+    string mimeType;
+    if (_reader->getFavicon(content, mimeType)) {
+        faviconData = [NSData dataWithBytes:content.data() length:content.length()];
+    }
+    return faviconData;
 }
 
-#pragma mark - getCount
-- (NSUInteger)getArticleCount {
-    return _reader->getArticleCount();
-}
 
-- (NSUInteger)getMediaCount {
-    return _reader->getMediaCount();
-}
-
-- (NSUInteger)getGlobalCount {
-    return _reader->getGlobalCount();
-}
-
-#pragma mark -
+#pragma mark - dealloc
 - (void)dealloc {
     _reader->~Reader();
     //delete _reader;
-    //should not call delete _reader; here since that will cause a error, probably because the instance of class Reader was deleted at the end of ~Reader();
+    //should not call delete _reader; here since that will cause a error, probably because the instance of class Reader was dealloced at the end of ~Reader();
 }
 
 - (void)exceptionHandling {

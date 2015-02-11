@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "zimReader.h"
 #import "SlideNavigationController.h"
+#import "ToolMenuView.h"
+#import "BookmarkMessageView.h"
 #import "Article.h"
 
-@interface ArticleVC : UIViewController <SlideNavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface ArticleVC : UIViewController <SlideNavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, ToolMenuControl>
 
 @property (strong, nonatomic) Article *article;
 //@property (strong, nonatomic)NSString *bookID;

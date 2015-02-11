@@ -15,6 +15,8 @@
 // encoder
 + (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleURL:(NSString *)articleURL {
     NSURL *zimFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"–" withString:@"%E2%80%93"];
     NSURL *newURL = [NSURL URLWithString:articleURL relativeToURL:zimFileURL];
     return newURL;
 }
@@ -29,6 +31,7 @@
 - (NSString *)contentURLString {
     //NSLog(@"contentURLString is: %@", self.path);
     NSString *contentURLString = [self.path stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+    contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%E2%80%93" withString:@"–"];
     return contentURLString;
 }
 

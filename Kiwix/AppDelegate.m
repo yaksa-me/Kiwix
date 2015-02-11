@@ -28,8 +28,9 @@
     }
     
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
-    ((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
+    //UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
+    UIViewController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
+    //((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
     [Preference setCurrentMenuIndex:0];
     
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
@@ -97,7 +98,8 @@
     // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Kiwix.sqlite"];
+    NSURL *baseURL = [NSURL fileURLWithPath:[FileCoordinator libDirPath]];
+    NSURL *storeURL = [baseURL URLByAppendingPathComponent:@"Kiwix.sqlite"];
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {

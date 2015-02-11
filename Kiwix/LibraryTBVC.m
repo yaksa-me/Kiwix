@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSArray *fileList; // An array of Book Obj
 @property (strong, nonatomic) NSArray *openingBookList; // An array of Book Obj that is opening
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -27,19 +28,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem.title = @"Delete";
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    
     [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
-    
     [self setFileLists];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    [self startTimer];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.timer invalidate];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -48,6 +56,32 @@
 - (void)setFileLists {
     self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
     self.openingBookList = [CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext];
+}
+
+- (void)updateBookList {
+    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
+    [self setFileLists];
+    [self.tableView reloadData];
+}
+
+- (void)startTimer {
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateBookList) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        //start editing
+        [self.timer invalidate];
+        self.editButtonItem.title = NSLocalizedString(@"Done", @"Done");
+    } else {
+        //finish editing
+        [self startTimer];
+        self.editButtonItem.title = NSLocalizedString(@"Delete", @"Delete");
+    }
 }
 
 #pragma mark - Slide Menu Delegation
@@ -85,6 +119,8 @@
 
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     cell.textLabel.text = book.fileName;
+    NSString *fileSizeFormatted = [NSByteCountFormatter stringFromByteCount:[book.fileSize longLongValue]*1000 countStyle:NSByteCountFormatterCountStyleFile];
+    cell.detailTextLabel.text = fileSizeFormatted;
     
     if ([self.openingBookList containsObject:book]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -104,21 +140,12 @@
         Book *book = [self.fileList objectAtIndex:indexPath.row];
         [FileCoordinator deleteBookWithID:book.idString inManagedObjectContext:self.managedObjectContext];
         [self setFileLists];
-        /*
-         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-         if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-         [Preference noLongerHasAnOpeningBook];
-         }
-         */
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
     // set all book to closed
     for (Book *bookToBeClosed in self.fileList) {
         bookToBeClosed.isOpening = [NSNumber numberWithBool:NO];

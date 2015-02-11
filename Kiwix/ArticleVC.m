@@ -15,6 +15,11 @@
 #import "NSURL+KiwixURLProtocol.h"
 #import "AppDelegate.h"
 #import "zimReader.h"
+#import "SlideNavigationController.h"
+#import <QuartzCore/QuartzCore.h>
+
+#define ARTICLE_TITLE @"articleTitle"
+#define ARTICLE_RELATIVE_URL @"articleRelativeURL"
 
 @interface ArticleVC ()
 
@@ -24,14 +29,15 @@
 @property (strong, nonatomic) zimReader *reader;
 @property CGFloat previousScrollViewYOffset;
 @property BOOL isShowingToolMenu;
+@property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
-@property (strong, nonatomic) UIView *popupView;
+@property (strong, nonatomic) ToolMenuView *toolMenu;
+@property (strong, nonatomic) BookmarkMessageView *bookmarkMessageView;
 @property (strong, nonatomic) UIView *loadingView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-- (IBAction)changeFontSize:(UIBarButtonItem *)sender;
-- (IBAction)test:(UIBarButtonItem *)sender;
 - (IBAction)testButton:(UIBarButtonItem *)sender;
 - (IBAction)webViewNavigation:(UIBarButtonItem *)sender;
+- (IBAction)bookmarkButtonTapped:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
@@ -68,6 +74,14 @@ NSUInteger textFontSize = 100;
         }
     }
     
+    if (!self.openingBook) {
+        [self.webView removeFromSuperview];
+        UIView *messageView =[self noBookMessageLabel];
+        [self.view addSubview:messageView];
+        messageView.center = self.view.center;
+        
+    }
+    
     self.webView.delegate = self;
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.translucent = NO;
@@ -90,6 +104,7 @@ NSUInteger textFontSize = 100;
     
     self.searchBar.delegate = self;
     self.searchDisplayController.delegate = self;
+    self.searchBar.layer.borderWidth = 10;
     
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:0]).tintColor = [UIColor grayColor];
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:1]).tintColor = [UIColor grayColor];
@@ -102,9 +117,9 @@ NSUInteger textFontSize = 100;
 }
 
 - (void)loadCurrentArticleIntoBrowser {
-    NSString *articleURLInZimFile;
+    NSString *articleURLInZimFile = [[NSString alloc] init];
     if (self.article) {
-        articleURLInZimFile = [self.reader pageURLFromTitle:self.article.title];
+        articleURLInZimFile = self.article.relativeURL;
     } else {
         articleURLInZimFile = @"(main)";
     }
@@ -119,6 +134,17 @@ NSUInteger textFontSize = 100;
     self.article.lastReadDate = [NSDate date];
     self.article.lastPosition = [NSNumber numberWithFloat:self.webView.scrollView.contentOffset.y];
     self.navigationController.toolbarHidden = YES;
+}
+
+- (UIView *)noBookMessageLabel {
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    messageLabel.text = @"Please open a book or import a book using iTunes";
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.numberOfLines = 0;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    [messageLabel sizeToFit];
+    return messageLabel;
 }
 
 #pragma mark - UIWebView Delegate
@@ -141,7 +167,11 @@ NSUInteger textFontSize = 100;
     // If a page is not main article and is a "Kiwix://" page, create/update Article obj in Coredata
     NSString *articleTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if (![articleTitle isEqualToString:@"Main Page"] && [[webView.request.URL scheme] isEqualToString:@"kiwix"]) {
-        self.article = [Article articleWithTitle:articleTitle andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
+        NSMutableDictionary *articleInfo = [[NSMutableDictionary alloc] init];
+        [articleInfo setObject:articleTitle forKey:ARTICLE_TITLE];
+        [articleInfo setObject:[self.reader pageURLFromTitle:articleTitle] forKey:ARTICLE_RELATIVE_URL];
+        self.article = [Article articleWithTitleInfo:articleInfo andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
+        self.article.lastReadDate = [NSDate date];
         
         if (self.article.lastPosition) {
             CGFloat lastReadPosition = [self.article.lastPosition floatValue];
@@ -162,7 +192,7 @@ NSUInteger textFontSize = 100;
     // Set the last read history before the web view start load new content
     if ([[[request URL] pathExtension] caseInsensitiveCompare:@"html"] == NSOrderedSame) {
         self.article.lastReadDate = [NSDate date];
-        self.article.lastPosition = [NSNumber numberWithFloat:webView.scrollView.contentOffset.y];
+        //self.article.lastPosition = [NSNumber numberWithFloat:webView.scrollView.contentOffset.y];
     }
 
     return YES;
@@ -255,8 +285,13 @@ NSUInteger textFontSize = 100;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        NSString *articleTitle = selectedCell.textLabel.text;;
-        self.article = [Article articleWithTitle:articleTitle andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
+        NSString *articleTitle = selectedCell.textLabel.text;
+        
+        //Create an article if article doesn't exist, regradless of whether it is main page or not
+        NSMutableDictionary *articleInfo = [[NSMutableDictionary alloc] init];
+        [articleInfo setObject:articleTitle forKey:ARTICLE_TITLE];
+        [articleInfo setObject:[self.reader pageURLFromTitle:articleTitle] forKey:ARTICLE_RELATIVE_URL];
+        self.article = [Article articleWithTitleInfo:articleInfo andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
         [self loadCurrentArticleIntoBrowser];
         [self.searchBar setShowsCancelButton:NO animated:YES];
         [self.searchDisplayController setActive:NO animated:YES];
@@ -275,13 +310,15 @@ NSUInteger textFontSize = 100;
 
 #pragma mark - UISearchBar delegate
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [self hideToolMenu];
+    self.navigationItem.leftBarButtonItem = nil;
     [searchBar setShowsCancelButton:YES animated:YES];
     [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.navigationItem.leftBarButtonItem = [[SlideNavigationController sharedInstance] barButtonItemForMenu:MenuLeft];
     [searchBar setShowsCancelButton:NO animated:YES];
-    [self.navigationItem setHidesBackButton:NO];
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -291,54 +328,104 @@ NSUInteger textFontSize = 100;
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    self.navigationItem.leftBarButtonItem = [[SlideNavigationController sharedInstance] barButtonItemForMenu:MenuLeft];
     [controller.searchBar setShowsCancelButton:NO animated:YES];
 }
 
-#pragma mark - UIAnimations
-
-
-
-#pragma mark - Target Actions
-- (IBAction)changeFontSize:(UIBarButtonItem *)sender {
-    switch ([sender tag]) {
-        case 1: // A-
-            textFontSize = (textFontSize > 50) ? textFontSize -5 : textFontSize;
-            break;
-        case 2: // A+
-            textFontSize = (textFontSize < 160) ? textFontSize +5 : textFontSize;
-            break;
+#pragma mark - UIAnimation
+- (void)showToolMenu {
+    if (!self.toolMenu) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ToolMenuView" owner:self options:nil];
+        self.toolMenu = [nib objectAtIndex:0];
+        self.toolMenu.delegate = self;
     }
     
-    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%d%%'", textFontSize];
+    CGFloat frameX = self.navigationController.toolbar.frame.size.width - 20 - self.toolMenu.frame.size.width;
+    CGFloat frameY = self.navigationController.toolbar.frame.origin.y - 20 - self.toolMenu.frame.size.height;
+    self.toolMenu.frame = CGRectMake(frameX, frameY, self.toolMenu.frame.size.width, self.toolMenu.frame.size.height);
+    self.toolMenu.alpha = 0.0;
+    [self.view addSubview:self.toolMenu];
+    
+    [UIView animateWithDuration:0.05 animations:^{
+        self.toolMenu.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideToolMenu)];
+        self.tapGestureRecognizer.delegate = self.toolMenu;
+        
+        self.webView.userInteractionEnabled = NO;
+        [self.view addGestureRecognizer:self.tapGestureRecognizer];
+        
+    }];
+    
+    self.isShowingToolMenu = YES;
+}
+
+- (void)hideToolMenu {
+    [UIView animateWithDuration:.25 animations:^{
+        //self.toolMenu.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self.toolMenu removeFromSuperview];
+            [self.view removeGestureRecognizer:self.tapGestureRecognizer];
+            self.webView.userInteractionEnabled = YES;
+        }
+    }];
+    self.isShowingToolMenu = NO;
+}
+
+- (void)displayBookmarkMessageWithMessage:(NSString *)message {
+    if (!self.bookmarkMessageView) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"BookmarkMessageView" owner:self options:nil];
+        self.bookmarkMessageView = [nib objectAtIndex:0];
+    }
+    
+    [self.bookmarkMessageView.layer removeAllAnimations];
+    CGSize mainscreenSize = [UIScreen mainScreen].bounds.size;
+    self.bookmarkMessageView.center = CGPointMake(mainscreenSize.width/2, mainscreenSize.height*0.45);
+    self.bookmarkMessageView.alpha = 0.0;
+    self.bookmarkMessageView.messageLabel.text = message;
+    [self.view addSubview:self.bookmarkMessageView];
+    
+
+    [UIView animateWithDuration:0.05 animations:^{
+        self.bookmarkMessageView.alpha = 0.9;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0 delay:0.75 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            self.bookmarkMessageView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [self.bookmarkMessageView removeFromSuperview];
+        }];
+    }];
+}
+
+#pragma mark - ToolMenuControl Delegate
+- (void)fontSizeAdjustIncrease:(BOOL)isIncreasing {
+    if (isIncreasing) {
+        textFontSize = (textFontSize < 160) ? textFontSize +5 : textFontSize;
+    } else {
+        textFontSize = (textFontSize > 50) ? textFontSize -5 : textFontSize;
+    }
+    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%lu%%'", (unsigned long)textFontSize];
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
+- (void)readingModeChange:(NSUInteger)mode {
+    [self.view setBackgroundColor:[UIColor blackColor]];
+    NSString *setJavaScript = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextFillColor= 'white'; document.getElementsByTagName('body')[0].style = 'background:  red'; DOMReady();"];
+    [self.webView setOpaque:NO];
+    [self.webView stringByEvaluatingJavaScriptFromString:setJavaScript];
+    [self.webView.scrollView setBackgroundColor:[UIColor blackColor]];
+}
+
+
+#pragma mark - Target Actions
+
 - (IBAction)testButton:(UIBarButtonItem *)sender {
     if (self.isShowingToolMenu) {
-        [UIView animateWithDuration:.25 animations:^{
-            self.popupView.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self.popupView removeFromSuperview];
-            }
-        }];
-        self.isShowingToolMenu = NO;
+        [self hideToolMenu];
     } else {
         // Show menu
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ToolMenuView" owner:self options:nil];
-        self.popupView = [nib objectAtIndex:0];
-        self.popupView.
-        self.popupView.frame = CGRectMake(20, 340, 280, 170);
-        self.popupView.alpha = 0.0;
-        [self.view addSubview:self.popupView];
-        
-        [UIView animateWithDuration:0.05 animations:^{
-            self.popupView.alpha = 1.0;
-        } completion:^(BOOL finished) {
-            
-        }];
-        
-        self.isShowingToolMenu = YES;
+        [self showToolMenu];
     }
 }
 
@@ -350,6 +437,16 @@ NSUInteger textFontSize = 100;
         case 1: //Forward
             [self.webView goForward];
             break;
+    }
+}
+
+- (IBAction)bookmarkButtonTapped:(UIBarButtonItem *)sender {
+    if ([self.article.isBookmarked isEqualToNumber:[[NSNumber alloc] initWithBool:YES]]) {
+        self.article.isBookmarked = [[NSNumber alloc] initWithBool:NO];
+        [self displayBookmarkMessageWithMessage:@"Bookmark Removed!"];
+    } else {
+        self.article.isBookmarked = [[NSNumber alloc] initWithBool:YES];
+        [self displayBookmarkMessageWithMessage:@"Bookmark Added!"];
     }
 }
 

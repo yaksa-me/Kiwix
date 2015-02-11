@@ -11,6 +11,8 @@
 #import "Preference.h"
 #import "Article.h"
 #import "Book.h"
+#import "AppDelegate.h"
+#import "ArticleVC.h"
 
 @interface BookmarksTBVC ()
 
@@ -27,8 +29,10 @@
     
     self.title = @"Bookmark";
     
+    self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
-    self.articleBookmarkedArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
+    self.articleBookmarkedArray = [CoreDataTask articlesBookmarkedInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     
     self.navigationController.toolbarHidden = YES;
 }
@@ -61,6 +65,17 @@
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;
+}
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"SelectArticleFromBookmark"]) {
+        ArticleVC *destination = segue.destinationViewController;
+        NSUInteger indexOfSelectedArticle = [self.tableView indexPathForCell:(UITableViewCell *)sender].row;
+        Article *selectedArticle = [self.articleBookmarkedArray objectAtIndex:indexOfSelectedArticle];
+        destination.article = selectedArticle;
+        [Preference setCurrentMenuIndex:0];
+    }
 }
 
 @end

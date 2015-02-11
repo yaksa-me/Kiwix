@@ -11,14 +11,23 @@
     </entity>
     <entity name="Book" representedClassName="Book" syncable="YES">
         <attribute name="articleCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="creator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favIcon" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="globalCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="idString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isOpening" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="publisher" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="hasArticles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Article" inverseName="belongsToBook" inverseEntity="Article" syncable="YES"/>
     </entity>
     <elements>
         <element name="Article" positionX="52" positionY="171" width="128" height="135"/>
-        <element name="Book" positionX="-468" positionY="207" width="128" height="135"/>
+        <element name="Book" positionX="-468" positionY="207" width="128" height="268"/>
     </elements>
 </model>

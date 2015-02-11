@@ -16,6 +16,8 @@
 #define IS_BACKINGUP_FILES_TO_ICLOUD @"isBackingUpFilesToiCloud"
 #define OPEN_LAST_READ_WHEN_LUNCH @"openLastReadWhenLunch"
 
+#define READING_MODE @"readingMode"
+
 @implementation Preference
 
 + (BOOL)isFirstLunch {
@@ -148,6 +150,20 @@
 + (void)setOpenLastReadWhenLunch:(BOOL)mainPageLunchOpenState {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:mainPageLunchOpenState forKey:OPEN_LAST_READ_WHEN_LUNCH];
+    [defaults synchronize];
+}
+
++ (NSUInteger)readingMode {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults integerForKey:READING_MODE]) {
+        [defaults setInteger:0 forKey:READING_MODE];
+        [defaults synchronize];
+    }
+    return [defaults integerForKey:READING_MODE];
+}
++ (void)setReadingMode:(NSUInteger)mode {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:mode forKey:READING_MODE];
     [defaults synchronize];
 }
 

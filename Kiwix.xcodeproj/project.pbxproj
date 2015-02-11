@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9717053A1A73308D000902EB /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 971705391A73308D000902EB /* Article.m */; };
-		9717053D1A73308E000902EB /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717053C1A73308E000902EB /* Book.m */; };
+		970483F51A8A45BD00130BC1 /* LeftMenuFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 970483F41A8A45BD00130BC1 /* LeftMenuFlowLayout.m */; };
+		97501F981A88402600BE3093 /* BookmarkMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97501F971A88402600BE3093 /* BookmarkMessageView.m */; };
+		97501F9A1A88404D00BE3093 /* BookmarkMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97501F991A88404D00BE3093 /* BookmarkMessageView.xib */; };
 		977AF9011A6352C200B43722 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FC1A6352C200B43722 /* TFHpple.m */; };
 		977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FE1A6352C200B43722 /* TFHppleElement.m */; };
 		977AF9031A6352C200B43722 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9001A6352C200B43722 /* XPathQuery.m */; };
@@ -47,6 +48,10 @@
 		97C8628E1A62D3EE004A4791 /* LeftMenuTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */; };
 		97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862951A62DC2F004A4791 /* LibraryTBVC.m */; };
 		97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C862981A62DE53004A4791 /* SearchTBVC.m */; };
+		97C91CF91A886975009C8D8A /* LeftMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C91CF81A886975009C8D8A /* LeftMenuVC.m */; };
+		97C91CFE1A8876CF009C8D8A /* LeftMenuCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C91CFC1A8876CF009C8D8A /* LeftMenuCollectionViewCell.m */; };
+		97C91CFF1A8876CF009C8D8A /* LeftMenuCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C91CFD1A8876CF009C8D8A /* LeftMenuCollectionViewCell.xib */; };
+		97C91D021A88F7C8009C8D8A /* CollectionViewCellBoarderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C91D011A88F7C8009C8D8A /* CollectionViewCellBoarderView.m */; };
 		97C920441A5E39D50074FC16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920431A5E39D50074FC16 /* main.m */; };
 		97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920461A5E39D50074FC16 /* AppDelegate.m */; };
 		97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97C920481A5E39D50074FC16 /* Kiwix.xcdatamodeld */; };
@@ -62,6 +67,8 @@
 		97C920871A5E3B920074FC16 /* menu-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C9207E1A5E3B920074FC16 /* menu-button.png */; };
 		97C920881A5E3B920074FC16 /* menu-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C9207F1A5E3B920074FC16 /* menu-button@2x.png */; };
 		97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C920811A5E3B920074FC16 /* SlideNavigationController.m */; };
+		97C9443A1A81A1A60073BD0D /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C944391A81A1A60073BD0D /* Book.m */; };
+		97C9443D1A81A1A70073BD0D /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C9443C1A81A1A70073BD0D /* Article.m */; };
 		97CD24801A7E548A00C75BEE /* LoadingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CD247F1A7E548A00C75BEE /* LoadingMessageView.m */; };
 		97CD24821A7E549000C75BEE /* LoadingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CD24811A7E549000C75BEE /* LoadingMessageView.xib */; };
 		97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE13D81A66C9B40009C31B /* zimFileFinder.m */; };
@@ -90,10 +97,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		971705381A73308D000902EB /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
-		971705391A73308D000902EB /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
-		9717053B1A73308E000902EB /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		9717053C1A73308E000902EB /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		970483F31A8A45BD00130BC1 /* LeftMenuFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuFlowLayout.h; sourceTree = "<group>"; };
+		970483F41A8A45BD00130BC1 /* LeftMenuFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuFlowLayout.m; sourceTree = "<group>"; };
+		97501F961A88402600BE3093 /* BookmarkMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkMessageView.h; sourceTree = "<group>"; };
+		97501F971A88402600BE3093 /* BookmarkMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkMessageView.m; sourceTree = "<group>"; };
+		97501F991A88404D00BE3093 /* BookmarkMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkMessageView.xib; sourceTree = "<group>"; };
 		977AF8F81A63528600B43722 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		977AF8FB1A6352C200B43722 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		977AF8FC1A6352C200B43722 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
@@ -150,6 +158,13 @@
 		97C862951A62DC2F004A4791 /* LibraryTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryTBVC.m; sourceTree = "<group>"; };
 		97C862971A62DE53004A4791 /* SearchTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTBVC.h; sourceTree = "<group>"; };
 		97C862981A62DE53004A4791 /* SearchTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTBVC.m; sourceTree = "<group>"; };
+		97C91CF71A886975009C8D8A /* LeftMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuVC.h; sourceTree = "<group>"; };
+		97C91CF81A886975009C8D8A /* LeftMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuVC.m; sourceTree = "<group>"; };
+		97C91CFB1A8876CF009C8D8A /* LeftMenuCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuCollectionViewCell.h; sourceTree = "<group>"; };
+		97C91CFC1A8876CF009C8D8A /* LeftMenuCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuCollectionViewCell.m; sourceTree = "<group>"; };
+		97C91CFD1A8876CF009C8D8A /* LeftMenuCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftMenuCollectionViewCell.xib; sourceTree = "<group>"; };
+		97C91D001A88F7C8009C8D8A /* CollectionViewCellBoarderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellBoarderView.h; sourceTree = "<group>"; };
+		97C91D011A88F7C8009C8D8A /* CollectionViewCellBoarderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCellBoarderView.m; sourceTree = "<group>"; };
 		97C9203E1A5E39D50074FC16 /* Kiwix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C920421A5E39D50074FC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C920431A5E39D50074FC16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -177,6 +192,10 @@
 		97C9207F1A5E3B920074FC16 /* menu-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button@2x.png"; sourceTree = "<group>"; };
 		97C920801A5E3B920074FC16 /* SlideNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationController.h; sourceTree = "<group>"; };
 		97C920811A5E3B920074FC16 /* SlideNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationController.m; sourceTree = "<group>"; };
+		97C944381A81A1A60073BD0D /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		97C944391A81A1A60073BD0D /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		97C9443B1A81A1A70073BD0D /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		97C9443C1A81A1A70073BD0D /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		97CD247E1A7E548A00C75BEE /* LoadingMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingMessageView.h; sourceTree = "<group>"; };
 		97CD247F1A7E548A00C75BEE /* LoadingMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingMessageView.m; sourceTree = "<group>"; };
 		97CD24811A7E549000C75BEE /* LoadingMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingMessageView.xib; sourceTree = "<group>"; };
@@ -240,6 +259,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97501F951A88401100BE3093 /* BookmarkMessageView */ = {
+			isa = PBXGroup;
+			children = (
+				97501F961A88402600BE3093 /* BookmarkMessageView.h */,
+				97501F971A88402600BE3093 /* BookmarkMessageView.m */,
+				97501F991A88404D00BE3093 /* BookmarkMessageView.xib */,
+			);
+			name = BookmarkMessageView;
+			sourceTree = "<group>";
+		};
 		977AF8FA1A6352C200B43722 /* HPPLE */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +287,10 @@
 			isa = PBXGroup;
 			children = (
 				97EDA8621A7AD3CF00A0DC03 /* Old */,
+				97C91CF71A886975009C8D8A /* LeftMenuVC.h */,
+				97C91CF81A886975009C8D8A /* LeftMenuVC.m */,
+				970483F31A8A45BD00130BC1 /* LeftMenuFlowLayout.h */,
+				970483F41A8A45BD00130BC1 /* LeftMenuFlowLayout.m */,
 				97C8628C1A62D3EE004A4791 /* LeftMenuTBVC.h */,
 				97C8628D1A62D3EE004A4791 /* LeftMenuTBVC.m */,
 				977AF90E1A63584200B43722 /* ArticleVC.h */,
@@ -278,10 +311,10 @@
 				977AF9191A6378F900B43722 /* Book+Create.m */,
 				977AF9271A637C8F00B43722 /* Article+Create.h */,
 				977AF9281A637C8F00B43722 /* Article+Create.m */,
-				9717053B1A73308E000902EB /* Book.h */,
-				9717053C1A73308E000902EB /* Book.m */,
-				971705381A73308D000902EB /* Article.h */,
-				971705391A73308D000902EB /* Article.m */,
+				97C9443B1A81A1A70073BD0D /* Article.h */,
+				97C9443C1A81A1A70073BD0D /* Article.m */,
+				97C944381A81A1A60073BD0D /* Book.h */,
+				97C944391A81A1A60073BD0D /* Book.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -341,6 +374,8 @@
 		97A169451A6FF3A900D48F68 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				97C91CFA1A8876A3009C8D8A /* LeftMenuCollectionViewCell */,
+				97501F951A88401100BE3093 /* BookmarkMessageView */,
 				97CD247D1A7E546D00C75BEE /* LoadingMessageView */,
 				97EDA8631A7B16F300A0DC03 /* PopupView */,
 				97CC7F891A782748009B2A23 /* FIleSelection */,
@@ -348,6 +383,18 @@
 				97CC7F881A782744009B2A23 /* LeftMenuTableViewCell */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		97C91CFA1A8876A3009C8D8A /* LeftMenuCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				97C91CFB1A8876CF009C8D8A /* LeftMenuCollectionViewCell.h */,
+				97C91CFC1A8876CF009C8D8A /* LeftMenuCollectionViewCell.m */,
+				97C91CFD1A8876CF009C8D8A /* LeftMenuCollectionViewCell.xib */,
+				97C91D001A88F7C8009C8D8A /* CollectionViewCellBoarderView.h */,
+				97C91D011A88F7C8009C8D8A /* CollectionViewCellBoarderView.m */,
+			);
+			name = LeftMenuCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		97C920351A5E39D50074FC16 = {
@@ -636,6 +683,7 @@
 			files = (
 				97C920871A5E3B920074FC16 /* menu-button.png in Resources */,
 				97CD24821A7E549000C75BEE /* LoadingMessageView.xib in Resources */,
+				97C91CFF1A8876CF009C8D8A /* LeftMenuCollectionViewCell.xib in Resources */,
 				97EDA8651A7B17D500A0DC03 /* ToolMenuView.xib in Resources */,
 				97BE47AC1A71951C003B8E5D /* LeftMenuTableViewCell.xib in Resources */,
 				97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */,
@@ -644,6 +692,7 @@
 				97EDCC5F1A6807D000C8710F /* Preference.plist in Resources */,
 				97A1694E1A705A6C00D48F68 /* FileInfoView.xib in Resources */,
 				97C920881A5E3B920074FC16 /* menu-button@2x.png in Resources */,
+				97501F9A1A88404D00BE3093 /* BookmarkMessageView.xib in Resources */,
 				97F5EB601A6E9C7A00B8C306 /* left-tool.png in Resources */,
 				97C920551A5E39D50074FC16 /* Images.xcassets in Resources */,
 			);
@@ -663,26 +712,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C9443D1A81A1A70073BD0D /* Article.m in Sources */,
 				978FAF901A632A80003D7A41 /* stringTools.cpp in Sources */,
 				97C920841A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
 				97EDCC651A68329800C8710F /* BookmarksTBVC.m in Sources */,
+				97C91CF91A886975009C8D8A /* LeftMenuVC.m in Sources */,
 				97F5EB541A6D4BC600B8C306 /* NSURL+KiwixURLProtocol.m in Sources */,
 				97C862961A62DC2F004A4791 /* LibraryTBVC.m in Sources */,
-				9717053A1A73308D000902EB /* Article.m in Sources */,
 				977AF92C1A63878100B43722 /* FileCoordinator.m in Sources */,
 				97C920851A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 				977AF9031A6352C200B43722 /* XPathQuery.m in Sources */,
+				970483F51A8A45BD00130BC1 /* LeftMenuFlowLayout.m in Sources */,
 				97EDCC621A68087B00C8710F /* Preference.m in Sources */,
 				97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */,
 				97EDCC681A6832A400C8710F /* HistoryTBVC.m in Sources */,
 				97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */,
 				97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */,
+				97C91D021A88F7C8009C8D8A /* CollectionViewCellBoarderView.m in Sources */,
+				97C9443A1A81A1A60073BD0D /* Book.m in Sources */,
 				97C920821A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m in Sources */,
+				97501F981A88402600BE3093 /* BookmarkMessageView.m in Sources */,
 				97C920861A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */,
 				978FAF8E1A632A80003D7A41 /* pathTools.cpp in Sources */,
 				97C862991A62DE53004A4791 /* SearchTBVC.m in Sources */,
-				9717053D1A73308E000902EB /* Book.m in Sources */,
 				977AF91A1A6378F900B43722 /* Book+Create.m in Sources */,
 				978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */,
 				97C920831A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m in Sources */,
@@ -698,6 +751,7 @@
 				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
 				978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */,
 				977AF90B1A63539300B43722 /* Parser.m in Sources */,
+				97C91CFE1A8876CF009C8D8A /* LeftMenuCollectionViewCell.m in Sources */,
 				97BE47AF1A719545003B8E5D /* LeftMenuTableViewCell.m in Sources */,
 				97EDA8681A7B17E700A0DC03 /* ToolMenuView.m in Sources */,
 				97CD24801A7E548A00C75BEE /* LoadingMessageView.m in Sources */,

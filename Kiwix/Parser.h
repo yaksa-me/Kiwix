@@ -14,4 +14,6 @@
 
 + (NSString *)timeDifferenceStringBetweenNowAnd:(NSDate *)date;
 
++ (NSString *)articleCountString:(NSUInteger)articleCount;
+
 @end

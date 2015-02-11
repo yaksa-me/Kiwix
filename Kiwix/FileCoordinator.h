@@ -15,6 +15,7 @@
 
 + (NSString *)docDirPath;
 + (NSString *)libDirPath;
++ (NSString *)inboxDirPath;
 
 + (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)moveZimFileFromDocumentDirectoryToLibraryDirectory; //Move all zim files in document dir to app support dir

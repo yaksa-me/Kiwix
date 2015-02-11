@@ -102,6 +102,7 @@
         NSUInteger indexOfSelectedArticle = [self.tableView indexPathForCell:(UITableViewCell *)sender].row;
         Article *selectedArticle = [self.articleReadHistoryArray objectAtIndex:indexOfSelectedArticle];
         destination.article = selectedArticle;
+        [Preference setCurrentMenuIndex:0];
     }
 }
 @end
