@@ -14,8 +14,8 @@
 @implementation KiwixURLProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    static NSUInteger requestCount = 0;
-    NSLog(@"Request #%u: URL = %@", requestCount++, request.URL.absoluteString);
+    //static NSUInteger requestCount = 0;
+    //NSLog(@"Request #%u: URL = %@", requestCount++, request.URL.absoluteString);
     
     if ([[[request URL] scheme] caseInsensitiveCompare:@"Kiwix"] == NSOrderedSame) {
         return YES;

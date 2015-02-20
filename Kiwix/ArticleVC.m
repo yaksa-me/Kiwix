@@ -16,6 +16,8 @@
 #import "AppDelegate.h"
 #import "zimReader.h"
 #import "SlideNavigationController.h"
+#import "CustomBarButtonItem.h"
+#import "MessageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define ARTICLE_TITLE @"articleTitle"
@@ -25,21 +27,22 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Book *openingBook;
-@property (strong, nonatomic) NSMutableArray *filteredArticleArray;
 @property (strong, nonatomic) zimReader *reader;
+@property (strong, nonatomic) NSMutableArray *filteredArticleArray;
+
+
 @property CGFloat previousScrollViewYOffset;
 @property BOOL isShowingToolMenu;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
 @property (strong, nonatomic) ToolMenuView *toolMenu;
-@property (strong, nonatomic) BookmarkMessageView *bookmarkMessageView;
-@property (strong, nonatomic) UIView *loadingView;
+@property (strong, nonatomic) MessageView *messageView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) CustomBarButtonItem *bookmarkButtonItem;
+
 - (IBAction)testButton:(UIBarButtonItem *)sender;
 - (IBAction)webViewNavigation:(UIBarButtonItem *)sender;
-- (IBAction)bookmarkButtonTapped:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
 
 @end
 
@@ -74,21 +77,23 @@ NSUInteger textFontSize = 100;
         }
     }
     
+    //If not opening book display message
     if (!self.openingBook) {
         [self.webView removeFromSuperview];
         UIView *messageView =[self noBookMessageLabel];
         [self.view addSubview:messageView];
         messageView.center = self.view.center;
-        
     }
     
     self.webView.delegate = self;
-    self.navigationController.toolbarHidden = NO;
-    self.navigationController.toolbar.translucent = NO;
+    self.searchBar.delegate = self;
+    self.searchBar.layer.borderWidth = 10;
+    self.searchDisplayController.delegate = self;
+    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    [self.searchDisplayController.navigationItem setLeftBarButtonItem:[[SlideNavigationController sharedInstance] barButtonItemForMenu:MenuLeft]];
     self.isShowingToolMenu = NO;
     
-    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
-    
+    /*
     for (UIView *subView in self.searchBar.subviews)
     {
         for (UIView *secondLevelSubview in subView.subviews){
@@ -100,20 +105,30 @@ NSUInteger textFontSize = 100;
                 break;
             }
         }
-    }
-    
-    self.searchBar.delegate = self;
-    self.searchDisplayController.delegate = self;
-    self.searchBar.layer.borderWidth = 10;
+    }*/
     
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:0]).tintColor = [UIColor grayColor];
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:1]).tintColor = [UIColor grayColor];
+    [self initializeBookmarkButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.translucent = NO;
+    [self makeOperable];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeInoperable) name:SlideNavigationControllerDidReveal object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeOperable) name:SlideNavigationControllerDidClose object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.article.lastReadDate = [NSDate date];
+    self.article.lastPosition = [NSNumber numberWithFloat:self.webView.scrollView.contentOffset.y];
+    self.navigationController.toolbarHidden = YES;
+    [self makeOperable];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SlideNavigationControllerDidReveal object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SlideNavigationControllerDidClose object:nil];
 }
 
 - (void)loadCurrentArticleIntoBrowser {
@@ -129,13 +144,6 @@ NSUInteger textFontSize = 100;
     [self.webView loadRequest:request];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.article.lastReadDate = [NSDate date];
-    self.article.lastPosition = [NSNumber numberWithFloat:self.webView.scrollView.contentOffset.y];
-    self.navigationController.toolbarHidden = YES;
-}
-
 - (UIView *)noBookMessageLabel {
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     messageLabel.text = @"Please open a book or import a book using iTunes";
@@ -147,6 +155,35 @@ NSUInteger textFontSize = 100;
     return messageLabel;
 }
 
+- (void)initializeBookmarkButton {
+    NSMutableArray *toolBarItems = [self.toolbarItems mutableCopy];
+    [toolBarItems removeObjectAtIndex:3];
+    self.bookmarkButtonItem = [[CustomBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"bookmark"]
+                                                            highlightedImage:[UIImage imageNamed:@"bookmark_highlighted"]
+                                                             andCurrentState:[self.article.isBookmarked boolValue]];
+    [self.bookmarkButtonItem.button addTarget:self action:@selector(changeBookmarkStatus) forControlEvents:UIControlEventTouchUpInside];
+    [toolBarItems insertObject:self.bookmarkButtonItem atIndex:3];
+    self.toolbarItems = toolBarItems;
+}
+
+- (void)changeBookmarkStatus {
+    self.article.isBookmarked = [NSNumber numberWithBool:![self.article.isBookmarked boolValue]];
+    [self.bookmarkButtonItem animateWithHighLightState:[self.article.isBookmarked boolValue]];
+}
+
+- (void)makeInoperable {
+    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
+    for (UIBarButtonItem *item in self.toolbarItems) {
+        item.enabled = NO;
+    }
+}
+
+- (void)makeOperable {
+    [self.navigationController.navigationBar setUserInteractionEnabled:YES];
+    for (UIBarButtonItem *item in self.toolbarItems) {
+        item.enabled = YES;
+    }
+}
 #pragma mark - UIWebView Delegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     UIBarButtonItem *itemBack = [self.toolbarItems objectAtIndex:0];
@@ -175,11 +212,29 @@ NSUInteger textFontSize = 100;
         
         if (self.article.lastPosition) {
             CGFloat lastReadPosition = [self.article.lastPosition floatValue];
-            [self.webView.scrollView setContentOffset:CGPointMake(0, lastReadPosition) animated:NO];
+            [self.webView.scrollView setContentOffset:CGPointMake(0, lastReadPosition) animated:YES];
         } else {
             self.article.lastPosition = [NSNumber numberWithFloat:webView.scrollView.contentOffset.y];
         }
-        //NSLog(@"%@", [NSNumber numberWithFloat:webView.scrollView.contentOffset.y]);
+        
+        if ([self.article.isBookmarked boolValue] != self.bookmarkButtonItem.isHightlighted) {
+            [self.bookmarkButtonItem animateWithHighLightState:[self.article.isBookmarked boolValue]];
+        }
+        
+        // Message View
+        if ([self.article.lastPosition floatValue] >= 0) {
+            [self displayMessageViewWithMessage:self.article.title];
+        }
+        /*
+        [self.webView setBackgroundColor:[UIColor greenColor]];
+        [self.webView setOpaque:NO];
+        
+        NSString *javaScriptString = @"document.body.style.background = '#000000';";
+        NSString *result = [self.webView stringByEvaluatingJavaScriptFromString:javaScriptString];
+        NSString *html = [NSString stringWithContentsOfURL:[[self.webView request] URL] encoding:NSUTF8StringEncoding error:nil];
+        */
+        
+        
         
         NSLog(@"Load finish: %@", articleTitle);
     } else {
@@ -373,27 +428,26 @@ NSUInteger textFontSize = 100;
     self.isShowingToolMenu = NO;
 }
 
-- (void)displayBookmarkMessageWithMessage:(NSString *)message {
-    if (!self.bookmarkMessageView) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"BookmarkMessageView" owner:self options:nil];
-        self.bookmarkMessageView = [nib objectAtIndex:0];
+- (void)displayMessageViewWithMessage:(NSString *)message {
+    if (!self.messageView) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageView" owner:self options:nil];
+        self.messageView = [nib objectAtIndex:0];
     }
     
-    [self.bookmarkMessageView.layer removeAllAnimations];
-    CGSize mainscreenSize = [UIScreen mainScreen].bounds.size;
-    self.bookmarkMessageView.center = CGPointMake(mainscreenSize.width/2, mainscreenSize.height*0.45);
-    self.bookmarkMessageView.alpha = 0.0;
-    self.bookmarkMessageView.messageLabel.text = message;
-    [self.view addSubview:self.bookmarkMessageView];
+    CGFloat frameX = 0;
+    CGFloat frameY = self.navigationController.navigationBar.frame.size.height + self.navigationController.navigationBar.frame.origin.y;
+    self.messageView.frame = CGRectMake(frameX, frameY, self.navigationController.navigationBar.frame.size.width, self.messageView.frame.size.height);
+    self.messageView.alpha = 0.0;
+    self.messageView.messageLabel.text = message;
+    [self.view addSubview:self.messageView];
     
-
     [UIView animateWithDuration:0.05 animations:^{
-        self.bookmarkMessageView.alpha = 0.9;
+        self.messageView.alpha = 0.8;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1.0 delay:0.75 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            self.bookmarkMessageView.alpha = 0.0;
+        [UIView animateWithDuration:0.5 delay:1.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            self.messageView.alpha = 0.0;
         } completion:^(BOOL finished) {
-            [self.bookmarkMessageView removeFromSuperview];
+            [self.messageView removeFromSuperview];
         }];
     }];
 }
@@ -419,7 +473,6 @@ NSUInteger textFontSize = 100;
 
 
 #pragma mark - Target Actions
-
 - (IBAction)testButton:(UIBarButtonItem *)sender {
     if (self.isShowingToolMenu) {
         [self hideToolMenu];
@@ -437,16 +490,6 @@ NSUInteger textFontSize = 100;
         case 1: //Forward
             [self.webView goForward];
             break;
-    }
-}
-
-- (IBAction)bookmarkButtonTapped:(UIBarButtonItem *)sender {
-    if ([self.article.isBookmarked isEqualToNumber:[[NSNumber alloc] initWithBool:YES]]) {
-        self.article.isBookmarked = [[NSNumber alloc] initWithBool:NO];
-        [self displayBookmarkMessageWithMessage:@"Bookmark Removed!"];
-    } else {
-        self.article.isBookmarked = [[NSNumber alloc] initWithBool:YES];
-        [self displayBookmarkMessageWithMessage:@"Bookmark Added!"];
     }
 }
 

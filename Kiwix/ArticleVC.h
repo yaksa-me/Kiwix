@@ -10,7 +10,6 @@
 #import "zimReader.h"
 #import "SlideNavigationController.h"
 #import "ToolMenuView.h"
-#import "BookmarkMessageView.h"
 #import "Article.h"
 
 @interface ArticleVC : UIViewController <SlideNavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, ToolMenuControl>

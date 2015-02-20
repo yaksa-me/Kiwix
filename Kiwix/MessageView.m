@@ -1,14 +1,18 @@
 //
-//  LoadingMessageView.m
+//  MessageView.m
 //  Kiwix
 //
-//  Created by Chris Li on 2/1/15.
+//  Created by Chris Li on 2/14/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
-#import "LoadingMessageView.h"
+#import "MessageView.h"
 
-@implementation LoadingMessageView
+@implementation MessageView
+
+-(void)awakeFromNib {
+    self.messageLabel.textColor = [UIColor darkTextColor];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -11,7 +11,6 @@
 #import "CoreDataTask.h"
 #import "AppDelegate.h"
 #import "Book.h"
-#import "FileCoordinator.h"
 #import "FilePropertiesTBVC.h"
 
 @interface SettingTBVC ()
@@ -27,6 +26,10 @@
     [super viewDidLoad];
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     self.navigationController.toolbarHidden = YES;
+    self.title = @"Settings";
+    
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+    self.navigationController.toolbar.userInteractionEnabled = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -34,29 +37,23 @@
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     [self.tableView reloadData];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        //File choosing cell
-        if (self.openingBook) {
+    switch (section) {
+        case 0:
             return 2;
-        } else {
+        case 1:
             return 1;
-        }
-    } else if (section == 1) {
-        return 1;
-    } else {
-        return 0;
+        case 2:
+            return 1;
+        default:
+            return 0;
+            break;
     }
 }
 
@@ -65,23 +62,29 @@
     UITableViewCell *cellDefault = [tableView dequeueReusableCellWithIdentifier:@"SettingBasicCell"];
     
     if (indexPath.section == 0) {
-        //File choosing cell
         if (indexPath.row == 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OpeningFileCell"];
-            cell.textLabel.text = @"Open a zim file...";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AllZimFilesCell"];
+            cell.textLabel.text = @"All zim Files";
             return cell;
-        } else {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilePropertiesCell"];
-            cell.textLabel.text = @"File Properties";
+        } else if (indexPath.row == 1) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"iCloudBackupCell"];
+            cell.textLabel.text = @"iCloud Backup";
+            cell.detailTextLabel.text = [Preference isBackingUpFilesToiCloud] ? @"On" : @"Off";
             return cell;
         }
     } else if (indexPath.section == 1) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"iCloudBackupCell"];
-        UISwitch *swith = [[UISwitch alloc] initWithFrame:CGRectZero];
-        [swith addTarget:self action:@selector(setiCloudBackupPreference:) forControlEvents:UIControlEventValueChanged];
-        [swith setOn:[Preference isBackingUpFilesToiCloud]];
-        cell.accessoryView = swith;
-        cell.textLabel.text = @"Zim File Backup to iCloud";
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RememberLastReadPositionCell"];
+            UISwitch *swith = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [swith addTarget:self action:@selector(setRememberLastReadingPositionPreference:) forControlEvents:UIControlEventValueChanged];
+            [swith setOn:YES];
+            cell.accessoryView = swith;
+            cell.textLabel.text = @"Remember last read position";
+            return cell;
+        }
+    } else if (indexPath.section == 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"About"];
+        cell.textLabel.text = @"About";
         return cell;
     }
     return cellDefault;
@@ -92,7 +95,9 @@
     if (section == 0) {
         string = @"File";
     } else if (section == 1) {
-        string = @"iCloud Backup";
+        string = @"Reader";
+    } else if (section == 2) {
+        return @"Other";
     }
     return string;
 }
@@ -105,8 +110,6 @@
         } else {
             string = @"No Book is opened.";
         }
-    } else if (section == 1) {
-        string = @"When turned off, none of your zim files will be backed up to iCloud. But your settings and reading history will still be backed up to iCloud.";
     }
     return string;
 }
@@ -119,35 +122,14 @@
     }
 }
 
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowBookDetail"]) {
-        FilePropertiesTBVC *destination = segue.destinationViewController;
-        //destination.book = self.openingBook;
-    }
-}
-
-
 #pragma mark - Slide Menu Delegation
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
+- (BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
 
-#pragma mark - Target actions
-- (void)setiCloudBackupPreference:(UISwitch *)backupStateSwitch {
-    if (backupStateSwitch.on) {
-        //should backup to iCloud
-        [FileCoordinator removeNoiCloudBackupAttributeFromAllZimFilesInLibraryDir];
-        [Preference setIsBackingUpFilesToiCloud:YES];
-    } else {
-        //should not backup to iCloud
-        [FileCoordinator addNoiCloudBackupAttributeToAllZimFilesInLibraryDir];
-        [Preference setIsBackingUpFilesToiCloud:NO];
-    }
+#pragma mark - Target action
+- (void)setRememberLastReadingPositionPreference:(UISwitch *)readingPositionRememberSwitch {
+    
 }
 
 @end

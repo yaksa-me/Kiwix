@@ -24,6 +24,19 @@
     return mutableResultArray;
 }
 
++ (NSArray *)arrayOfBookMetadataFromData:(NSData *)data {
+    TFHpple *bookListparser= [TFHpple hppleWithHTMLData:data];
+    NSString *htmlXpathQueryString = @"//library/book";
+    NSArray *parsingResultArray = [bookListparser searchWithXPathQuery:htmlXpathQueryString];
+    
+    NSMutableArray *arrayOfBookMetadataDic = [[NSMutableArray alloc] init];
+    for (TFHppleElement *element in parsingResultArray) {
+        [arrayOfBookMetadataDic addObject:element.attributes];
+    }
+    
+    return arrayOfBookMetadataDic;
+}
+
 + (NSString *)timeDifferenceStringBetweenNowAnd:(NSDate *)date {
     NSInteger interval = -1 * date.timeIntervalSinceNow;
     

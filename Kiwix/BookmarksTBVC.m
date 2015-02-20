@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Bookmark";
+    self.title = @"Favorite";
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     
@@ -35,11 +35,31 @@
     self.articleBookmarkedArray = [CoreDataTask articlesBookmarkedInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
     
     self.navigationController.toolbarHidden = YES;
+    
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 0.00001f)];
+    self.tableView.tableFooterView = [self tableFooterView];
+    
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (UIView *)tableFooterView {
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    UILabel *tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    tableFooter.textColor = [UIColor darkGrayColor];
+    tableFooter.opaque = NO;
+    tableFooter.textAlignment = NSTextAlignmentCenter;
+    if ([self.articleBookmarkedArray count] <=1) {
+        tableFooter.text = [NSString stringWithFormat:@"There are %lu bookmarked article.", (unsigned long)[self.articleBookmarkedArray count]];
+    } else {
+        tableFooter.text = [NSString stringWithFormat:@"There are %lu bookmarked articles.", (unsigned long)[self.articleBookmarkedArray count]];
+    }
+    
+    return tableFooter;
+}
+
+- (void)loadFileListFromInternet {
+    
 }
 
 #pragma mark - Table view data source
@@ -59,6 +79,20 @@
     cell.textLabel.text = article.title;
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+#pragma mark - Table View Delagete
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    ArticleVC *articleVC = [mainStoryboard instantiateViewControllerWithIdentifier: @"ArticleVC"];
+    Article *selectedArticle = [self.articleBookmarkedArray objectAtIndex:indexPath.row];
+    articleVC.article = selectedArticle;
+    [[SlideNavigationController sharedInstance] popAllAndSwitchToViewController:articleVC withSlideOutAnimation:YES andCompletion:nil];
+    [Preference setCurrentMenuIndex:0];
 }
 
 #pragma mark - Slide Menu Delegation

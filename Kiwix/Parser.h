@@ -11,6 +11,7 @@
 @interface Parser : NSObject
 
 + (NSArray *)tableOfContentFromTOCHTMLString:(NSString *)htmlString;
++ (NSArray *)arrayOfBookMetadataFromData:(NSData *)data;
 
 + (NSString *)timeDifferenceStringBetweenNowAnd:(NSDate *)date;
 

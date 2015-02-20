@@ -16,6 +16,10 @@
 + (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleURL:(NSString *)articleURL {
     NSURL *zimFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
     articleURL = [articleURL stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"!" withString:@"%21"];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"$" withString:@"%24"];
+    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
     articleURL = [articleURL stringByReplacingOccurrencesOfString:@"–" withString:@"%E2%80%93"];
     NSURL *newURL = [NSURL URLWithString:articleURL relativeToURL:zimFileURL];
     return newURL;
@@ -31,6 +35,10 @@
 - (NSString *)contentURLString {
     //NSLog(@"contentURLString is: %@", self.path);
     NSString *contentURLString = [self.path stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+    contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%21" withString:@"!"];
+    contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%23" withString:@"#"];
+    contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%24" withString:@"$"];
+    contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%26" withString:@"&"];
     contentURLString = [contentURLString stringByReplacingOccurrencesOfString:@"%E2%80%93" withString:@"–"];
     return contentURLString;
 }

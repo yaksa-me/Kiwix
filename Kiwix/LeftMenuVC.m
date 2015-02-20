@@ -38,9 +38,9 @@
     self.collectionView.collectionViewLayout = [[LeftMenuFlowLayout alloc] init];
     self.collectionView.backgroundColor = [UIColor lightGrayColor];
     
-    self.labelArray = @[@"Reading", @"Favorite", @"Recent", @"Settings"];
+    self.labelArray = @[@"Reading", @"BookList", @"Recent", @"Settings"];
     self.iconNameArray = @[@"reading", @"star", @"recent", @"settings"];
-    self.iconHighlightedArray = @[@"reading_highlighted", @"star_highlighted", @"recent", @"settings"];
+    self.iconHighlightedArray = @[@"reading_highlighted", @"star_highlighted", @"recent_highlighted", @"settings_highlighted"];
     
     self.scaleFactorArray = @[[NSNumber numberWithFloat:1.2], [NSNumber numberWithFloat:0.8], [NSNumber numberWithFloat:1.2], [NSNumber numberWithFloat:1.1]];
     self.colorArray = @[UIColorFromRGB(0x00AE00), UIColorFromRGB(0xFF3824), UIColorFromRGB(0xFF9600), UIColorFromRGB(0x0076FF)];
@@ -140,18 +140,40 @@
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        
+        reusableview = headerView;
+    }
+    
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+        
+        reusableview = footerview;
+    }
+    
+    return reusableview;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(60.0f, 50.0f);
+}
 #pragma mark – UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(80, 105);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(50, 10, 50, 10);
+    return UIEdgeInsetsMake(50, 10, 0, 10);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    UIViewController *viewController ;
+    UIViewController *viewController;
     
     switch (indexPath.row)
     {
@@ -160,7 +182,7 @@
             [Preference setCurrentMenuIndex:0];
             break;
         case 1:
-            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookmarksTBVC"];
+            viewController = [mainStoryboard instantiateViewControllerWithIdentifier: @"BookListTBVC"];
             [Preference setCurrentMenuIndex:1];
             break;
         case 2:
