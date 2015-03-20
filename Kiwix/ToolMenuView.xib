@@ -24,11 +24,11 @@
                         <constraint firstAttribute="width" constant="71" id="rHs-2m-a9E"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="K">
+                    <state key="normal" title="A">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="fontPlus:" destination="iN0-l3-epB" eventType="touchUpInside" id="wyZ-Qj-XPr"/>
+                        <action selector="fontMinus:" destination="iN0-l3-epB" eventType="touchUpInside" id="PI7-wo-g6C"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4eL-mf-3Hq">
@@ -67,11 +67,11 @@
                         <constraint firstAttribute="width" constant="71" id="T2K-qE-rXe"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                    <state key="normal" title="K">
+                    <state key="normal" title="A">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="fontMinus:" destination="iN0-l3-epB" eventType="touchUpInside" id="I9s-3u-7k2"/>
+                        <action selector="fontPlus:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZhB-gw-bPu"/>
                     </connections>
                 </button>
             </subviews>
@@ -115,8 +115,8 @@
                 <outlet property="brightButton" destination="4eL-mf-3Hq" id="d3M-t4-2dg"/>
                 <outlet property="dimBrightSlider" destination="dOJ-df-ZTy" id="C3R-vr-YG0"/>
                 <outlet property="dimButton" destination="tv8-xW-yMi" id="Rym-6K-rmb"/>
-                <outlet property="fontMinus" destination="9d3-pQ-Owk" id="Lsk-6C-DhB"/>
-                <outlet property="fontPlus" destination="7Ag-dT-p8b" id="dVk-Hd-PVr"/>
+                <outlet property="fontMinus" destination="7Ag-dT-p8b" id="HDV-Jy-Civ"/>
+                <outlet property="fontPlus" destination="9d3-pQ-Owk" id="MQy-em-7A8"/>
                 <outlet property="fontSeparater" destination="QC0-2t-cRz" id="uyu-yS-bSb"/>
                 <outlet property="separaterA" destination="9xw-K0-qDs" id="xH1-mB-tJ2"/>
             </connections>

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Kiwix/SettingTBVC.m"
-            timestampString = "445906079.036382"
+            timestampString = "447259911.844351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "-setRememberLastReadingPositionPreference:"
             landmarkType = "5">
          </BreakpointContent>
@@ -22,16 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Kiwix/Parser.m"
-            timestampString = "446048758.930337"
+            filePath = "Kiwix/ArticleVC.m"
+            timestampString = "447350403.795216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "+arrayOfBookMetadataFromData:"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
+            landmarkName = "-hideToolMenu"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

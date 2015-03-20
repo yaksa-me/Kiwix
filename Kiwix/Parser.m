@@ -60,22 +60,74 @@
         } else {
             return [NSString stringWithFormat:@"%ldhours", (long)hour];
         }
-    } else if (interval >= 60*60*24 && interval <60*60*24*30) {
+    } else if (interval >= 60*60*24 && interval <60*60*24*7) {
         NSUInteger day =  interval / (60*60*24);
         if (day == 1) {
             return [NSString stringWithFormat:@"%ldday", (long)day];
         } else {
             return [NSString stringWithFormat:@"%lddays", (long)day];
         }
-    }
-    else {
+    } else if (interval >= 60*60*24*7 && interval <60*60*24*30) {
+        NSUInteger week =  interval / (60*60*24*7);
+        if (week == 1) {
+            return [NSString stringWithFormat:@"%ldweek", (long)week];
+        } else {
+            return [NSString stringWithFormat:@"%ldweeks", (long)week];
+        }
+    } else if (interval >= 60*60*24*30 && interval <60*60*24*365) {
+        NSUInteger month =  interval / (60*60*24*30);
+        if (month == 1) {
+            return [NSString stringWithFormat:@"%ldmonth", (long)month];
+        } else {
+            return [NSString stringWithFormat:@"%ldmonths", (long)month];
+        }
+    } else {
         return [NSString stringWithFormat:@"%lds", (long)interval];
     }
     
 }
 
 + (NSString *)articleCountString:(NSUInteger)articleCount {
-    NSString *articleCountString;
+    NSString *articleCountString = [self abbreviateNumber:articleCount withDecimal:2];
     return articleCountString;
+}
+
++ (NSString *)abbreviateNumber:(int)num withDecimal:(int)dec {
+    
+    NSString *abbrevNum;
+    float number = (float)num;
+    
+    NSArray *abbrev = @[@"K", @"M", @"B"];
+    
+    for (int i = abbrev.count - 1; i >= 0; i--) {
+        
+        // Convert array index to "1000", "1000000", etc
+        int size = pow(10,(i+1)*3);
+        
+        if(size <= number) {
+            // Here, we multiply by decPlaces, round, and then divide by decPlaces.
+            // This gives us nice rounding to a particular decimal place.
+            number = round(number*dec/size)/dec;
+            
+            NSString *numberString = [self floatToString:number];
+            
+            // Add the letter for the abbreviation
+            abbrevNum = [NSString stringWithFormat:@"%@%@", numberString, [abbrev objectAtIndex:i]];
+        }
+    }
+    return abbrevNum;
+}
+
++ (NSString *) floatToString:(float) val {
+    
+    NSString *ret = [NSString stringWithFormat:@"%.1f", val];
+    unichar c = [ret characterAtIndex:[ret length] - 1];
+    
+    while (c == 48 || c == 46) { // 0 or .
+        ret = [ret substringToIndex:[ret length] - 1];
+        c = [ret characterAtIndex:[ret length] - 1];
+    }
+    
+    return ret;
 }
 @end

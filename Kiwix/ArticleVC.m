@@ -110,15 +110,13 @@ NSUInteger textFontSize = 100;
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:0]).tintColor = [UIColor grayColor];
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:1]).tintColor = [UIColor grayColor];
     [self initializeBookmarkButton];
+    [self changeToolBarItemsOperatingStatus];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.translucent = NO;
-    [self makeOperable];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeInoperable) name:SlideNavigationControllerDidReveal object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeOperable) name:SlideNavigationControllerDidClose object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -126,9 +124,6 @@ NSUInteger textFontSize = 100;
     self.article.lastReadDate = [NSDate date];
     self.article.lastPosition = [NSNumber numberWithFloat:self.webView.scrollView.contentOffset.y];
     self.navigationController.toolbarHidden = YES;
-    [self makeOperable];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SlideNavigationControllerDidReveal object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SlideNavigationControllerDidClose object:nil];
 }
 
 - (void)loadCurrentArticleIntoBrowser {
@@ -142,6 +137,8 @@ NSUInteger textFontSize = 100;
     NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.openingBook.idString articleURL:articleURLInZimFile];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+    
+    [self changeToolBarItemsOperatingStatus];
 }
 
 - (UIView *)noBookMessageLabel {
@@ -166,24 +163,14 @@ NSUInteger textFontSize = 100;
     self.toolbarItems = toolBarItems;
 }
 
+- (void)changeToolBarItemsOperatingStatus {
+}
+
 - (void)changeBookmarkStatus {
     self.article.isBookmarked = [NSNumber numberWithBool:![self.article.isBookmarked boolValue]];
     [self.bookmarkButtonItem animateWithHighLightState:[self.article.isBookmarked boolValue]];
 }
 
-- (void)makeInoperable {
-    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
-    for (UIBarButtonItem *item in self.toolbarItems) {
-        item.enabled = NO;
-    }
-}
-
-- (void)makeOperable {
-    [self.navigationController.navigationBar setUserInteractionEnabled:YES];
-    for (UIBarButtonItem *item in self.toolbarItems) {
-        item.enabled = YES;
-    }
-}
 #pragma mark - UIWebView Delegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     UIBarButtonItem *itemBack = [self.toolbarItems objectAtIndex:0];
@@ -240,7 +227,7 @@ NSUInteger textFontSize = 100;
     } else {
         self.article = nil;
     }
-    
+    [self changeBookmarkStatus];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -368,8 +355,9 @@ NSUInteger textFontSize = 100;
     [self hideToolMenu];
     self.navigationItem.leftBarButtonItem = nil;
     [searchBar setShowsCancelButton:YES animated:YES];
-    [self.navigationItem setHidesBackButton:YES];
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
+
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.navigationItem.leftBarButtonItem = [[SlideNavigationController sharedInstance] barButtonItemForMenu:MenuLeft];
@@ -385,6 +373,7 @@ NSUInteger textFontSize = 100;
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
     self.navigationItem.leftBarButtonItem = [[SlideNavigationController sharedInstance] barButtonItemForMenu:MenuLeft];
     [controller.searchBar setShowsCancelButton:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
 }
 
 #pragma mark - UIAnimation
@@ -455,9 +444,9 @@ NSUInteger textFontSize = 100;
 #pragma mark - ToolMenuControl Delegate
 - (void)fontSizeAdjustIncrease:(BOOL)isIncreasing {
     if (isIncreasing) {
-        textFontSize = (textFontSize < 160) ? textFontSize +5 : textFontSize;
+        textFontSize = (textFontSize < 120) ? textFontSize +20 : textFontSize;
     } else {
-        textFontSize = (textFontSize > 50) ? textFontSize -5 : textFontSize;
+        textFontSize = (textFontSize > 80) ? textFontSize -20 : textFontSize;
     }
     NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%lu%%'", (unsigned long)textFontSize];
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];

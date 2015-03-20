@@ -47,6 +47,32 @@
     return self;
 }
 
+- (id)initWithImage:(UIImage *)image andLabelText:(NSString *)labelText {
+    self.image = image;
+    self.imageView = [[UIImageView alloc] initWithImage:[self.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    self.imageView.autoresizingMask = UIViewAutoresizingNone;
+    self.imageView.contentMode = UIViewContentModeCenter;
+    
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.button.frame = CGRectMake(0, 0, 40, 40);
+    [self.button addSubview:self.imageView];
+    
+    self.imageView.center = self.button.center;
+    
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    messageLabel.center = CGPointMake(self.button.center.x-2, self.button.center.y+2);
+    messageLabel.text = labelText;
+    messageLabel.textColor = [UIColor darkGrayColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    [self.button addSubview:messageLabel];
+    
+    self.button.tintColor = [UIColor grayColor];;
+    self = [super initWithCustomView:self.button];
+    
+    return self;
+}
+
 - (void)animateWithHighLightState:(BOOL)state {
     self.button.userInteractionEnabled = NO;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{

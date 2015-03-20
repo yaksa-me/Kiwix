@@ -8,14 +8,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="6Tv-78-Fcm" customClass="LeftMenuCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="105"/>
+            <rect key="frame" x="0.0" y="0.0" width="80" height="95"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="80" height="105"/>
+                <rect key="frame" x="0.0" y="0.0" width="80" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0c-r0-8EL">
-                        <rect key="frame" x="0.0" y="80" width="80" height="21"/>
+                        <rect key="frame" x="0.0" y="76" width="80" height="19"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -41,12 +41,12 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="jfx-s8-GyX" secondAttribute="bottom" constant="29" id="c2t-5Z-ZYx"/>
                 <constraint firstItem="jfx-s8-GyX" firstAttribute="top" secondItem="6Tv-78-Fcm" secondAttribute="top" constant="4" id="hDq-MR-zxR"/>
-                <constraint firstItem="M0c-r0-8EL" firstAttribute="top" secondItem="jfx-s8-GyX" secondAttribute="bottom" constant="4" id="izl-wd-gof"/>
+                <constraint firstItem="M0c-r0-8EL" firstAttribute="top" secondItem="jfx-s8-GyX" secondAttribute="bottom" id="izl-wd-gof"/>
                 <constraint firstItem="M0c-r0-8EL" firstAttribute="leading" secondItem="6Tv-78-Fcm" secondAttribute="leading" id="pt1-w8-Etw"/>
                 <constraint firstItem="M0c-r0-8EL" firstAttribute="centerX" secondItem="jfx-s8-GyX" secondAttribute="centerX" id="rkd-2M-wE3"/>
                 <constraint firstAttribute="centerX" secondItem="jfx-s8-GyX" secondAttribute="centerX" id="s9M-8X-qvh"/>
                 <constraint firstItem="bke-En-DGE" firstAttribute="centerY" secondItem="jfx-s8-GyX" secondAttribute="centerY" id="sc9-la-gNS"/>
-                <constraint firstAttribute="bottom" secondItem="M0c-r0-8EL" secondAttribute="bottom" constant="4" id="v1Y-lV-Tf3"/>
+                <constraint firstAttribute="bottom" secondItem="M0c-r0-8EL" secondAttribute="bottom" id="v1Y-lV-Tf3"/>
                 <constraint firstItem="bke-En-DGE" firstAttribute="centerX" secondItem="jfx-s8-GyX" secondAttribute="centerX" id="zst-g0-vW7"/>
             </constraints>
             <size key="customSize" width="50" height="105"/>

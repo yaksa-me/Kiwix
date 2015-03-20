@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Book *openingBook;
+- (IBAction)dismissButton:(UIBarButtonItem *)sender;
 
 @end
 
@@ -27,9 +28,6 @@
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     self.navigationController.toolbarHidden = YES;
     self.title = @"Settings";
-    
-    self.navigationController.navigationBar.userInteractionEnabled = YES;
-    self.navigationController.toolbar.userInteractionEnabled = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -132,4 +130,7 @@
     
 }
 
+- (IBAction)dismissButton:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

@@ -39,6 +39,7 @@ typedef enum {
 @property (nonatomic, assign) CGPoint draggingPoint;
 @property (nonatomic, assign) Menu lastRevealedMenu;
 @property (nonatomic, assign) BOOL menuNeedsLayout;
+@property (strong, nonatomic) UIView *coveringView;
 @end
 
 @implementation SlideNavigationController
@@ -47,11 +48,10 @@ NSString * const SlideNavigationControllerDidOpen = @"SlideNavigationControllerD
 NSString * const SlideNavigationControllerDidClose = @"SlideNavigationControllerDidClose";
 NSString  *const SlideNavigationControllerDidReveal = @"SlideNavigationControllerDidReveal";
 
-#define MENU_SLIDE_ANIMATION_DURATION .3
+#define MENU_SLIDE_ANIMATION_DURATION .1
 #define MENU_QUICK_SLIDE_ANIMATION_DURATION .18
 #define MENU_IMAGE @"menu-button"
 #define MENU_SHADOW_RADIUS 10
-#define MENU_CORNER_RADIUS 10
 #define MENU_SHADOW_OPACITY 1
 #define MENU_DEFAULT_SLIDE_OFFSET 220
 #define MENU_FAST_VELOCITY_FOR_SWIPE_FOLLOW_DIRECTION 1200
@@ -148,6 +148,8 @@ static SlideNavigationController *singletonInstance;
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
     self.menuNeedsLayout = YES;
 }
 
@@ -324,7 +326,6 @@ static SlideNavigationController *singletonInstance;
 	}
 	else
 	{
-        self.view.layer.cornerRadius = MENU_CORNER_RADIUS;
 		self.view.layer.shadowOpacity = 0;
 		self.view.layer.shadowRadius = 0;
 	}
@@ -463,6 +464,13 @@ static SlideNavigationController *singletonInstance;
 {
 	[self enableTapGestureToCloseMenu:YES];
 
+    if (![self.view.subviews containsObject:self.coveringView]) {
+        self.coveringView = [[UIView alloc] initWithFrame:CGRectMake(100, 0, 220, self.view.frame.size.height)];
+        self.coveringView.userInteractionEnabled = YES;
+        [self.coveringView addGestureRecognizer:self.tapRecognizer];
+        [self.view addSubview:self.coveringView];
+    }
+    
 	[self prepareMenuForReveal:menu];
 	
 	[UIView animateWithDuration:duration
@@ -485,7 +493,7 @@ static SlideNavigationController *singletonInstance;
 - (void)closeMenuWithDuration:(float)duration andCompletion:(void (^)())completion
 {
 	[self enableTapGestureToCloseMenu:NO];
-    
+    [self.coveringView removeFromSuperview];
      Menu menu = (self.horizontalLocation > 0) ? MenuLeft : MenuRight;
 	
 	[UIView animateWithDuration:duration
@@ -513,7 +521,7 @@ static SlideNavigationController *singletonInstance;
     if ((location > 0 && self.horizontalLocation <= 0) || (location < 0 && self.horizontalLocation >= 0)) {
         [self postNotificationWithName:SlideNavigationControllerDidReveal forMenu:(location > 0) ? MenuLeft : MenuRight];
     }
-	
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
     {
         rect.origin.x = location;
@@ -757,8 +765,8 @@ static SlideNavigationController *singletonInstance;
 			{
 				if (currentX > 0)
 				{
-					if ([self shouldDisplayMenu:menu forViewController:self.visibleViewController])
-						[self openMenu:(velocity.x > 0) ? MenuLeft : MenuRight withDuration:MENU_QUICK_SLIDE_ANIMATION_DURATION andCompletion:nil];
+                    if ([self shouldDisplayMenu:menu forViewController:self.visibleViewController])
+                        [self openMenu:(velocity.x > 0) ? MenuLeft : MenuRight withDuration:MENU_QUICK_SLIDE_ANIMATION_DURATION andCompletion:nil];
 				}
 				else
 				{

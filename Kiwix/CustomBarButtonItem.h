@@ -16,6 +16,8 @@
 @property BOOL isHightlighted;
 
 - (id)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage andCurrentState:(BOOL)state;
+- (id)initWithImage:(UIImage *)image andLabelText:(NSString *)labelText;
+
 - (void)animateWithHighLightState:(BOOL)state; //State is the state that should be changed to 
     
 @end

@@ -38,8 +38,6 @@
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 0.00001f)];
     self.tableView.tableFooterView = [self tableFooterView];
-    
-    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
 - (UIView *)tableFooterView {

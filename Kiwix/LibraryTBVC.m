@@ -7,13 +7,13 @@
 //
 
 #import "LibraryTBVC.h"
-#import "ArticleListTBVC.h"
 #import "CoreDataTask.h"
 #import "FileCoordinator.h"
 #import "zimFileFinder.h"
 #import "Preference.h"
 #import "AppDelegate.h"
 #import "Book.h"
+#import "Parser.h"
 
 @interface LibraryTBVC ()
 
@@ -120,7 +120,10 @@
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     cell.textLabel.text = book.fileName;
     NSString *fileSizeFormatted = [NSByteCountFormatter stringFromByteCount:[book.fileSize longLongValue]*1000 countStyle:NSByteCountFormatterCountStyleFile];
-    cell.detailTextLabel.text = fileSizeFormatted;
+    NSString *detailText = [[@"Size: " stringByAppendingString:fileSizeFormatted] stringByAppendingString:@", "];
+    detailText = [[[detailText stringByAppendingString:@"Language: "] stringByAppendingString:book.language] stringByAppendingString:@", "];
+    detailText = [[detailText stringByAppendingString:@"Article: "] stringByAppendingString:[Parser articleCountString:[book.articleCount integerValue]]];
+    cell.detailTextLabel.text = detailText;
     
     if ([self.openingBookList containsObject:book]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -142,6 +145,10 @@
         [self setFileLists];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 49;
 }
 
 #pragma mark - Table view delegate
