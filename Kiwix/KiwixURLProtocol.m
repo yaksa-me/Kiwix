@@ -8,7 +8,7 @@
 
 #import "KiwixURLProtocol.h"
 #import "NSURL+KiwixURLProtocol.h"
-#import "zimReader.h"
+#import "ZimMultiReader.h"
 #import <UIKit/UIKit.h>
 
 @implementation KiwixURLProtocol
@@ -31,13 +31,12 @@
 - (void)startLoading
 {
     NSURL *requestURL = [self.request URL];
-    zimReader *reader = [[zimReader alloc] initWithZIMFileURL:[requestURL zimFileURL]];
     NSData *contentData;
     
     if ([[requestURL path] containsString:@"(main)"]) {
-        contentData = [reader dataWithContentOfMainPage];
+        //contentData = [reader dataWithContentOfMainPage];
     } else {
-        contentData = [reader dataWithContentURLString:[requestURL contentURLString]];
+        contentData = [[ZimMultiReader sharedInstance] dataWithZimFileID:[requestURL zimFileID] andContentURLString:[requestURL contentURLString]];
     }
     /*
     if ([[requestURL pathExtension] caseInsensitiveCompare:@"html"] == NSOrderedSame) {

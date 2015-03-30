@@ -84,12 +84,6 @@
     }
 }
 
-#pragma mark - Slide Menu Delegation
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return NO;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -119,11 +113,12 @@
 
     Book *book = [self.fileList objectAtIndex:indexPath.row];
     cell.textLabel.text = book.fileName;
+    /*
     NSString *fileSizeFormatted = [NSByteCountFormatter stringFromByteCount:[book.fileSize longLongValue]*1000 countStyle:NSByteCountFormatterCountStyleFile];
     NSString *detailText = [[@"Size: " stringByAppendingString:fileSizeFormatted] stringByAppendingString:@", "];
     detailText = [[[detailText stringByAppendingString:@"Language: "] stringByAppendingString:book.language] stringByAppendingString:@", "];
     detailText = [[detailText stringByAppendingString:@"Article: "] stringByAppendingString:[Parser articleCountString:[book.articleCount integerValue]]];
-    cell.detailTextLabel.text = detailText;
+    cell.detailTextLabel.text = detailText;*/
     
     if ([self.openingBookList containsObject:book]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

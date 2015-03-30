@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SlideNavigationController.h"
 
-@interface LibraryTBVC : UITableViewController <SlideNavigationControllerDelegate>
+@interface LibraryTBVC : UITableViewController 
 
 @end

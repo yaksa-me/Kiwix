@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SlideNavigationController.h"
+#import "Article.h"
 
-@interface HistoryTBVC : UITableViewController <SlideNavigationControllerDelegate>
-
+@interface HistoryTBVC : UITableViewController
 @end

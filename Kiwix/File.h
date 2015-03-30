@@ -11,10 +11,15 @@
 
 @interface File : NSObject
 
+#pragma marks - File Paths & URLs
 + (NSString *)docDirPath;
 + (NSString *)libDirPath;
 + (NSString *)inboxDirPath;
++ (NSURL *)docDirURL;
++ (NSArray *)zimFileURLsInDocDir;
++ (NSUInteger)numberOfZimFilesInDocDir;
 
+#pragma mark - File Position & Coredata
 + (void)processFilesWithManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)moveZimFileFromDocumentDirectoryToLibraryDirectory; //Move all zim files in document dir to app support dir
 //Add idString, book title, book original file name in
@@ -29,5 +34,6 @@
 + (NSArray *)zimFileIDsInLibraryDirectory;
 + (NSURL *)zimFileURLInLibraryDirectoryFormFileID:(NSString *)fileID;
 + (BOOL)zimFileExistInLibraryDirectoryWithFileID:(NSString *)fileID;
+
 
 @end

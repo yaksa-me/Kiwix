@@ -13,6 +13,8 @@
 
 - (instancetype)initWithZIMFileURL:(NSURL *)url;
 
+- (NSURL *)fileURL;
+
 - (NSString *)htmlContentOfPageWithPageURLString:(NSString *)pageURLString;//Will return nil if there is no page with that specific URL
 - (NSString *)htmlContentOfPageWithPagetitle:(NSString *)title;
 - (NSData *)dataWithContentOfMainPage;
@@ -23,10 +25,8 @@
 - (NSString *)mainPageURL;//Will return nil if the zim file have no main page, not sure if this will ever happen(Does every zim file have a main page?)
 - (NSString *)getRandomPageUrl;
 
+
 - (NSArray *)searchSuggestionsSmart:(NSString *)searchTerm;
-
-
-
 
 
 - (NSUInteger)getArticleCount;
@@ -34,8 +34,7 @@
 - (NSUInteger)getGlobalCount;
 
 - (NSString *)getID;
-- (NSString *)getTitle;
-- (NSString *)getDesc;
+- (NSString *)getTitle;- (NSString *)getDesc;
 - (NSString *)getLanguage;
 - (NSDate *)getDate;
 - (NSString *)getCreator;

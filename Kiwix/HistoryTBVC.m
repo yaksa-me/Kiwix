@@ -160,9 +160,12 @@
     }
 }
 
-#pragma mark - Slide Menu Delegation
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    return YES;
+#pragma mark - Table View Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Article *newArticle = [self.tableViewDataArray objectAtIndex:indexPath.row];
+    NSDictionary *notificationDic = [[NSDictionary alloc] initWithObjects:@[newArticle] forKeys:@[@"newArticleObj"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshWebView" object:self userInfo: notificationDic];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Navigation 

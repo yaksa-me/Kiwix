@@ -13,23 +13,22 @@
 @implementation NSURL (KiwixURLProtocol)
 
 // encoder
-+ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleURL:(NSString *)articleURL {
++ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleString:(NSString *)articleString {
     NSURL *zimFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"!" withString:@"%21"];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"$" withString:@"%24"];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-    articleURL = [articleURL stringByReplacingOccurrencesOfString:@"–" withString:@"%E2%80%93"];
-    NSURL *newURL = [NSURL URLWithString:articleURL relativeToURL:zimFileURL];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@"!" withString:@"%21"];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@"$" withString:@"%24"];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+    articleString = [articleString stringByReplacingOccurrencesOfString:@"–" withString:@"%E2%80%93"];
+    NSURL *newURL = [NSURL URLWithString:articleString relativeToURL:zimFileURL];
     return newURL;
 }
 
 ////Decoder
-- (NSURL *)zimFileURL {
+- (NSString *)zimFileID {
     NSString *idString = [[self.host componentsSeparatedByString:@"/"] lastObject];
-    NSURL *zimFileURL = [zimFileFinder zimFileURLInLibraryDirectoryFormFileID:idString];
-    return zimFileURL;
+    return idString;
 }
 
 - (NSString *)contentURLString {
@@ -43,8 +42,7 @@
     return contentURLString;
 }
 
-// Infer the MIME type of the resource from itshttp://stackoverflow.com/a/9802467/452816 path extension
-// Source:
+// Infer the MIME type of the resource from its http://stackoverflow.com/a/9802467/452816 path extension
 - (NSString *)expectedMIMEType
 {
     CFStringRef type = NULL;

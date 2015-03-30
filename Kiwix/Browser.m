@@ -9,6 +9,7 @@
 #import "Browser.h"
 #import "AppDelegate.h"
 #import "zimReader.h"
+#import "ZimMultiReader.h"
 #import "CoreDataTask.h"
 #import "File.h"
 #import "NSURL+KiwixURLProtocol.h"
@@ -23,9 +24,8 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Book *openingBook;
 @property (strong, nonatomic) zimReader *reader;
-@property (strong, nonatomic) NSMutableArray *filteredArticleArray;
+@property (strong, nonatomic) NSMutableArray *filteredArticleURLArray;
 @property (strong, nonatomic) NSString *placeHolderText;
-
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
@@ -41,7 +41,7 @@
     
     //Model Setup
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    
+    /*
     self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject]; // Currently only one book should be open (v1.0)
     
     if (self.openingBook) {
@@ -55,15 +55,21 @@
             self.article = [CoreDataTask lastReadArticleFromBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
             [self loadCurrentArticleIntoBrowser];
         }
-    }
+    }*/
     
-    //View Setup
+    [self setupView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshBrowserWithNewArticle:) name:@"RefreshWebView" object:nil];
+}
+
+- (void)setupView {
     self.webView.delegate = self;
     self.searchBar.delegate = self;
-    //self.searchBar.layer.borderWidth = 10;
+    self.webView.opaque = NO;
     self.searchDisplayController.delegate = self;
     self.webView.scrollView.delegate = self;
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
     
     CustomBarButtonItem *tabButtonItem = [[CustomBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab"] andLabelText:@"2"];
     NSMutableArray *toolbarItems = [self.toolbarItems mutableCopy];
@@ -77,7 +83,7 @@
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:5]).tintColor = [UIColor grayColor];
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:7]).tintColor = [UIColor grayColor];
 }
-
+/*
 - (void)loadCurrentArticleIntoBrowser {
     NSString *articleURLInZimFile = [[NSString alloc] init];
     if (self.article) {
@@ -92,6 +98,19 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
+
+- (void)refreshBrowserWithNewArticle:(NSNotification *)notification {
+    self.article = [notification.userInfo objectForKey:@"newArticleObj"];
+    [self loadCurrentArticleIntoBrowser];
+}
+ */
+
+- (void)loadArticleWithURL:(NSURL *)url {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
+}
+
+
 
 #pragma mark - UIWebView Delegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -152,19 +171,19 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    /*
     CGRect frameNav = self.navigationController.navigationBar.frame;
     CGRect frameTool = self.navigationController.toolbar.frame;
     CGRect frameScroll = scrollView.frame;
     CGFloat sizeNav = frameNav.size.height - 21;
-    CGFloat sizeScreen = [UIScreen mainScreen].bounds.size.height;
+    CGFloat heightScreen = [UIScreen mainScreen].bounds.size.height;
     CGFloat framePercentageHidden = ((20 - frameNav.origin.y) / (frameNav.size.height - 1));
     
     CGFloat scrollOffset = scrollView.contentOffset.y;
     CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
     CGFloat scrollHeight = scrollView.frame.size.height;
-    [scrollView setFrame:CGRectMake(frameScroll.origin.x, frameNav.origin.y -21, frameScroll.size.width, frameTool.origin.y + frameTool.size.height - frameNav.origin.y + 21)];
-    //[scrollView setContentInset:UIEdgeInsetsMake(scrollView.contentInset.top, scrollView.contentInset.left, sizeScreen - frameTool.origin.y, scrollView.contentInset.right)];
-    NSLog(@"%f", scrollView.contentInset.bottom);
+    //[scrollView setFrame:CGRectMake(frameScroll.origin.x, frameNav.origin.y -21, frameScroll.size.width, frameTool.origin.y + frameTool.size.height - frameNav.origin.y + 21)];
+    
     CGFloat scrollContentSizeHeight = scrollView.contentSize.height + scrollView.contentInset.bottom;
     
     if (scrollOffset <= -scrollView.contentInset.top) {
@@ -176,13 +195,16 @@
     } else {
         //NSLog(@"middle");
         frameNav.origin.y = MIN(20, MAX(-sizeNav, frameNav.origin.y - scrollDiff));
-        frameTool.origin.y = MAX(sizeScreen - 44, MIN(sizeScreen, frameTool.origin.y + scrollDiff));
+        frameTool.origin.y = MAX(heightScreen - 44, MIN(heightScreen, frameTool.origin.y + scrollDiff));
     }
-    
+
+    [scrollView setContentInset:UIEdgeInsetsMake(scrollView.contentInset.top, scrollView.contentInset.left, heightScreen - frameTool.origin.y, scrollView.contentInset.right)];
+    [scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(frameNav.size.height+frameNav.origin.y, scrollView.scrollIndicatorInsets.left, scrollView.contentInset.bottom, scrollView.scrollIndicatorInsets.right)];
     [self.navigationController.navigationBar setFrame:frameNav];
     [self.navigationController.toolbar setFrame:frameTool];
-    [self updateBarButtonItems:(1 - framePercentageHidden)];
+    [self updateNavBarButtonItems:(1 - framePercentageHidden)];
     self.previousScrollViewYOffset = scrollOffset;
+    */
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -201,12 +223,16 @@
 - (void)stoppedScrolling
 {
     CGRect frame = self.navigationController.navigationBar.frame;
-    if (frame.origin.y < 20) {
+    if (frame.origin.y < 0) {
+        //Animation hide
         [self animateNavBarTo:-(frame.size.height - 21)];
+    } else {
+        //Animation show
+        [self animateNavBarTo:21];
     }
 }
 
-- (void)updateBarButtonItems:(CGFloat)alpha
+- (void)updateNavBarButtonItems:(CGFloat)alpha
 {
     [self.navigationItem.leftBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem* item, NSUInteger i, BOOL *stop) {
         item.customView.alpha = alpha;
@@ -218,21 +244,30 @@
     self.navigationController.navigationBar.tintColor = [self.navigationController.navigationBar.tintColor colorWithAlphaComponent:alpha];
 }
 
-- (void)animateNavBarTo:(CGFloat)y
+- (void)animateNavBarTo:(CGFloat)yNav
 {
+    CGRect frameNav = self.navigationController.navigationBar.frame;
+    CGRect frameTool = self.navigationController.toolbar.frame;
+    CGPoint contentOffset = self.webView.scrollView.contentOffset;
+    CGFloat heightScreen = [UIScreen mainScreen].bounds.size.height;
+    CGFloat alpha = (frameNav.origin.y >= yNav ? 0 : 1);
+    
+    contentOffset.y += frameNav.origin.y - yNav;
+    frameNav.origin.y = yNav;
+    frameTool.origin.y = alpha == 1 ? heightScreen - frameTool.size.height : heightScreen;
+    
     [UIView animateWithDuration:0.2 animations:^{
-        CGRect frame = self.navigationController.navigationBar.frame;
-        CGFloat alpha = (frame.origin.y >= y ? 0 : 1);
-        frame.origin.y = y;
-        [self.navigationController.navigationBar setFrame:frame];
-        [self updateBarButtonItems:alpha];
+        [self.navigationController.navigationBar setFrame:frameNav];
+        [self.navigationController.toolbar setFrame:frameTool];
+        [self.webView.scrollView setContentOffset:contentOffset];
+        [self updateNavBarButtonItems:alpha];
     }];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.openingBook) {
-        //Has a opening Book
+    if ([File numberOfZimFilesInDocDir]) {
+        //Have at least one zim file
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             return 1;
         } else {
@@ -244,15 +279,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.openingBook) {
-        //Has a opening Book
+    if ([File numberOfZimFilesInDocDir]) {
+        //Have at least one zim file
         if (tableView == self.searchDisplayController.searchResultsTableView) {
-            return [self.filteredArticleArray count];
+            return [self.filteredArticleURLArray count];
         } else {
             return 0;
         }
     } else {
-        //No book is opening
         return 0;
     }
 }
@@ -265,7 +299,7 @@
     }
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [self.filteredArticleArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[self.filteredArticleURLArray objectAtIndex:indexPath.row] description];
     }
     
     return cell;
@@ -274,6 +308,9 @@
 #pragma mark - Table View Delagate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
+        NSURL *selectedArticleURL = [self.filteredArticleURLArray objectAtIndex:indexPath.row];
+        [self loadArticleWithURL:selectedArticleURL];
+        /*
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         NSString *articleTitle = selectedCell.textLabel.text;
         
@@ -283,6 +320,8 @@
         [articleInfo setObject:[self.reader pageURLFromTitle:articleTitle] forKey:ARTICLE_RELATIVE_URL];
         self.article = [Article articleWithTitleInfo:articleInfo andBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
         [self loadCurrentArticleIntoBrowser];
+         */
+        //[self loadArticleOfTitle]
         [self.searchBar setShowsCancelButton:NO animated:YES];
         [self.searchDisplayController setActive:NO animated:YES];
     }
@@ -290,11 +329,11 @@
 
 #pragma mark - Search Helper
 - (void)filterContentForSearchText:(NSString*)searchText{
-    [self.filteredArticleArray removeAllObjects];
-    if (self.openingBook) {
-        NSArray *filteredArticles = [self.reader searchSuggestionsSmart:searchText];
-        self.filteredArticleArray = [NSMutableArray arrayWithArray:filteredArticles];
-        NSLog(@"Search text:%@, %lu items found in zimfile", searchText, (unsigned long)[self.filteredArticleArray count]);
+    [self.filteredArticleURLArray removeAllObjects];
+    if ([File numberOfZimFilesInDocDir]) {
+        NSArray *results = [[ZimMultiReader sharedInstance] universalSearchSuggestionWithSearchTerm:searchText];
+        self.filteredArticleURLArray = [NSMutableArray arrayWithArray:results];
+        NSLog(@"Search text:%@, %lu items found.", searchText, (unsigned long)[self.filteredArticleURLArray count]);
     }
 }
 
@@ -320,6 +359,7 @@
     [controller.searchBar setShowsCancelButton:NO animated:YES];
     [self.navigationController setToolbarHidden:NO animated:YES];
     self.searchBar.placeholder = self.placeHolderText;
+    [self.filteredArticleURLArray removeAllObjects];
 }
 
 #pragma mark - Target Actions

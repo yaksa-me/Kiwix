@@ -28,7 +28,7 @@
 
 @implementation File
 
-#pragma marks - File Paths
+#pragma marks - File Paths & URLs
 + (NSString *)docDirPath {
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirPath = ([docPaths count] > 0) ? [docPaths objectAtIndex:0] : nil;
@@ -50,6 +50,20 @@
         [fileManager createDirectoryAtPath:inboxDirPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     return inboxDirPath;
+}
+
++ (NSURL *)docDirURL {
+    return [NSURL fileURLWithPath:[self docDirPath]];
+}
+
++ (NSArray *)zimFileURLsInDocDir {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *contents = [fileManager contentsOfDirectoryAtURL:[self docDirURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    return contents;
+}
+
++ (NSUInteger)numberOfZimFilesInDocDir {
+    return [[self zimFileURLsInDocDir] count];
 }
 
 #pragma mark - File Position & Coredata

@@ -14,6 +14,8 @@
 @interface zimReader () {
     kiwix::Reader *_reader;
 }
+
+@property NSURL *fileURL;
 @end
 
 @implementation zimReader
@@ -22,6 +24,7 @@
     self = [super init];
     if (self) {
         _reader = new kiwix::Reader([url fileSystemRepresentation]);
+        self.fileURL = url;
     }
     
     return self;
@@ -54,11 +57,11 @@
 - (NSData *)dataWithContentURLString:(NSString *)pageURLString {
     NSData *contentData;
     
-    string pageURLC = [pageURLString cStringUsingEncoding:NSUTF8StringEncoding];
+    string pageURLStringC = [pageURLString cStringUsingEncoding:NSUTF8StringEncoding];
     string content;
     string contentType;
     unsigned int contentLength = 0;
-    if (_reader->getContentByUrl(pageURLC, content, contentLength, contentType)) {
+    if (_reader->getContentByUrl(pageURLStringC, content, contentLength, contentType)) {
         contentData = [NSData dataWithBytes:content.data() length:contentLength];
     }
     //NSLog(@"URL passed to getContentByUrl(): %@, getDataLength: %lu",pageURLString, (unsigned long)[contentData length]);
@@ -112,9 +115,6 @@
     }
     return searchSuggestionsArray;
 }
-
-
-
 
 #pragma mark - getCounts
 - (NSUInteger)getArticleCount {

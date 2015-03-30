@@ -7,13 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "SlideNavigationController.h"
-#import "FileCoordinator.h"
-#import "Preference.h"
 #import "KiwixURLProtocol.h"
-#import "CoreDataTask.h"
-#import "zimFileFinder.h"
-#import "SlideNavigationContorllerAnimatorSlide.h"
+#import "FileCoordinator.h"
+#import "ZimMultiReader.h"
 
 @interface AppDelegate ()
 
@@ -22,22 +18,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    if ([Preference isFirstLunch]) {
-        [Preference initializeUserDefaults];
-    }
-    
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    //UINavigationController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
-    UIViewController *leftMenu = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LeftMenu"];
-    //((LeftMenuTBVC *)leftMenu.topViewController).managedObjectContext = self.managedObjectContext;
-    [Preference setCurrentMenuIndex:0];
-    
-    [SlideNavigationController sharedInstance].leftMenu = leftMenu;
-    [SlideNavigationController sharedInstance].menuRevealAnimator = [[SlideNavigationContorllerAnimatorSlide alloc] initWithSlideMovement:0];
-    
     [NSURLProtocol registerClass:[KiwixURLProtocol class]];
-    
-    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
+    [ZimMultiReader sharedInstance];
     
     return YES;
 }
@@ -54,7 +36,6 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [FileCoordinator processFilesWithManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
