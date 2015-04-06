@@ -13,15 +13,10 @@
 @implementation NSURL (KiwixURLProtocol)
 
 // encoder
-+ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleString:(NSString *)articleString {
++ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString contentURLString:(NSString *)contentURLString {
     NSURL *zimFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", @"kiwix", idString]];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@"!" withString:@"%21"];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@"$" withString:@"%24"];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-    articleString = [articleString stringByReplacingOccurrencesOfString:@"–" withString:@"%E2%80%93"];
-    NSURL *newURL = [NSURL URLWithString:articleString relativeToURL:zimFileURL];
+    contentURLString = [contentURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *newURL = [NSURL URLWithString:contentURLString relativeToURL:zimFileURL];
     return newURL;
 }
 

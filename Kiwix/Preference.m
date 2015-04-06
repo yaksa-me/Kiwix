@@ -18,6 +18,8 @@
 
 #define READING_MODE @"readingMode"
 
+#define LAST_REFRESH_CATALOGUE_TIME @"lastRefreshCatalogueTime"
+
 @implementation Preference
 
 + (BOOL)isFirstLunch {
@@ -49,44 +51,6 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSUInteger index = [defaults integerForKey:@"currentMenuIndex"];
     return index;
-}
-
-#pragma mark - Book Opening Info
-+ (void)setOpeningBookID:(NSString *)idString andOpeningBookArticleCount:(NSUInteger)count{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *openingBookInfo = [[NSMutableDictionary alloc] init];
-    [openingBookInfo setObject:idString forKey:OPENING_BOOK_ID];
-    [openingBookInfo setObject:[NSNumber numberWithUnsignedInt:count] forKey:OPENING_BOOK_ARTICLE_COUNT];
-    [defaults setObject:openingBookInfo forKey:OPENING_BOOK];
-    [defaults synchronize];
-}
-+ (NSString *)openingBookID {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *openingBookInfo = [defaults objectForKey:OPENING_BOOK];
-    NSString *openingBookID = [openingBookInfo objectForKey:OPENING_BOOK_ID];
-    return openingBookID;
-}
-
-+ (NSUInteger)openingBookArticleCount {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *openingBookInfo = [defaults objectForKey:OPENING_BOOK];
-    NSUInteger openingBookArticleCount = [[openingBookInfo objectForKey:OPENING_BOOK_ARTICLE_COUNT] integerValue];
-    return openingBookArticleCount;
-}
-
-+ (BOOL)hasOpeningBook {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:OPENING_BOOK]) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-+ (void)noLongerHasAnOpeningBook {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:OPENING_BOOK];
-    [defaults synchronize];
 }
 
 #pragma mark - last read article info
@@ -164,6 +128,22 @@
 + (void)setReadingMode:(NSUInteger)mode {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:mode forKey:READING_MODE];
+    [defaults synchronize];
+}
+
+#pragma mark - Last Refresh Catalogue Time
++ (NSDate *)lastRefreshCatalogueTime {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults integerForKey:LAST_REFRESH_CATALOGUE_TIME]) {
+        [defaults setObject:[NSDate date] forKey:LAST_REFRESH_CATALOGUE_TIME];
+        [defaults synchronize];
+    }
+    return [defaults objectForKey:LAST_REFRESH_CATALOGUE_TIME];
+}
+
++ (void)setLastRefreshCatalogueTime:(NSDate *)date {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:date forKey:LAST_REFRESH_CATALOGUE_TIME];
     [defaults synchronize];
 }
 

@@ -13,11 +13,11 @@
 #import "CoreDataTask.h"
 #import "File.h"
 #import "NSURL+KiwixURLProtocol.h"
-#import "Article+Create.h"
+#import "Article+Task.h"
+#import "Book+Task.h"
+#import "Marco.h"
 #import "CustomBarButtonItem.h"
-
-#define ARTICLE_TITLE @"articleTitle"
-#define ARTICLE_RELATIVE_URL @"articleRelativeURL"
+#import "MenuCollectionViewController.h"
 
 @interface Browser ()
 
@@ -26,11 +26,17 @@
 @property (strong, nonatomic) zimReader *reader;
 @property (strong, nonatomic) NSMutableArray *filteredArticleURLArray;
 @property (strong, nonatomic) NSString *placeHolderText;
+@property (strong, nonatomic) MenuCollectionViewController *menuCollectionViewController;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)menuViewButton:(UIBarButtonItem *)sender;
+- (IBAction)webViewNavigation:(UIBarButtonItem *)sender;
 
 @property CGFloat previousScrollViewYOffset;
-- (IBAction)webViewNavigation:(UIBarButtonItem *)sender;
+
+@property (strong, nonatomic) UIDynamicAnimator *animator;
+@property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
+@property (strong, nonatomic) UIView *shadowView;
 
 @end
 
@@ -39,26 +45,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //Model Setup
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    /*
-    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject]; // Currently only one book should be open (v1.0)
-    
-    if (self.openingBook) {
-        //If have a opening book initialize the reader.
-        self.reader = [[zimReader alloc] initWithZIMFileURL:[File zimFileURLInLibraryDirectoryFormFileID:self.openingBook.idString]];
-        if (self.article) {
-            //If told which article to open, i.e. segued from history.
-            [self loadCurrentArticleIntoBrowser];
-        } else {
-            //Do not know which article to open yet, try find last read article, if no last read load main page
-            self.article = [CoreDataTask lastReadArticleFromBook:self.openingBook inManagedObjectContext:self.managedObjectContext];
-            [self loadCurrentArticleIntoBrowser];
-        }
-    }*/
     
     [self setupView];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshBrowserWithNewArticle:) name:@"RefreshWebView" object:nil];
 }
 
@@ -73,8 +62,6 @@
     
     CustomBarButtonItem *tabButtonItem = [[CustomBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab"] andLabelText:@"2"];
     NSMutableArray *toolbarItems = [self.toolbarItems mutableCopy];
-    //[toolbarItems removeObjectAtIndex:3];
-    //[toolbarItems insertObject:tabButtonItem atIndex:3];
     toolbarItems[3] = tabButtonItem;
     self.toolbarItems = toolbarItems;
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:0]).tintColor = [UIColor grayColor];
@@ -83,33 +70,28 @@
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:5]).tintColor = [UIColor grayColor];
     ((UIBarButtonItem *)[self.toolbarItems objectAtIndex:7]).tintColor = [UIColor grayColor];
 }
-/*
-- (void)loadCurrentArticleIntoBrowser {
-    NSString *articleURLInZimFile = [[NSString alloc] init];
-    if (self.article) {
-        articleURLInZimFile = self.article.relativeURL;
-        self.searchBar.placeholder = self.article.title;
-    } else {
-        articleURLInZimFile = @"(main)";
-        self.searchBar.placeholder = @"Search";
-    }
-    
-    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:self.openingBook.idString articleURL:articleURLInZimFile];
+
+// Load a Article of path ID/title to webView, meanwhile update Article Obj in CoreData
+- (void)loadArticleWithPath:(NSString *)path {
+    NSString *idString = path.pathComponents[0];
+    NSString *articleTitle = path.pathComponents[1];
+    NSString *contentURLString = [[ZimMultiReader sharedInstance] articleURLStringFromZimFile:idString andTitle:articleTitle];
+    NSURL *url = [NSURL kiwixURLWithZIMFileIDString:idString contentURLString:contentURLString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+    
+    NSDictionary *articleInfo = @{ARTICLE_TITLE:articleTitle, ARTICLE_RELATIVE_URL:contentURLString};
+    Book *book = [Book bookWithBookIDString:idString inManagedObjectContext:self.managedObjectContext];
+    [Article articleWithTitleInfo:articleInfo andBook:book inManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)refreshBrowserWithNewArticle:(NSNotification *)notification {
-    self.article = [notification.userInfo objectForKey:@"newArticleObj"];
-    [self loadCurrentArticleIntoBrowser];
+    Article *newArticle = [notification.userInfo objectForKey:NEW_ARTICLE_OBJ];
+    NSString *idString = newArticle.belongsToBook.idString;
+    NSString *title = newArticle.title;
+    NSString *path = [idString stringByAppendingPathComponent:title];
+    [self loadArticleWithPath:path];
 }
- */
-
-- (void)loadArticleWithURL:(NSURL *)url {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [self.webView loadRequest:request];
-}
-
 
 
 #pragma mark - UIWebView Delegate
@@ -128,7 +110,7 @@
     } else {
         itemForward.tintColor = [UIColor grayColor];
     }
-    
+    /*
     // If a page is not main article and is a "Kiwix://" page, create/update Article obj in Coredata
     NSString *articleTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if (![articleTitle isEqualToString:@"Main Page"] && [[webView.request.URL scheme] isEqualToString:@"kiwix"]) {
@@ -147,7 +129,7 @@
         
         self.searchBar.placeholder = self.article.title;
         self.placeHolderText = self.article.title;
-        /*
+        
         if ([self.article.isBookmarked boolValue] != self.bookmarkButtonItem.isHightlighted) {
             [self.bookmarkButtonItem animateWithHighLightState:[self.article.isBookmarked boolValue]];
         }
@@ -159,19 +141,20 @@
          NSString *javaScriptString = @"document.body.style.background = '#000000';";
          NSString *result = [self.webView stringByEvaluatingJavaScriptFromString:javaScriptString];
          NSString *html = [NSString stringWithContentsOfURL:[[self.webView request] URL] encoding:NSUTF8StringEncoding error:nil];
-         */
+     
         
         
         
         NSLog(@"Load finish: %@", articleTitle);
     } else {
         self.article = nil;
-    }
+    } */
 }
 
 #pragma mark - UIScrollViewDelegate
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    /*
+    
     CGRect frameNav = self.navigationController.navigationBar.frame;
     CGRect frameTool = self.navigationController.toolbar.frame;
     CGRect frameScroll = scrollView.frame;
@@ -204,7 +187,7 @@
     [self.navigationController.toolbar setFrame:frameTool];
     [self updateNavBarButtonItems:(1 - framePercentageHidden)];
     self.previousScrollViewYOffset = scrollOffset;
-    */
+ 
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -263,7 +246,7 @@
         [self updateNavBarButtonItems:alpha];
     }];
 }
-
+*/
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([File numberOfZimFilesInDocDir]) {
@@ -295,11 +278,13 @@
     UITableViewCell *cell = [self.searchDisplayController.searchResultsTableView dequeueReusableCellWithIdentifier:@"SearchArticleCell"];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchArticleCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SearchArticleCell"];
     }
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [[self.filteredArticleURLArray objectAtIndex:indexPath.row] description];
+        NSString *path = [self.filteredArticleURLArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [path pathComponents][1];
+        cell.detailTextLabel.text = [path pathComponents][0];
     }
     
     return cell;
@@ -308,8 +293,8 @@
 #pragma mark - Table View Delagate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        NSURL *selectedArticleURL = [self.filteredArticleURLArray objectAtIndex:indexPath.row];
-        [self loadArticleWithURL:selectedArticleURL];
+        NSString *selectedArticlePath = [self.filteredArticleURLArray objectAtIndex:indexPath.row];
+        [self loadArticleWithPath:selectedArticlePath];
         /*
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         NSString *articleTitle = selectedCell.textLabel.text;
@@ -372,5 +357,82 @@
             [self.webView goForward];
             break;
     }
+}
+- (IBAction)menuViewButton:(UIBarButtonItem *)sender {
+    if (sender.tag == 0) {
+        if (!self.menuCollectionViewController) {
+            self.menuCollectionViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuCollectionViewController"];
+        }
+        if ([self.view.subviews containsObject:self.menuCollectionViewController.view]) {
+            return;
+        }
+        
+        if (!self.shadowView) {
+            self.shadowView = [[UIView alloc] initWithFrame:self.view.frame];
+            self.shadowView.backgroundColor = [UIColor lightGrayColor];
+            self.shadowView.alpha = 0.0;
+        }
+        [self.view addSubview:self.shadowView];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.shadowView.alpha = 0.75;
+        }];
+        
+        [self addChildViewController:self.menuCollectionViewController];
+        [self.menuCollectionViewController didMoveToParentViewController:self];
+        UIView *view = self.menuCollectionViewController.view;
+        view.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, self.view.frame.size.width, MenuCollectionVCHeight);
+        [self.view addSubview:view];
+        
+        
+        self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+        
+        UIDynamicItemBehavior *behavior = [[UIDynamicItemBehavior alloc] initWithItems:@[view]];
+        [behavior setResistance:20.0];
+        [self.animator addBehavior:behavior];
+        
+        CGPoint anchorPoint = CGPointMake(view.center.x, view.frame.origin.y);
+        UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:view attachedToAnchor:anchorPoint];
+        [attachment setDamping:0.00001];
+        [attachment setFrequency:5.0];
+        [self.animator addBehavior:attachment];
+        CGFloat yDest = [UIScreen mainScreen].bounds.size.height - self.navigationController.toolbar.frame.size.height - MenuCollectionVCShowHeight;
+        anchorPoint = CGPointMake(view.center.x, yDest);
+        [attachment setAnchorPoint:anchorPoint];
+        
+        if (!self.tapGestureRecognizer) {
+            self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissMenuCollectionViewController)];
+            self.tapGestureRecognizer.numberOfTapsRequired = 1;
+            self.tapGestureRecognizer.numberOfTouchesRequired = 1;
+            self.tapGestureRecognizer.delegate = self;
+        }
+        [self.shadowView addGestureRecognizer:self.tapGestureRecognizer];
+        
+        sender.tag = 1;
+    } else {
+        [self dismissMenuCollectionViewController];
+        sender.tag = 0;
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (touch.view == self.menuCollectionViewController.view) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)dismissMenuCollectionViewController {
+    [self.animator removeAllBehaviors];
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.menuCollectionViewController.view.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, self.view.frame.size.width, MenuCollectionVCHeight);
+        self.shadowView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self.menuCollectionViewController.view removeFromSuperview];
+        [self.menuCollectionViewController removeFromParentViewController];
+        [self.shadowView removeFromSuperview];
+    }];
+    
+    UIBarButtonItem *menuBarButtonItem = [self.toolbarItems objectAtIndex:7];
+    menuBarButtonItem.tag = 0;
 }
 @end

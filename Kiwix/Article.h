@@ -2,7 +2,7 @@
 //  Article.h
 //  Kiwix
 //
-//  Created by Chris Li on 2/3/15.
+//  Created by Chris Li on 4/4/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 

@@ -25,19 +25,6 @@
     return matches;
 }
 
-+ (NSArray *)openingBooksInManagedObjectContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"isOpening == YES"];
-    
-    NSError *error;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    
-    if (!matches || error || ([matches count] > 1)) {
-        //handling error
-    }
-    return matches;
-}
-
 + (Book *)bookWithIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     request.predicate = [NSPredicate predicateWithFormat:@"idString = %@", idString];

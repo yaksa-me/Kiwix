@@ -9,7 +9,7 @@
 #import "File.h"
 #import "zimReader.h"
 #import "Preference.h"
-#import "Book+Create.h"
+#import "Book+Task.h"
 
 #define ARTICLE_COUNT @"articleCount"
 #define MEDIA_COUNT @"mediaCount"

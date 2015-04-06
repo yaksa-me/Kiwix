@@ -16,7 +16,7 @@
 - (NSData *)dataWithZimFileID:(NSString *)id andContentURLString:(NSString *)string;
 
 #pragma mark - Search
-- (NSArray *)universalSearchSuggestionWithSearchTerm:(NSString *)searchTerm;//return an array of article URLs
-
+- (NSArray *)universalSearchSuggestionWithSearchTerm:(NSString *)searchTerm;//return an array of article Paths, e.g., ID/Article Title
+- (NSString *)articleURLStringFromZimFile:(NSString *)idString andTitle:(NSString *)title;
 
 @end

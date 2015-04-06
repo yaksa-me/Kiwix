@@ -55,7 +55,7 @@
 
 - (void)setFileLists {
     self.fileList = [CoreDataTask allBooksInManagedObjectContext:self.managedObjectContext];
-    self.openingBookList = [CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext];
+    //self.openingBookList = [CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)updateBookList {
@@ -150,11 +150,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // set all book to closed
     for (Book *bookToBeClosed in self.fileList) {
-        bookToBeClosed.isOpening = [NSNumber numberWithBool:NO];
+        //bookToBeClosed.isOpening = [NSNumber numberWithBool:NO];
     }
     
     Book *book = [self.fileList objectAtIndex:indexPath.row];
-    book.isOpening = [NSNumber numberWithBool:YES];
+    //book.isOpening = [NSNumber numberWithBool:YES];
     [self setFileLists];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

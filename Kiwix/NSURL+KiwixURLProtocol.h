@@ -10,7 +10,7 @@
 
 @interface NSURL (KiwixURLProtocol)
 
-+ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString articleString:(NSString *)articleString;
++ (instancetype)kiwixURLWithZIMFileIDString:(NSString *)idString contentURLString:(NSString *)contentURLString;
 - (NSString *)zimFileID;
 - (NSString *)contentURLString;
 - (NSString *)expectedMIMEType;

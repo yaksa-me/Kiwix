@@ -7,8 +7,6 @@
 //
 
 #import "FileCoordinator.h"
-#import "Book+Create.h"
-#import "Article+Create.h"
 #import "zimReader.h"
 #import "Parser.h"
 #import "zimFileFinder.h"
@@ -145,7 +143,7 @@
             [infoDictionary setObject:[NSNumber numberWithUnsignedInteger:[reader getFileSize]] forKey:FILE_SIZE];
             [infoDictionary setObject:[reader getFavicon] forKey:FAVICON];
             
-            [Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
+            //[Book bookWithReaderInfo:infoDictionary inManagedObjectContext:context];
         }
     }
 }

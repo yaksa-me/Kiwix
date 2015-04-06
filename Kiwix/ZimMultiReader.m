@@ -9,11 +9,13 @@
 #import "ZimMultiReader.h"
 #import "zimReader.h"
 #import "File.h"
-#import "NSURL+KiwixURLProtocol.h"
+#import "Book+Task.h"
+#import "AppDelegate.h"
 
 @interface ZimMultiReader ()
 
 @property (strong, nonatomic)NSMutableDictionary *dicOfZimReaders; // A dic with fileID as key and ZimReader as obj
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -33,11 +35,17 @@
 - (instancetype)init { // init reader for all zim file in doc dir
     self = [super init];
     if (self) {
+        self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+        
         self.dicOfZimReaders = [[NSMutableDictionary alloc] init];
         NSArray *arrayOfURL = [File zimFileURLsInDocDir];
         for (NSURL *url in arrayOfURL) {
             zimReader *reader = [[zimReader alloc] initWithZIMFileURL:url];
-            [self.dicOfZimReaders setObject:reader forKey:[reader getID]];
+            NSString *fileIDString = [reader getID];
+            [self.dicOfZimReaders setObject:reader forKey:fileIDString];
+            
+            Book *book = [Book bookWithBookIDString:fileIDString inManagedObjectContext:self.managedObjectContext];
+            
         }
     }
     return self;
@@ -57,10 +65,15 @@
         zimReader *reader = [self.dicOfZimReaders objectForKey:idString];
         NSArray *result =  [reader searchSuggestionsSmart:searchTerm];
         for (NSString *articleString in result) {
-            NSURL *articleURL = [NSURL kiwixURLWithZIMFileIDString:idString articleString:articleString];
-            [searchResult addObject:articleURL];
+            NSString *articlePath = [idString stringByAppendingPathComponent:articleString];
+            [searchResult addObject:articlePath];
         }
     }
     return searchResult;
+}
+
+- (NSString *)articleURLStringFromZimFile:(NSString *)idString andTitle:(NSString *)title {
+    zimReader *reader = [self.dicOfZimReaders objectForKey:idString];
+    return [reader pageURLFromTitle:title];
 }
 @end

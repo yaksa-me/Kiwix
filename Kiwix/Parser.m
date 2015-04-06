@@ -11,19 +11,6 @@
 
 @implementation Parser
 
-+ (NSArray *)tableOfContentFromTOCHTMLString:(NSString *)htmlString {
-    NSData *htmlData = [htmlString dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
-    NSString *htmlXpathQueryString = @"//div[@id='content']/ul/li/a";
-    NSArray *resultArray = [htmlParser searchWithXPathQuery:htmlXpathQueryString];
-    
-    NSMutableArray *mutableResultArray = [[NSMutableArray alloc] init];
-    for (TFHppleElement *element in resultArray) {
-        [mutableResultArray addObject:[[element firstChild] content]];
-    }
-    return mutableResultArray;
-}
-
 + (NSArray *)arrayOfBookMetadataFromData:(NSData *)data {
     TFHpple *bookListparser= [TFHpple hppleWithHTMLData:data];
     NSString *htmlXpathQueryString = @"//library/book";

@@ -2,7 +2,7 @@
 //  Book.m
 //  Kiwix
 //
-//  Created by Chris Li on 2/3/15.
+//  Created by Chris Li on 4/4/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
@@ -13,19 +13,21 @@
 @implementation Book
 
 @dynamic articleCount;
-@dynamic fileName;
-@dynamic idString;
-@dynamic isOpening;
-@dynamic title;
-@dynamic fileSize;
-@dynamic mediaCount;
-@dynamic globalCount;
-@dynamic desc;
-@dynamic language;
-@dynamic date;
 @dynamic creator;
-@dynamic publisher;
+@dynamic date;
+@dynamic desc;
 @dynamic favIcon;
+@dynamic fileName;
+@dynamic fileSize;
+@dynamic globalCount;
+@dynamic idString;
+@dynamic isLocal;
+@dynamic language;
+@dynamic mediaCount;
+@dynamic publisher;
+@dynamic title;
+@dynamic url;
+@dynamic meta4URL;
 @dynamic hasArticles;
 
 @end

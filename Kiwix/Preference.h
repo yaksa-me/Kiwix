@@ -16,12 +16,6 @@
 + (void)setCurrentMenuIndex:(NSUInteger)index;
 + (NSUInteger)currentMenuIndex;
 
-//+ (void)setOpeningBookID:(NSString *)idString andOpeningBookArticleCount:(NSUInteger)count; //file name is renamed to be the same as file ID
-//+ (NSString *)openingBookID;
-//+ (NSUInteger)openingBookArticleCount;
-//+ (BOOL)hasOpeningBook;
-//+ (void)noLongerHasAnOpeningBook;
-
 //+ (void)setLastReadArticleInfoWithBookIDString:(NSString *)bookIDString andArticleTitle:(NSString *)articleTitle;
 //+ (NSString *)lastReadBookIDString;
 //+ (NSString *)lastReadArticleTitle;
@@ -39,5 +33,7 @@
 + (NSUInteger)readingFontSize;
 + (void)setReadingFontSize:(NSUInteger)fontSize;
 
++ (NSDate *)lastRefreshCatalogueTime;
++ (void)setLastRefreshCatalogueTime:(NSDate *)date;
 
 @end

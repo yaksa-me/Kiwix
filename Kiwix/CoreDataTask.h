@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Book.h"
+#import "Book+Task.h"
 @interface CoreDataTask : NSObject
 
 + (NSArray *)allBooksInManagedObjectContext:(NSManagedObjectContext *)context;  //An array of Book object.
-+ (NSArray *)openingBooksInManagedObjectContext:(NSManagedObjectContext *)context; // Currently there should only be one opening book (v1.0)
 
 + (Book *)bookWithIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
 

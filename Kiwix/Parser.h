@@ -10,8 +10,7 @@
 
 @interface Parser : NSObject
 
-+ (NSArray *)tableOfContentFromTOCHTMLString:(NSString *)htmlString;
-+ (NSArray *)arrayOfBookMetadataFromData:(NSData *)data;
++ (NSArray *)arrayOfBookMetadataFromData:(NSData *)data; // Array of Dic, key value see Marco.h
 
 + (NSString *)timeDifferenceStringBetweenNowAnd:(NSDate *)date;
 

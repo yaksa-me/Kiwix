@@ -1,14 +1,14 @@
 //
-//  LeftMenuTableViewCell.m
+//  BookTableViewCell.m
 //  Kiwix
 //
-//  Created by Chris Li on 1/22/15.
+//  Created by Chris Li on 4/5/15.
 //  Copyright (c) 2015 Chris Li. All rights reserved.
 //
 
-#import "LeftMenuTableViewCell.h"
+#import "BookTableViewCell.h"
 
-@implementation LeftMenuTableViewCell
+@implementation BookTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

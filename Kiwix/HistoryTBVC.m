@@ -7,20 +7,18 @@
 //
 
 #import "HistoryTBVC.h"
-#import "Article.h"
-#import "Book.h"
-#import "CoreDataTask.h"
 #import "Preference.h"
 #import "Parser.h"
-#import "ArticleVC.h"
 #import "AppDelegate.h"
 #import "EditingToolbar.h"
+#import "Article+Task.h"
+#import "Book+Task.h"
+#import "Marco.h"
 
 @interface HistoryTBVC ()
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSArray *tableViewDataArray; //An array of articles
-@property (strong, nonatomic) Book *openingBook;
 @property (strong, nonatomic) EditingToolbar *editingToolBar;
 - (IBAction)segmentedControl:(UISegmentedControl *)sender;
 - (IBAction)markAllButtonItem:(UIBarButtonItem *)sender;
@@ -35,10 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Recent";
-    
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    self.openingBook = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     [self setTableViewDataSource];
     
     NSTimer* timer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(reloadTableView) userInfo:nil repeats:YES];
@@ -74,7 +69,7 @@
 }
 
 - (void)setTableViewDataSource {
-    self.tableViewDataArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
+    self.tableViewDataArray = [Article articlesHaveBeenReadInManagedObjectContext:self.managedObjectContext];
 }
 
 - (void)reloadTableView {
@@ -85,7 +80,7 @@
 - (void)deleteArticleAtIndexPathArray:(NSArray *)indexPathArray {
     for (NSIndexPath *indexPath in indexPathArray) {
         Article *article = [self.tableViewDataArray objectAtIndex:indexPath.row];
-        [CoreDataTask deleteArticle:article inManagedObjectContext:self.managedObjectContext];
+        [Article deleteArticle:article inManagedObjectContext:self.managedObjectContext];
     }
     [self setTableViewDataSource];
     
@@ -163,7 +158,7 @@
 #pragma mark - Table View Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Article *newArticle = [self.tableViewDataArray objectAtIndex:indexPath.row];
-    NSDictionary *notificationDic = [[NSDictionary alloc] initWithObjects:@[newArticle] forKeys:@[@"newArticleObj"]];
+    NSDictionary *notificationDic = @{NEW_ARTICLE_OBJ: newArticle};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshWebView" object:self userInfo: notificationDic];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -177,16 +172,6 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"SelectArticleFromHistory"]) {
-        ArticleVC *destination = segue.destinationViewController;
-        NSUInteger indexOfSelectedArticle = [self.tableView indexPathForCell:(UITableViewCell *)sender].row;
-        Article *selectedArticle = [self.tableViewDataArray objectAtIndex:indexOfSelectedArticle];
-        destination.article = selectedArticle;
-        [Preference setCurrentMenuIndex:0];
-    }
-}
-
 #pragma mark - Target Action
 - (IBAction)segmentedControl:(UISegmentedControl *)sender {
     if (self.tableView.isEditing == YES) {
@@ -195,9 +180,9 @@
     
     if (sender.selectedSegmentIndex == 0) {
         // History
-        self.tableViewDataArray = [CoreDataTask articlesReadHistoryInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
+        self.tableViewDataArray = [Article articlesHaveBeenReadInManagedObjectContext:self.managedObjectContext];
     } else {
-        self.tableViewDataArray = [CoreDataTask articlesBookmarkedInBook:self.openingBook InManagedObjectContext:self.managedObjectContext];
+        self.tableViewDataArray = [Article articlesBookmarkedInManagedObjectContext:self.managedObjectContext];
     }
     
     [self reloadTableView];
@@ -238,6 +223,6 @@
 - (void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
     NSUInteger index = tapGestureRecognizer.view.tag;
     Article *article = [self.tableViewDataArray objectAtIndex:index];
-    NSLog(article.title);
+    //NSLog(article.title);
 }
 @end

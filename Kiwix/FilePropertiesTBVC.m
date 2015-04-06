@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    self.book = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
+    //self.book = [[CoreDataTask openingBooksInManagedObjectContext:self.managedObjectContext] firstObject];
     
     self.propertyNameA = @[@"Title", @"Language", @"Date", @"Creator", @"Publisher"];
     self.propertyValueA = [[NSMutableArray alloc] init];

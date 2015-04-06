@@ -10,7 +10,7 @@
 #import "Book.h"
 #import "Article.h"
 
-@interface Browser : UIViewController <UIWebViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface Browser : UIViewController <UIWebViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) Article *article;
 
