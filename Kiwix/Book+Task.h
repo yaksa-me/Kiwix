@@ -14,5 +14,6 @@
 + (Book *)bookWithBookIDString:(NSString *)idString inManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)bookMetadataToCoreDataWithMetadataArray:(NSArray *)array inManagedObjectContext:(NSManagedObjectContext *)context;
 + (void)deleteAllBooksNonLocalInManagedObjectContext:(NSManagedObjectContext *)context;
-
++ (NSString *)fileNameOfBook:(Book *)book;
++ (NSMutableDictionary *)bookDownloadProgesssDicInManagedObjectContext:(NSManagedObjectContext *)context; // A dic with book idString as key and download progress <NSNumber> as value
 @end

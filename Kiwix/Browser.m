@@ -18,6 +18,7 @@
 #import "Marco.h"
 #import "CustomBarButtonItem.h"
 #import "MenuCollectionViewController.h"
+#import "ArticleSearchResultTBVC.h"
 
 @interface Browser ()
 
@@ -317,7 +318,12 @@
     [self.filteredArticleURLArray removeAllObjects];
     if ([File numberOfZimFilesInDocDir]) {
         NSArray *results = [[ZimMultiReader sharedInstance] universalSearchSuggestionWithSearchTerm:searchText];
-        self.filteredArticleURLArray = [NSMutableArray arrayWithArray:results];
+        NSArray *sorted = [results sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSString *title1 = [(NSString *)obj1 pathComponents][1];
+            NSString *title2 = [(NSString *)obj2 pathComponents][1];
+            return [title1 caseInsensitiveCompare:title2];
+        }];
+        self.filteredArticleURLArray = [NSMutableArray arrayWithArray:sorted];
         NSLog(@"Search text:%@, %lu items found.", searchText, (unsigned long)[self.filteredArticleURLArray count]);
     }
 }

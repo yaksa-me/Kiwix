@@ -14,7 +14,7 @@
 
 @interface ZimMultiReader ()
 
-@property (strong, nonatomic)NSMutableDictionary *dicOfZimReaders; // A dic with fileID as key and ZimReader as obj
+@property (strong, nonatomic) NSMutableDictionary *dicOfZimReaders; // A dic with fileID as key and ZimReader as obj
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
@@ -36,19 +36,28 @@
     self = [super init];
     if (self) {
         self.managedObjectContext = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-        
-        self.dicOfZimReaders = [[NSMutableDictionary alloc] init];
-        NSArray *arrayOfURL = [File zimFileURLsInDocDir];
-        for (NSURL *url in arrayOfURL) {
-            zimReader *reader = [[zimReader alloc] initWithZIMFileURL:url];
-            NSString *fileIDString = [reader getID];
-            [self.dicOfZimReaders setObject:reader forKey:fileIDString];
-            
-            Book *book = [Book bookWithBookIDString:fileIDString inManagedObjectContext:self.managedObjectContext];
-            
-        }
+        [self initZimReaderDic];
     }
     return self;
+}
+
+- (void)initZimReaderDic {
+    self.dicOfZimReaders = [[NSMutableDictionary alloc] init];
+    NSArray *arrayOfURL = [File zimFileURLsInDocDir];
+    for (NSURL *url in arrayOfURL) {
+        zimReader *reader = [[zimReader alloc] initWithZIMFileURL:url];
+        NSString *fileIDString = [reader getID];
+        [self.dicOfZimReaders setObject:reader forKey:fileIDString];
+        
+        Book *book = [Book bookWithBookIDString:fileIDString inManagedObjectContext:self.managedObjectContext];
+        book.downloadProgress = [NSNumber numberWithFloat:1.0];
+    }
+}
+
+#pragma mark - ZimReaderArrayUpdater
+- (void)updateZimReaderArray {
+    self.dicOfZimReaders = nil;
+    [self initZimReaderDic];
 }
 
 #pragma mark - Data Loading

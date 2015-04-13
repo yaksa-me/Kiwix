@@ -12,6 +12,9 @@
 
 + (instancetype)sharedInstance;
 
+#pragma mark - ZimReaderArrayUpdater 
+- (void)updateZimReaderArray;
+
 #pragma mark - Data Loading
 - (NSData *)dataWithZimFileID:(NSString *)id andContentURLString:(NSString *)string;
 

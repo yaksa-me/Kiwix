@@ -20,6 +20,8 @@
 
 #define LAST_REFRESH_CATALOGUE_TIME @"lastRefreshCatalogueTime"
 
+#define DOWNLOAD_SESSION_IDENTIFIER @"downloadSessionIdentifier"
+
 @implementation Preference
 
 + (BOOL)isFirstLunch {
@@ -134,7 +136,7 @@
 #pragma mark - Last Refresh Catalogue Time
 + (NSDate *)lastRefreshCatalogueTime {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults integerForKey:LAST_REFRESH_CATALOGUE_TIME]) {
+    if (![defaults objectForKey:LAST_REFRESH_CATALOGUE_TIME]) {
         [defaults setObject:[NSDate date] forKey:LAST_REFRESH_CATALOGUE_TIME];
         [defaults synchronize];
     }
@@ -144,6 +146,22 @@
 + (void)setLastRefreshCatalogueTime:(NSDate *)date {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:date forKey:LAST_REFRESH_CATALOGUE_TIME];
+    [defaults synchronize];
+}
+
++ (NSString *)downloadSessionIdentifier {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults stringForKey:DOWNLOAD_SESSION_IDENTIFIER]) {
+        NSString *identifier = [[NSDate date] description];
+        [defaults setObject:identifier forKey:DOWNLOAD_SESSION_IDENTIFIER];
+        [defaults synchronize];
+    }
+    return [defaults objectForKey:DOWNLOAD_SESSION_IDENTIFIER];
+}
++ (void)setDownloadSessionIdentifier {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *identifier = [[NSDate date] description];
+    [defaults setObject:identifier forKey:DOWNLOAD_SESSION_IDENTIFIER];
     [defaults synchronize];
 }
 

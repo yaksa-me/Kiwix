@@ -36,4 +36,7 @@
 + (NSDate *)lastRefreshCatalogueTime;
 + (void)setLastRefreshCatalogueTime:(NSDate *)date;
 
++ (NSString *)downloadSessionIdentifier;
++ (void)setDownloadSessionIdentifier;
+
 @end

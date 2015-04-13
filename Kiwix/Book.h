@@ -17,11 +17,13 @@
 @property (nonatomic, retain) NSString * creator;
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * desc;
+@property (nonatomic, retain) NSNumber * downloadProgress;
 @property (nonatomic, retain) NSData * favIcon;
 @property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSNumber * fileSize;
 @property (nonatomic, retain) NSNumber * globalCount;
 @property (nonatomic, retain) NSString * idString;
+@property (nonatomic, retain) NSNumber * isDownloading;
 @property (nonatomic, retain) NSNumber * isLocal;
 @property (nonatomic, retain) NSString * language;
 @property (nonatomic, retain) NSNumber * mediaCount;

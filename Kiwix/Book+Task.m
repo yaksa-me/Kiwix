@@ -67,21 +67,25 @@
         
         Book *book = [self bookWithBookIDString:idString inManagedObjectContext:context];
         book.articleCount = [dic objectForKey:BOOK_ARTICLE_COUNT];
-        book.creator = [dic objectForKey:BOOK_CREATOR];
+        book.creator = [dic objectForKey:BOOK_CREATOR] ? [dic objectForKey:BOOK_CREATOR] : @"N/A";
         book.date =  [dateFormatter dateFromString:[dic objectForKey:BOOK_DATE]];
-        book.desc = [dic objectForKey:BOOK_DESCRIPTION];
-        book.favIcon = [[dic objectForKey:BOOK_FAVICON] dataUsingEncoding:NSUTF8StringEncoding];
-        book.language = [dic objectForKey:BOOK_LANGUAGE];
+        book.desc = [dic objectForKey:BOOK_DESCRIPTION] ? [dic objectForKey:BOOK_DESCRIPTION]: @"N/A";
+        book.language = [dic objectForKey:BOOK_LANGUAGE] ? [dic objectForKey:BOOK_LANGUAGE] : @"N/A";
         book.mediaCount = [numberFormatter numberFromString:[dic objectForKey:BOOK_MEDIA_COUNT]];
-        book.publisher = [dic objectForKey:BOOK_PUBLISHER];
+        book.publisher = [dic objectForKey:BOOK_PUBLISHER] ? [dic objectForKey:BOOK_PUBLISHER]: @"N/A";
         book.title = [dic objectForKey:BOOK_TITLE] ? [dic objectForKey:BOOK_TITLE] : @"N/A";
         book.meta4URL = [dic objectForKey:BOOK_META4_URL];
+        book.fileSize = [numberFormatter numberFromString:[dic objectForKey:BOOK_SIZE]];
+        
+        if ([dic objectForKey:BOOK_FAVICON]) {
+            book.favIcon = [[NSData alloc] initWithBase64EncodedString:[dic objectForKey:BOOK_FAVICON] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        }
     }
 }
 
 + (void)deleteAllBooksNonLocalInManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"isLocal = %@", [NSNumber numberWithBool:NO]];
+    request.predicate = [NSPredicate predicateWithFormat:@"downloadProgress == nil"];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -93,4 +97,26 @@
     }
 }
 
++ (NSString *)fileNameOfBook:(Book *)book {
+    NSString *meta4URL = book.meta4URL;
+    NSString *fileName = [[meta4URL pathComponents] lastObject];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@".meta4" withString:@""];
+    return fileName;
+}
+
++ (NSMutableDictionary *)bookDownloadProgesssDicInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"downloadProgress != nil", [NSNumber numberWithFloat:0.0]];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    if (matches) {
+        for (Book *book in matches) {
+            [dic setValue:book.downloadProgress forKey:book.idString];
+        }
+    }
+    return dic;
+}
 @end

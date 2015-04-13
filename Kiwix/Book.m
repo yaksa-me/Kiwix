@@ -16,11 +16,13 @@
 @dynamic creator;
 @dynamic date;
 @dynamic desc;
+@dynamic downloadProgress;
 @dynamic favIcon;
 @dynamic fileName;
 @dynamic fileSize;
 @dynamic globalCount;
 @dynamic idString;
+@dynamic isDownloading;
 @dynamic isLocal;
 @dynamic language;
 @dynamic mediaCount;

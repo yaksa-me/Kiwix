@@ -7,11 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		974B09FE1ADBF8A80029A8FE /* ArticleSearchResultTBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 974B09FD1ADBF8A80029A8FE /* ArticleSearchResultTBVC.m */; };
 		974D73961AC837E5000A8913 /* ZimMultiReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D73951AC837E5000A8913 /* ZimMultiReader.m */; };
 		974D7F621ACECDD800F8F808 /* MenuCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D7F611ACECDD800F8F808 /* MenuCollectionViewController.m */; };
 		974E19261AD2183F005AA535 /* BarButtonItemWithLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 974E19251AD2183F005AA535 /* BarButtonItemWithLabel.m */; };
 		974E192A1AD220AF005AA535 /* BookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 974E19291AD220AF005AA535 /* BookTableViewCell.m */; };
 		974F46071ACE265900B2F6F0 /* Article+Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 974F46061ACE265900B2F6F0 /* Article+Task.m */; };
+		9770F0001AD3824700BA333B /* MRBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFDC1AD3824700BA333B /* MRBlurView.m */; };
+		9770F0011AD3824700BA333B /* UIImage+MRImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFDE1AD3824700BA333B /* UIImage+MRImageEffects.m */; };
+		9770F0021AD3824700BA333B /* MRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFE11AD3824700BA333B /* MRActivityIndicatorView.m */; };
+		9770F0031AD3824700BA333B /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFE31AD3824700BA333B /* MRCircularProgressView.m */; };
+		9770F0041AD3824700BA333B /* MRIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFE51AD3824700BA333B /* MRIconView.m */; };
+		9770F0051AD3824700BA333B /* MRNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFE71AD3824700BA333B /* MRNavigationBarProgressView.m */; };
+		9770F0061AD3824700BA333B /* MRProgressOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFE91AD3824700BA333B /* MRProgressOverlayView.m */; };
+		9770F0071AD3824700BA333B /* MRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFEB1AD3824700BA333B /* MRProgressView.m */; };
+		9770F0081AD3824700BA333B /* MRStopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFEE1AD3824700BA333B /* MRStopButton.m */; };
+		9770F00C1AD3824700BA333B /* MRMessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFFA1AD3824700BA333B /* MRMessageInterceptor.m */; };
+		9770F00D1AD3824700BA333B /* MRMethodCopier.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFFC1AD3824700BA333B /* MRMethodCopier.m */; };
+		9770F00E1AD3824700BA333B /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770EFFF1AD3824700BA333B /* MRWeakProxy.m */; };
+		9770F0111AD3899C00BA333B /* BookTableViewCellAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770F0101AD3899C00BA333B /* BookTableViewCellAccessoryView.m */; };
+		9770F0191AD4104D00BA333B /* Downloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9770F0181AD4104D00BA333B /* Downloader.m */; };
 		977AF9011A6352C200B43722 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FC1A6352C200B43722 /* TFHpple.m */; };
 		977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF8FE1A6352C200B43722 /* TFHppleElement.m */; };
 		977AF9031A6352C200B43722 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 977AF9001A6352C200B43722 /* XPathQuery.m */; };
@@ -62,8 +77,6 @@
 		97E755B01A93A79400C7BE2C /* EditingToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E755AF1A93A79400C7BE2C /* EditingToolbar.m */; };
 		97E8E2061A9B864600D2F7DB /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 97E8E2051A9B864600D2F7DB /* about.html */; };
 		97E8E2081A9B86AD00D2F7DB /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8E2071A9B86AD00D2F7DB /* AboutVC.swift */; };
-		97E8E20D1A9B8F2300D2F7DB /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8E20B1A9B8F2300D2F7DB /* CustomTableViewCell.swift */; };
-		97E8E20E1A9B8F2300D2F7DB /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97E8E20C1A9B8F2300D2F7DB /* CustomTableViewCell.xib */; };
 		97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC5C1A6788DE00C8710F /* CoreDataTask.m */; };
 		97EDCC5F1A6807D000C8710F /* Preference.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97EDCC5E1A6807D000C8710F /* Preference.plist */; };
 		97EDCC621A68087B00C8710F /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EDCC611A68087B00C8710F /* Preference.m */; };
@@ -94,6 +107,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		974B09FC1ADBF8A80029A8FE /* ArticleSearchResultTBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleSearchResultTBVC.h; sourceTree = "<group>"; };
+		974B09FD1ADBF8A80029A8FE /* ArticleSearchResultTBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleSearchResultTBVC.m; sourceTree = "<group>"; };
 		974D73941AC837E5000A8913 /* ZimMultiReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZimMultiReader.h; sourceTree = "<group>"; };
 		974D73951AC837E5000A8913 /* ZimMultiReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZimMultiReader.m; sourceTree = "<group>"; };
 		974D7F601ACECDD800F8F808 /* MenuCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCollectionViewController.h; sourceTree = "<group>"; };
@@ -107,6 +122,37 @@
 		974F46051ACE265900B2F6F0 /* Article+Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+Task.h"; sourceTree = "<group>"; };
 		974F46061ACE265900B2F6F0 /* Article+Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+Task.m"; sourceTree = "<group>"; };
 		974F46081ACE26E500B2F6F0 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
+		9770EFDB1AD3824700BA333B /* MRBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRBlurView.h; sourceTree = "<group>"; };
+		9770EFDC1AD3824700BA333B /* MRBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRBlurView.m; sourceTree = "<group>"; };
+		9770EFDD1AD3824700BA333B /* UIImage+MRImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MRImageEffects.h"; sourceTree = "<group>"; };
+		9770EFDE1AD3824700BA333B /* UIImage+MRImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MRImageEffects.m"; sourceTree = "<group>"; };
+		9770EFE01AD3824700BA333B /* MRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRActivityIndicatorView.h; sourceTree = "<group>"; };
+		9770EFE11AD3824700BA333B /* MRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRActivityIndicatorView.m; sourceTree = "<group>"; };
+		9770EFE21AD3824700BA333B /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
+		9770EFE31AD3824700BA333B /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCircularProgressView.m; sourceTree = "<group>"; };
+		9770EFE41AD3824700BA333B /* MRIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRIconView.h; sourceTree = "<group>"; };
+		9770EFE51AD3824700BA333B /* MRIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRIconView.m; sourceTree = "<group>"; };
+		9770EFE61AD3824700BA333B /* MRNavigationBarProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNavigationBarProgressView.h; sourceTree = "<group>"; };
+		9770EFE71AD3824700BA333B /* MRNavigationBarProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNavigationBarProgressView.m; sourceTree = "<group>"; };
+		9770EFE81AD3824700BA333B /* MRProgressOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressOverlayView.h; sourceTree = "<group>"; };
+		9770EFE91AD3824700BA333B /* MRProgressOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRProgressOverlayView.m; sourceTree = "<group>"; };
+		9770EFEA1AD3824700BA333B /* MRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressView.h; sourceTree = "<group>"; };
+		9770EFEB1AD3824700BA333B /* MRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRProgressView.m; sourceTree = "<group>"; };
+		9770EFEC1AD3824700BA333B /* MRStopableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRStopableView.h; sourceTree = "<group>"; };
+		9770EFED1AD3824700BA333B /* MRStopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRStopButton.h; sourceTree = "<group>"; };
+		9770EFEE1AD3824700BA333B /* MRStopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRStopButton.m; sourceTree = "<group>"; };
+		9770EFEF1AD3824700BA333B /* MRProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgress.h; sourceTree = "<group>"; };
+		9770EFF91AD3824700BA333B /* MRMessageInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMessageInterceptor.h; sourceTree = "<group>"; };
+		9770EFFA1AD3824700BA333B /* MRMessageInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMessageInterceptor.m; sourceTree = "<group>"; };
+		9770EFFB1AD3824700BA333B /* MRMethodCopier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMethodCopier.h; sourceTree = "<group>"; };
+		9770EFFC1AD3824700BA333B /* MRMethodCopier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMethodCopier.m; sourceTree = "<group>"; };
+		9770EFFD1AD3824700BA333B /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
+		9770EFFE1AD3824700BA333B /* MRWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRWeakProxy.h; sourceTree = "<group>"; };
+		9770EFFF1AD3824700BA333B /* MRWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRWeakProxy.m; sourceTree = "<group>"; };
+		9770F00F1AD3899C00BA333B /* BookTableViewCellAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookTableViewCellAccessoryView.h; sourceTree = "<group>"; };
+		9770F0101AD3899C00BA333B /* BookTableViewCellAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookTableViewCellAccessoryView.m; sourceTree = "<group>"; };
+		9770F0171AD4104D00BA333B /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
+		9770F0181AD4104D00BA333B /* Downloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Downloader.m; sourceTree = "<group>"; };
 		977AF8F81A63528600B43722 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		977AF8FB1A6352C200B43722 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		977AF8FC1A6352C200B43722 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
@@ -184,8 +230,6 @@
 		97E755AF1A93A79400C7BE2C /* EditingToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingToolbar.m; sourceTree = "<group>"; };
 		97E8E2051A9B864600D2F7DB /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		97E8E2071A9B86AD00D2F7DB /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
-		97E8E20B1A9B8F2300D2F7DB /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		97E8E20C1A9B8F2300D2F7DB /* CustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		97EDCC5B1A6788DE00C8710F /* CoreDataTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTask.h; sourceTree = "<group>"; };
 		97EDCC5C1A6788DE00C8710F /* CoreDataTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTask.m; sourceTree = "<group>"; };
 		97EDCC5E1A6807D000C8710F /* Preference.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Preference.plist; sourceTree = "<group>"; };
@@ -266,8 +310,68 @@
 			children = (
 				974E19281AD220AF005AA535 /* BookTableViewCell.h */,
 				974E19291AD220AF005AA535 /* BookTableViewCell.m */,
+				9770F00F1AD3899C00BA333B /* BookTableViewCellAccessoryView.h */,
+				9770F0101AD3899C00BA333B /* BookTableViewCellAccessoryView.m */,
 			);
 			name = BookTableViewCell;
+			sourceTree = "<group>";
+		};
+		9770EFD91AD3824700BA333B /* MRProgress */ = {
+			isa = PBXGroup;
+			children = (
+				9770EFDA1AD3824700BA333B /* Blur */,
+				9770EFDF1AD3824700BA333B /* Components */,
+				9770EFEF1AD3824700BA333B /* MRProgress.h */,
+				9770EFF81AD3824700BA333B /* Utils */,
+			);
+			path = MRProgress;
+			sourceTree = "<group>";
+		};
+		9770EFDA1AD3824700BA333B /* Blur */ = {
+			isa = PBXGroup;
+			children = (
+				9770EFDB1AD3824700BA333B /* MRBlurView.h */,
+				9770EFDC1AD3824700BA333B /* MRBlurView.m */,
+				9770EFDD1AD3824700BA333B /* UIImage+MRImageEffects.h */,
+				9770EFDE1AD3824700BA333B /* UIImage+MRImageEffects.m */,
+			);
+			path = Blur;
+			sourceTree = "<group>";
+		};
+		9770EFDF1AD3824700BA333B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9770EFE01AD3824700BA333B /* MRActivityIndicatorView.h */,
+				9770EFE11AD3824700BA333B /* MRActivityIndicatorView.m */,
+				9770EFE21AD3824700BA333B /* MRCircularProgressView.h */,
+				9770EFE31AD3824700BA333B /* MRCircularProgressView.m */,
+				9770EFE41AD3824700BA333B /* MRIconView.h */,
+				9770EFE51AD3824700BA333B /* MRIconView.m */,
+				9770EFE61AD3824700BA333B /* MRNavigationBarProgressView.h */,
+				9770EFE71AD3824700BA333B /* MRNavigationBarProgressView.m */,
+				9770EFE81AD3824700BA333B /* MRProgressOverlayView.h */,
+				9770EFE91AD3824700BA333B /* MRProgressOverlayView.m */,
+				9770EFEA1AD3824700BA333B /* MRProgressView.h */,
+				9770EFEB1AD3824700BA333B /* MRProgressView.m */,
+				9770EFEC1AD3824700BA333B /* MRStopableView.h */,
+				9770EFED1AD3824700BA333B /* MRStopButton.h */,
+				9770EFEE1AD3824700BA333B /* MRStopButton.m */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9770EFF81AD3824700BA333B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9770EFF91AD3824700BA333B /* MRMessageInterceptor.h */,
+				9770EFFA1AD3824700BA333B /* MRMessageInterceptor.m */,
+				9770EFFB1AD3824700BA333B /* MRMethodCopier.h */,
+				9770EFFC1AD3824700BA333B /* MRMethodCopier.m */,
+				9770EFFD1AD3824700BA333B /* MRProgressHelper.h */,
+				9770EFFE1AD3824700BA333B /* MRWeakProxy.h */,
+				9770EFFF1AD3824700BA333B /* MRWeakProxy.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		977AF8FA1A6352C200B43722 /* HPPLE */ = {
@@ -289,6 +393,8 @@
 			children = (
 				97FFF1941AA74F4A003EDA95 /* Browser.h */,
 				97FFF1951AA74F4A003EDA95 /* Browser.m */,
+				974B09FC1ADBF8A80029A8FE /* ArticleSearchResultTBVC.h */,
+				974B09FD1ADBF8A80029A8FE /* ArticleSearchResultTBVC.m */,
 				97EDCC661A6832A400C8710F /* HistoryTBVC.h */,
 				97EDCC671A6832A400C8710F /* HistoryTBVC.m */,
 				974D7F601ACECDD800F8F808 /* MenuCollectionViewController.h */,
@@ -319,6 +425,7 @@
 		978FAF871A632A3C003D7A41 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				9770EFD91AD3824700BA333B /* MRProgress */,
 				97C920701A5E3B920074FC16 /* SlideMenu */,
 				977AF8FA1A6352C200B43722 /* HPPLE */,
 				97C83E1F1A94FEE000DA30F0 /* Lib */,
@@ -358,7 +465,6 @@
 			isa = PBXGroup;
 			children = (
 				97F507EE1AD01C48008E22CA /* MenuCollectionViewCell */,
-				97E8E20A1A9B8F0400D2F7DB /* CustomTableViewCell */,
 				97E755AB1A93A76E00C7BE2C /* EditingToolbar */,
 				97C8CD231A8F9C7100BC045E /* CustomBarButtonItem */,
 				974E19271AD21849005AA535 /* BarButtonItemWithLabel */,
@@ -507,6 +613,8 @@
 		97CE13D61A66C6C40009C31B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9770F0171AD4104D00BA333B /* Downloader.h */,
+				9770F0181AD4104D00BA333B /* Downloader.m */,
 				977AF9091A63539300B43722 /* Parser.h */,
 				977AF90A1A63539300B43722 /* Parser.m */,
 				97FFF1971AA75132003EDA95 /* File.h */,
@@ -534,15 +642,6 @@
 				97E755AF1A93A79400C7BE2C /* EditingToolbar.m */,
 			);
 			name = EditingToolbar;
-			sourceTree = "<group>";
-		};
-		97E8E20A1A9B8F0400D2F7DB /* CustomTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				97E8E20B1A9B8F2300D2F7DB /* CustomTableViewCell.swift */,
-				97E8E20C1A9B8F2300D2F7DB /* CustomTableViewCell.xib */,
-			);
-			name = CustomTableViewCell;
 			sourceTree = "<group>";
 		};
 		97F507EE1AD01C48008E22CA /* MenuCollectionViewCell */ = {
@@ -631,6 +730,11 @@
 				TargetAttributes = {
 					97C9203D1A5E39D50074FC16 = {
 						CreatedOnToolsVersion = 6.1.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					97C9205C1A5E39D50074FC16 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -667,7 +771,6 @@
 				97E8E2061A9B864600D2F7DB /* about.html in Resources */,
 				97F507ED1ACF9615008E22CA /* MenuCollectionViewCell.xib in Resources */,
 				97A1694C1A6FF50D00D48F68 /* ZimFileIcon.png in Resources */,
-				97E8E20E1A9B8F2300D2F7DB /* CustomTableViewCell.xib in Resources */,
 				97C920531A5E39D50074FC16 /* Main.storyboard in Resources */,
 				97C920581A5E39D50074FC16 /* LaunchScreen.xib in Resources */,
 				97EDCC5F1A6807D000C8710F /* Preference.plist in Resources */,
@@ -701,40 +804,54 @@
 				977AF9031A6352C200B43722 /* XPathQuery.m in Sources */,
 				97E755B01A93A79400C7BE2C /* EditingToolbar.m in Sources */,
 				974F46071ACE265900B2F6F0 /* Article+Task.m in Sources */,
+				9770F0041AD3824700BA333B /* MRIconView.m in Sources */,
 				97EDCC621A68087B00C8710F /* Preference.m in Sources */,
 				97C920891A5E3B920074FC16 /* SlideNavigationController.m in Sources */,
 				974E192A1AD220AF005AA535 /* BookTableViewCell.m in Sources */,
 				97EF9B5E1ACE369E000E1C5A /* Book+Task.m in Sources */,
 				97EDCC681A6832A400C8710F /* HistoryTBVC.m in Sources */,
+				9770F00E1AD3824700BA333B /* MRWeakProxy.m in Sources */,
 				97CE13D91A66C9B40009C31B /* zimFileFinder.m in Sources */,
 				97F5EB511A6D34E100B8C306 /* KiwixURLProtocol.m in Sources */,
 				97FFF1991AA75132003EDA95 /* File.m in Sources */,
+				9770F00C1AD3824700BA333B /* MRMessageInterceptor.m in Sources */,
 				97F507EC1ACF9615008E22CA /* MenuCollectionViewCell.m in Sources */,
 				97C920821A5E3B920074FC16 /* SlideNavigationContorllerAnimatorFade.m in Sources */,
 				974D7F621ACECDD800F8F808 /* MenuCollectionViewController.m in Sources */,
+				9770F0081AD3824700BA333B /* MRStopButton.m in Sources */,
 				97C83E0E1A93DEB500DA30F0 /* ICloudBackupTBVC.m in Sources */,
+				9770F0191AD4104D00BA333B /* Downloader.m in Sources */,
+				9770F0071AD3824700BA333B /* MRProgressView.m in Sources */,
 				97C920861A5E3B920074FC16 /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				974D73961AC837E5000A8913 /* ZimMultiReader.m in Sources */,
 				97EDCC5D1A6788DE00C8710F /* CoreDataTask.m in Sources */,
 				978FAF8E1A632A80003D7A41 /* pathTools.cpp in Sources */,
 				978FAF941A632BAB003D7A41 /* zimReader.mm in Sources */,
 				97C920831A5E3B920074FC16 /* SlideNavigationContorllerAnimatorScale.m in Sources */,
+				9770F0051AD3824700BA333B /* MRNavigationBarProgressView.m in Sources */,
 				97FFF1961AA74F4A003EDA95 /* Browser.m in Sources */,
 				97C8CD291A8F9CF200BC045E /* CustomBarButtonItem.m in Sources */,
-				97E8E20D1A9B8F2300D2F7DB /* CustomTableViewCell.swift in Sources */,
 				97F507F11AD01D34008E22CA /* BooksViewController.m in Sources */,
 				97C920471A5E39D50074FC16 /* AppDelegate.m in Sources */,
 				977AF9021A6352C200B43722 /* TFHppleElement.m in Sources */,
 				977AF9011A6352C200B43722 /* TFHpple.m in Sources */,
+				9770F0111AD3899C00BA333B /* BookTableViewCellAccessoryView.m in Sources */,
 				97F5EB4E1A6BFDD100B8C306 /* FilePropertiesTBVC.m in Sources */,
 				97C9204A1A5E39D50074FC16 /* Kiwix.xcdatamodeld in Sources */,
 				978FAF8F1A632A80003D7A41 /* reader.cpp in Sources */,
 				97F507F41AD09320008E22CA /* Article.m in Sources */,
+				9770F0021AD3824700BA333B /* MRActivityIndicatorView.m in Sources */,
+				9770F0011AD3824700BA333B /* UIImage+MRImageEffects.m in Sources */,
 				977AF90B1A63539300B43722 /* Parser.m in Sources */,
 				97E8E2081A9B86AD00D2F7DB /* AboutVC.swift in Sources */,
 				97F173581A6AF61C00A06E22 /* SettingTBVC.m in Sources */,
 				97F507F71AD09320008E22CA /* Book.m in Sources */,
+				9770F00D1AD3824700BA333B /* MRMethodCopier.m in Sources */,
+				9770F0001AD3824700BA333B /* MRBlurView.m in Sources */,
+				9770F0031AD3824700BA333B /* MRCircularProgressView.m in Sources */,
 				97C920441A5E39D50074FC16 /* main.m in Sources */,
+				974B09FE1ADBF8A80029A8FE /* ArticleSearchResultTBVC.m in Sources */,
+				9770F0061AD3824700BA333B /* MRProgressOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
